@@ -110,30 +110,49 @@ export default function SkillsSection() {
         
         {/* Certifications Section */}
         <div className="mt-16">
-          <h3 className="text-xl font-semibold mb-6 text-center">Certifications</h3>
+          <motion.div 
+            className="text-center mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h3 className="text-2xl font-bold text-dark mb-4">Certifications & Achievements</h3>
+            <div className="w-20 h-1 bg-accent mx-auto"></div>
+          </motion.div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {personalData.certifications.map((cert, index) => (
               <motion.div 
                 key={`cert-${index}`}
-                className="bg-white rounded-lg shadow-md overflow-hidden"
+                className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <img 
-                  src={cert.image} 
-                  alt={cert.name} 
-                  className="w-full h-40 object-cover"
-                />
-                <div className="p-4">
-                  <h4 className="font-medium mb-2">{cert.name}</h4>
-                  <p className="text-sm text-gray-600 mb-2">{cert.issuer}</p>
-                  <div className="flex justify-between text-xs text-gray-500">
-                    <span>Issued: {cert.issueDate}</span>
-                    <span>Credential ID: {cert.credentialId}</span>
-                  </div>
+                <div className="p-4 flex-grow">
+                  <h4 className="font-semibold text-lg mb-2">{cert.name}</h4>
+                  <p className="text-sm text-gray-600 mb-3">{cert.issuer}</p>
+                  <p className="text-sm text-gray-700 mb-3">{cert.issueDate}</p>
+                  <p className="text-xs text-gray-500">ID: {cert.credentialId}</p>
+                </div>
+                <div className="relative overflow-hidden" style={{ height: '200px' }}>
+                  <a 
+                    href={cert.image} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="block absolute inset-0"
+                  >
+                    <div className="absolute inset-0 bg-black/5 hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <span className="bg-white/90 text-primary text-xs px-2 py-1 rounded">View Certificate</span>
+                    </div>
+                    <img 
+                      src={cert.image} 
+                      alt={cert.name} 
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </a>
                 </div>
               </motion.div>
             ))}
