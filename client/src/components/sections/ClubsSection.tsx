@@ -1,14 +1,11 @@
 import { motion } from "framer-motion";
 import { personalData } from "@/data/personalData";
 import { Card, CardContent } from "@/components/ui/card";
-import { Code, Globe, Users, Handshake } from "lucide-react";
+import { BarChart2, Image, Megaphone, PenTool, Users } from "lucide-react";
 
 export default function ClubsSection() {
   const clubIcons = {
-    "Tech Club": <Code className="text-primary" />,
-    "Toastmasters": <Users className="text-primary" />,
-    "Environmental Society": <Globe className="text-primary" />,
-    "Alumni Association": <Handshake className="text-primary" />
+    "DIAconomics Club": <BarChart2 className="text-primary" />
   };
 
   return (

@@ -1,14 +1,11 @@
 import { motion } from "framer-motion";
 import { personalData } from "@/data/personalData";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Code, Leaf, BookOpen } from "lucide-react";
+import { Heart, BookOpen, GraduationCap, Gift } from "lucide-react";
 
 export default function VolunteerSection() {
   const volunteerIcons = {
-    "Habitat for Humanity": <Heart className="text-white" />,
-    "Code for Good": <Code className="text-white" />,
-    "City Park Clean-up": <Leaf className="text-white" />,
-    "Tech Literacy for Seniors": <BookOpen className="text-white" />
+    "Panchgani Education Initiative": <GraduationCap className="text-white" />
   };
 
   return (

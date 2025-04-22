@@ -109,24 +109,24 @@ export const personalData = {
   
   clubs: [
     {
-      name: "Coding Club",
-      role: "Member",
+      name: "DIAconomics Club",
+      role: "Head of Media",
       period: "Current",
       responsibilities: [
-        "Participate in coding challenges and hackathons",
-        "Collaborate with team members on projects",
-        "Learn new programming technologies and frameworks",
-        "Share knowledge with peers"
+        "Manage club's media presence and content creation",
+        "Create promotional materials for club events",
+        "Coordinate media strategy for economics-related activities",
+        "Collaborate with other team members on club initiatives"
       ]
     }
   ],
   
   volunteerWork: [
     {
-      organization: "Technology Education",
-      role: "Helper",
-      period: "Present",
-      description: "Help classmates and younger students with understanding programming concepts and troubleshooting their code."
+      organization: "Panchgani Education Initiative",
+      role: "Volunteer",
+      period: "Annual Event",
+      description: "Part of a 100-member organization that travels to Panchgani, India annually to donate essential educational supplies (schoolbooks, bags, desks, stationery) and necessities (food, lunchboxes, blankets) to over 3,000 students each year."
     }
   ],
   
