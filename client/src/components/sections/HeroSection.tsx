@@ -4,56 +4,46 @@ import { personalData } from "@/data/personalData";
 
 export default function HeroSection() {
   return (
-    <section id="about" className="relative bg-gradient-to-r from-primary to-secondary text-white py-20 md:py-32">
+    <section
+      id="about"
+      className="relative bg-gradient-to-r from-primary to-secondary text-foreground py-20 md:py-32"
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center">
-          <motion.div 
+          <motion.div
             className="md:w-1/2 mb-10 md:mb-0"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <img 
-              src={personalData.profileImage} 
-              alt={`${personalData.name} Profile Picture`} 
+            <img
+              src={personalData.profileImage}
+              alt={`${personalData.name} Profile Picture`}
               className="rounded-full w-64 h-64 object-cover border-4 border-white shadow-xl mx-auto md:mx-0"
             />
           </motion.div>
-          <motion.div 
+          <motion.div
             className="md:w-1/2 text-center md:text-left"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">{personalData.name}</h1>
-            <p className="text-xl mb-6 opacity-90">{personalData.title}</p>
-            <p className="text-lg mb-8 max-w-lg">{personalData.shortBio}</p>
-            <div className="flex justify-center md:justify-start space-x-4">
-              <Button 
-                className="bg-white text-primary hover:bg-gray-100 font-medium py-2 px-6 rounded-full transition transform hover:scale-105"
-                onClick={() => {
-                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-                }}
-              >
-                Contact Me
-              </Button>
-              <Button 
-                variant="outline" 
-                className="bg-transparent hover:bg-white/10 border-2 border-white font-medium py-2 px-6 rounded-full transition transform hover:scale-105"
-                onClick={() => {
-                  document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
-                }}
-              >
-                View Portfolio
-              </Button>
-            </div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              {personalData.name}
+            </h1>
+            <p className="text-xl mb-6 font-semibold text-white">{personalData.title}</p>
+            <p className="text-lg mb-8 max-w-lg bg-black/25 backdrop-blur-sm p-4 rounded-lg shadow-md text-white">{personalData.shortBio}</p>
           </motion.div>
         </div>
       </div>
-      
+
       <div className="absolute bottom-0 left-0 right-0">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-          <path fill="#F9FAFB" fillOpacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,133.3C672,139,768,181,864,181.3C960,181,1056,139,1152,117.3C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+          <path
+            fill="#F9FAFB"
+            fillOpacity="1"
+            d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,133.3C672,139,768,181,864,181.3C960,181,1056,139,1152,117.3C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+          ></path>
         </svg>
       </div>
     </section>
