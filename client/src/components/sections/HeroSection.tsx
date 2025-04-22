@@ -28,16 +28,18 @@ export default function HeroSection() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-md">
               {personalData.name}
             </h1>
-            <p className="text-xl mb-6 font-semibold text-white">{personalData.title}</p>
-            <p className="text-lg mb-8 max-w-lg bg-black/25 backdrop-blur-sm p-4 rounded-lg shadow-md text-white">{personalData.shortBio}</p>
+            <p className="text-xl mb-6 font-semibold text-white drop-shadow-md">{personalData.title}</p>
+            <div className="bg-black/40 backdrop-blur-sm p-5 rounded-lg shadow-md w-full max-w-lg">
+              <p className="text-lg text-white">{personalData.shortBio}</p>
+            </div>
           </motion.div>
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0">
+      <div className="absolute bottom-0 left-0 right-0 z-10">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
           <path
             fill="#F9FAFB"

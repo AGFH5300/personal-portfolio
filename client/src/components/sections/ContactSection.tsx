@@ -18,13 +18,25 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { RectangleEllipsis, Phone, MapPin, Linkedin, Github, Twitter, Instagram } from "lucide-react";
+import {
+  RectangleEllipsis,
+  Phone,
+  MapPin,
+  Linkedin,
+  Github,
+  Twitter,
+  Instagram,
+} from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
-  subject: z.string().min(2, { message: "Subject must be at least 2 characters." }),
-  message: z.string().min(10, { message: "Message must be at least 10 characters." }),
+  subject: z
+    .string()
+    .min(2, { message: "Subject must be at least 2 characters." }),
+  message: z
+    .string()
+    .min(10, { message: "Message must be at least 10 characters." }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -55,7 +67,8 @@ export default function ContactSection() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "There was a problem sending your message. Please try again.",
+        description:
+          "There was a problem sending your message. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -64,16 +77,22 @@ export default function ContactSection() {
   };
 
   const socialIcons = [
-    { icon: <Linkedin className="h-4 w-4" />, url: personalData.social.linkedin },
+    {
+      icon: <Linkedin className="h-4 w-4" />,
+      url: personalData.social.linkedin,
+    },
     { icon: <Github className="h-4 w-4" />, url: personalData.social.github },
     { icon: <Twitter className="h-4 w-4" />, url: personalData.social.twitter },
-    { icon: <Instagram className="h-4 w-4" />, url: personalData.social.instagram }
+    {
+      icon: <Instagram className="h-4 w-4" />,
+      url: personalData.social.instagram,
+    },
   ];
 
   return (
     <section id="contact" className="py-16 bg-primary text-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -83,7 +102,7 @@ export default function ContactSection() {
           <h2 className="text-3xl font-bold mb-4">Get In Touch</h2>
           <div className="w-20 h-1 bg-white mx-auto"></div>
         </motion.div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -102,7 +121,7 @@ export default function ContactSection() {
                   <p className="opacity-80">{personalData.email}</p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mr-4">
                   <Phone className="h-4 w-4" />
@@ -112,7 +131,7 @@ export default function ContactSection() {
                   <p className="opacity-80">{personalData.phone}</p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mr-4">
                   <MapPin className="h-4 w-4" />
@@ -123,14 +142,14 @@ export default function ContactSection() {
                 </div>
               </div>
             </div>
-            
+
             <h3 className="text-xl font-semibold mt-8 mb-6">Follow Me</h3>
             <div className="flex space-x-4">
               {socialIcons.map((social, index) => (
-                <a 
+                <a
                   key={index}
-                  href={social.url} 
-                  target="_blank" 
+                  href={social.url}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
                 >
@@ -139,7 +158,7 @@ export default function ContactSection() {
               ))}
             </div>
           </motion.div>
-          
+
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -148,7 +167,10 @@ export default function ContactSection() {
           >
             <h3 className="text-xl font-semibold mb-6">Send Me a Message</h3>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
                 <FormField
                   control={form.control}
                   name="name"
@@ -166,7 +188,7 @@ export default function ContactSection() {
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control}
                   name="email"
@@ -185,7 +207,7 @@ export default function ContactSection() {
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control}
                   name="subject"
@@ -203,7 +225,7 @@ export default function ContactSection() {
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control}
                   name="message"
@@ -222,11 +244,11 @@ export default function ContactSection() {
                     </FormItem>
                   )}
                 />
-                
-                <Button 
-                  type="submit" 
+
+                <Button
+                  type="submit"
                   disabled={isSubmitting}
-                  className="px-6 py-3 bg-white text-primary font-medium rounded-md hover:bg-opacity-90 transition transform hover:scale-105"
+                  className="px-6 py-3 bg-white text-primary font-medium rounded-md transition transform hover:scale-105"
                 >
                   {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>

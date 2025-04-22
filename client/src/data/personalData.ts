@@ -28,7 +28,7 @@ export const personalData = {
     },
     {
       degree: "Head of Enterprise and Entrepreneurship (Year 8)",
-      school: "Previous School",
+      school: "The Winchester School Jebal Ali",
       period: "2020-2022",
     },
   ],
