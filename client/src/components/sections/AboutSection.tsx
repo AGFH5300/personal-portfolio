@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { personalData } from "@/data/personalData";
-import { Briefcase, GraduationCap } from "lucide-react";
+import { Briefcase, GraduationCap, Trophy } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function AboutSection() {
@@ -80,6 +80,21 @@ export default function AboutSection() {
                       <h4 className="font-medium">{exp.position}</h4>
                     </div>
                     <p className="text-sm text-gray-600">{exp.company}, {exp.period}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            
+            <h3 className="text-xl font-semibold mt-8 mb-4">Awards & Achievements</h3>
+            <div className="space-y-4">
+              {personalData.awards && personalData.awards.map((award, index) => (
+                <Card key={`award-${index}`} className="shadow-sm border border-gray-100">
+                  <CardContent className="p-4">
+                    <div className="flex items-center mb-2">
+                      <Trophy className="text-primary mr-3" />
+                      <h4 className="font-medium">{award.name}</h4>
+                    </div>
+                    <p className="text-sm text-gray-600">{award.issuer}, {award.date}</p>
                   </CardContent>
                 </Card>
               ))}

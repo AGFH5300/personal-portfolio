@@ -22,8 +22,26 @@ export const personalData = {
   education: [
     {
       degree: "High School Student",
-      school: "School Name", // Replace with your actual school
+      school: "Dubai International Academy Emirates Hills",
       period: "Current"
+    }
+  ],
+  
+  awards: [
+    {
+      name: "2nd Place - Business Minds Case Study Competition",
+      date: "April 19, 2025",
+      issuer: "Business Minds"
+    },
+    {
+      name: "1st Place - Game Jam Competition",
+      date: "School Event",
+      issuer: "Dubai International Academy Emirates Hills"
+    },
+    {
+      name: "4th Place - Team Bowl",
+      date: "World Scholars Cup",
+      issuer: "World Scholars Cup"
     }
   ],
   
