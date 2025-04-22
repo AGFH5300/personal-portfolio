@@ -53,11 +53,9 @@ export default function NavBar() {
       scrolled ? "shadow-md py-2" : "py-4"
     )}>
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <Link href="/">
-          <a className="text-2xl font-bold">
-            <span className="text-primary">John</span>
-            <span className="text-foreground">Doe</span>
-          </a>
+        <Link href="/" className="text-2xl font-bold">
+            <span className="text-primary">Ansh</span>
+            <span className="text-foreground">Gupta</span>
         </Link>
 
         {/* Desktop Navigation */}

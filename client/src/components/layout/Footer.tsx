@@ -8,14 +8,12 @@ export default function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
-            <Link href="/">
-              <a className="text-2xl font-bold text-white">
-                John<span className="text-primary">Doe</span>
-              </a>
+            <Link href="/" className="text-2xl font-bold text-white">
+                Ansh<span className="text-primary">Gupta</span>
             </Link>
           </div>
           <div className="text-sm text-gray-400">
-            &copy; {currentYear} John Doe. All rights reserved.
+            &copy; {currentYear} Ansh Gupta. All rights reserved.
           </div>
           <div className="mt-4 md:mt-0">
             <a 
