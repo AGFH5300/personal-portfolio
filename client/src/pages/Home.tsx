@@ -7,6 +7,7 @@ import ClubsSection from "@/components/sections/ClubsSection";
 import VolunteerSection from "@/components/sections/VolunteerSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import ContactSection from "@/components/sections/ContactSection";
+import AwardsSection from "@/components/sections/AwardsSection";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <SkillsSection />
+        <AwardsSection />
         <ClubsSection />
         <VolunteerSection />
         <ProjectsSection />

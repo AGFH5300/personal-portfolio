@@ -55,25 +55,15 @@ export default function ProjectsSection() {
                   ))}
                 </div>
                 <div className="flex space-x-4">
-                  {project.sourceUrl && (
-                    <a
-                      href={project.sourceUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary hover:text-secondary transition-colors duration-300 flex items-center"
-                    >
-                      <Github className="mr-2 h-4 w-4" /> <span>Source</span>
-                    </a>
-                  )}
-                  {project.demoUrl && (
+                  {project.demoUrl && project.demoUrl !== "#" && (
                     <a
                       href={project.demoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-primary hover:text-secondary transition-colors duration-300 flex items-center"
                     >
-                      <ExternalLink className="mr-2 h-4 w-4" />{" "}
-                      <span>Live</span>
+                      <ExternalLink className="mr-2 h-4 w-4" />
+                      <span>View Project</span>
                     </a>
                   )}
                 </div>
