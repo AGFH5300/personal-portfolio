@@ -25,7 +25,7 @@ import {
   Linkedin,
   Github,
   MessageCircleMore,
-  Instagram,
+  Camera,
 } from "lucide-react";
 
 const formSchema = z.object({
@@ -84,8 +84,8 @@ export default function ContactSection() {
     { icon: <Github className="h-4 w-4" />, url: personalData.social.github },
     { icon: <MessageCircleMore className="h-4 w-4" />, url: personalData.social.twitter },
     {
-      icon: <Instagram className="h-4 w-4" />,
-      url: personalData.social.instagram,
+      icon: <Camera className="h-4 w-4" />,
+      url: personalData.social.snapchat,
     },
   ];
 
