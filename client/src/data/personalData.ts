@@ -15,10 +15,12 @@ export const personalData = {
   cvUrl: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
 
   social: {
-    linkedin: "#",
-    github: "#",
+    linkedin: "https://www.linkedin.com/in/anshvg/",
+    github: "https://github.com/AGFH5300",
     twitter: "#",
     instagram: "#",
+    snapchat: "#",
+    whatsapp: "#",
   },
 
   education: [
