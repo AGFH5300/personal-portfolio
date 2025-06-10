@@ -24,7 +24,7 @@ import {
   MapPin,
   Linkedin,
   Github,
-  MessageSquareMore,
+  MessageCircleMore,
   Instagram,
 } from "lucide-react";
 
@@ -82,7 +82,7 @@ export default function ContactSection() {
       url: personalData.social.linkedin,
     },
     { icon: <Github className="h-4 w-4" />, url: personalData.social.github },
-    { icon: <MessageSquareMore className="h-4 w-4" />, url: personalData.social.twitter },
+    { icon: <MessageCircleMore className="h-4 w-4" />, url: personalData.social.twitter },
     {
       icon: <Instagram className="h-4 w-4" />,
       url: personalData.social.instagram,
