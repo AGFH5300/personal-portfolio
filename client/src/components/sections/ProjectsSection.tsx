@@ -36,7 +36,7 @@ export default function ProjectsSection() {
               <img
                 src={project.image}
                 alt={project.name}
-                className="w-full h-48 object-cover"
+                className="w-full object-cover"
               />
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-2">{project.name}</h3>
@@ -60,7 +60,7 @@ export default function ProjectsSection() {
                       href={project.demoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary hover:text-secondary transition-colors duration-300 flex items-center"
+                      className="text-primary hover:text-bg transition-colors duration-300 flex items-center"
                     >
                       <ExternalLink className="mr-2 h-4 w-4" />
                       <span>View Project</span>

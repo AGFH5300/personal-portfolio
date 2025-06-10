@@ -47,7 +47,6 @@ export default function AwardsSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card>
                 <CardContent className="p-6">
                   <div className="flex items-start">
                     <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
@@ -60,7 +59,6 @@ export default function AwardsSection() {
                     </div>
                   </div>
                 </CardContent>
-              </Card>
             </motion.div>
           ))}
         </div>

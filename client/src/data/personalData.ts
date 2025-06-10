@@ -17,10 +17,9 @@ export const personalData = {
   social: {
     linkedin: "https://www.linkedin.com/in/anshvg/",
     github: "https://github.com/AGFH5300",
-    twitter: "#",
-    instagram: "#",
-    snapchat: "#",
-    whatsapp: "#",
+    email: "mailto:dxb.avg@gmail.com",
+    snapchat: "https://www.snapchat.com/add/AGFH530",
+    whatsapp: "https://wa.me/971585082674?text=Hello!",
   },
 
   education: [
@@ -110,7 +109,7 @@ export const personalData = {
     {
       name: "HSK Level 1",
       issuer: "Chinese Proficiency Test",
-      issueDate: "Score: 95/100",
+      issueDate: "Score: 195/100",
       credentialId: "HSK-Level1",
       image: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
     },
@@ -145,7 +144,7 @@ export const personalData = {
       name: "Idle Clicker Game",
       description:
         "An idle clicker game built with React, TypeScript, and Tailwind CSS as part of a game jam.",
-      image: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
+      image: "https://i.postimg.cc/PqN30h0j/idle-realms-thumbnail.png",
       technologies: [
         { name: "React", color: "blue" },
         { name: "TypeScript", color: "blue" },

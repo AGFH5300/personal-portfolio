@@ -25,7 +25,7 @@ import {
   Linkedin,
   Github,
   MessageCircleMore,
-  Camera,
+  Mail,
 } from "lucide-react";
 
 const formSchema = z.object({
@@ -82,10 +82,13 @@ export default function ContactSection() {
       url: personalData.social.linkedin,
     },
     { icon: <Github className="h-4 w-4" />, url: personalData.social.github },
-    { icon: <MessageCircleMore className="h-4 w-4" />, url: personalData.social.twitter },
     {
-      icon: <Camera className="h-4 w-4" />,
-      url: personalData.social.snapchat,
+      icon: <MessageCircleMore className="h-4 w-4" />,
+      url: personalData.social.whatsapp,
+    },
+    {
+      icon: <Mail className="h-4 w-4" />,
+      url: personalData.social.email,
     },
   ];
 
@@ -129,16 +132,6 @@ export default function ContactSection() {
                 <div>
                   <h4 className="font-medium">Phone</h4>
                   <p className="opacity-80">{personalData.phone}</p>
-                </div>
-              </div>
-
-              <div className="flex items-start">
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mr-4">
-                  <MapPin className="h-4 w-4" />
-                </div>
-                <div>
-                  <h4 className="font-medium">Nationality</h4>
-                  <p className="opacity-80">{personalData.nationality}</p>
                 </div>
               </div>
             </div>
