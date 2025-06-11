@@ -4,13 +4,13 @@ export const personalData = {
   shortBio:
     "Passionate about creating web applications and learning new technologies. I specialize in front-end development with experience in HTML, CSS, JavaScript, PHP, and React.",
   fullBio: [
-    "I'm a 15-year-old developer with a growing portfolio of web projects. My journey began with creating websites using HTML, CSS, and JavaScript, and has expanded to include more complex applications using React, TypeScript, and database technologies.",
-    "I am also a language enthusiast with HSK certifications in Chinese, having achieved excellent scores across all levels I've completed.",
+    "I'm a 15-year-old developer with a growing portfolio of web projects. It began with creating websites using HTML, CSS, and JavaScript, and has expanded to include more complex applications using React, TypeScript and backend like PHP.",
+    "I am also a language enthusiast with HSK certifications in Chinese, having achieved excellent scores across all levels I've done.",
   ],
   age: 15,
   nationality: "Indian",
   email: "dxb.avg@gmail.com",
-  phone: "+971 585 08 2674",
+  phone: "+971 585 082 674",
   profileImage: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
   cvUrl: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
 
@@ -24,14 +24,19 @@ export const personalData = {
 
   education: [
     {
-      degree: "High School Student",
+      degree: "Year 9 ~ Current",
       school: "Dubai International Academy Emirates Hills",
-      period: "Current",
+      period: "2023 ~ Current",
     },
     {
-      degree: "Head of Enterprise and Entrepreneurship (Year 8)",
+      degree: "Year 5 ~ Year 8",
       school: "The Winchester School Jebal Ali",
-      period: "2020-2022",
+      period: "2019 ~ 2022",
+    },
+    {
+      degree: "FS2 ~ Year 4",
+      school: "Gems Wellington International School",
+      period: "2014 ~ 2018",
     },
   ],
 
@@ -66,10 +71,10 @@ export const personalData = {
       { name: "HTML/CSS", level: 85 },
       { name: "JavaScript", level: 75 },
       { name: "PHP", level: 65 },
-      { name: "MySQL", level: 65 },
-      { name: "React", level: 60 },
       { name: "TypeScript", level: 65 },
+      { name: "React", level: 60 },
       { name: "Python", level: 50 },
+      { name: "C+", level: 35 },
     ],
     soft: [
       {

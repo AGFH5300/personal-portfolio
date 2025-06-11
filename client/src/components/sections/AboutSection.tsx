@@ -72,10 +72,10 @@ export default function AboutSection() {
                   <CardContent className="p-4">
                     <div className="flex items-center mb-2">
                       <GraduationCap className="text-primary mr-3" />
-                      <h4 className="font-medium">{edu.degree}</h4>
+                      <h4 className="font-medium">{edu.school}</h4>
                     </div>
                     <p className="text-sm text-gray-600">
-                      {edu.school}, {edu.period}
+                      {edu.degree} | {edu.period}
                     </p>
                   </CardContent>
                 </Card>
@@ -99,33 +99,10 @@ export default function AboutSection() {
               ))}
             </div>
 
-            <h3 className="text-xl font-semibold mt-8 mb-4">
-              Awards & Achievements
-            </h3>
-            <div className="space-y-4">
-              {personalData.awards &&
-                personalData.awards.map((award, index) => (
-                  <Card
-                    key={`award-${index}`}
-                    className="shadow-sm border border-gray-100"
-                  >
-                    <CardContent className="p-4">
-                      <div className="flex items-center mb-2">
-                        <Trophy className="text-primary mr-3" />
-                        <h4 className="font-medium">{award.name}</h4>
-                      </div>
-                      <p className="text-sm text-gray-600">
-                        {award.issuer}, {award.date}
-                      </p>
-                    </CardContent>
-                  </Card>
-                ))}
-            </div>
-
             <div className="flex justify-center mt-8">
               <a
-                href="#"
-                className="inline-flex items-center text-primary hover:text-secondary transition-colors duration-300"
+                // href="https://drive.google.com/uc?export=download&id=<id>"
+                className="inline-flex items-center text-primary hover:text-black transition-colors duration-300"
               >
                 <span>Download CV</span>
                 <svg

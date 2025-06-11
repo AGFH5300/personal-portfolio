@@ -60,7 +60,7 @@ export default function ProjectsSection() {
                       href={project.demoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary hover:text-bg transition-colors duration-300 flex items-center"
+                      className="text-primary hover:text-black transition-colors duration-300 flex items-center"
                     >
                       <ExternalLink className="mr-2 h-4 w-4" />
                       <span>View Project</span>
