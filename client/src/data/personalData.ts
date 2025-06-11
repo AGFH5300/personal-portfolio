@@ -98,24 +98,21 @@ export const personalData = {
 
   certifications: [
     {
-      name: "HSK Level 3",
+      name: "HSK Level 1",
       issuer: "Chinese Proficiency Test",
-      issueDate: "Score: 280/300",
-      credentialId: "HSK-Level3",
-      image: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
+      issueDate: "Score: 195/200",
+      image: "https://i.postimg.cc/T38g93qz/hsk-1.jpg",
     },
     {
       name: "HSK Level 2",
       issuer: "Chinese Proficiency Test",
       issueDate: "Score: 195/200",
-      credentialId: "HSK-Level2",
       image: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
     },
     {
-      name: "HSK Level 1",
+      name: "HSK Level 3",
       issuer: "Chinese Proficiency Test",
-      issueDate: "Score: 195/100",
-      credentialId: "HSK-Level1",
+      issueDate: "Score: 280/300",
       image: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
     },
   ],

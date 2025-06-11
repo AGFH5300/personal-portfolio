@@ -36,7 +36,7 @@ export default function SkillsSection() {
 
   const skillIcons = {
     "Team Leadership": <Users className="text-primary text-xl" />,
-    Communication: <MessageSquare className="text-primary text-xl" />,
+    "Communication": <MessageSquare className="text-primary text-xl" />,
     "Problem Solving": <Lightbulb className="text-primary text-xl" />,
     "Project Management": <ListTodo className="text-primary text-xl" />,
   };
