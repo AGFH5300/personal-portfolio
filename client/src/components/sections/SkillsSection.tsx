@@ -1,12 +1,17 @@
 import { motion, useAnimation } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { personalData } from "@/data/personalData";
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, MessageSquare, Lightbulb, ListTodo } from "lucide-react";
+import { CertificateModal } from "@/components/ui/certificate-modal";
 
 export default function SkillsSection() {
   const controls = useAnimation();
   const sectionRef = useRef<HTMLElement>(null);
+  const [selectedCertificate, setSelectedCertificate] = useState<{
+    image: string;
+    name: string;
+  } | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -141,32 +146,34 @@ export default function SkillsSection() {
                   <p className="text-sm text-gray-700 mb-3">{cert.issueDate}</p>
                 </div>
                 <div
-                  className="relative overflow-hidden"
+                  className="relative overflow-hidden cursor-pointer"
                   style={{ height: "200px" }}
+                  onClick={() => setSelectedCertificate(cert)}
                 >
-                  <a
-                    href={cert.image}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block absolute inset-0"
-                  >
-                    <div className="absolute inset-0 bg-black/5 hover:bg-black/20 transition-colors flex items-center justify-center">
-                      <span className="bg-white/90 text-primary text-xs px-2 py-1 rounded">
-                        View Certificate
-                      </span>
-                    </div>
-                    <img
-                      src={cert.image}
-                      alt={cert.name}
-                      className="w-full h-full object-cover object-top"
-                    />
-                  </a>
+                  <div className="absolute inset-0 bg-black/5 hover:bg-black/20 transition-colors flex items-center justify-center">
+                    <span className="bg-white/90 text-primary text-xs px-2 py-1 rounded">
+                      View Certificate
+                    </span>
+                  </div>
+                  <img
+                    src={cert.image}
+                    alt={cert.name}
+                    className="w-full h-full object-cover object-top"
+                  />
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
       </div>
+      
+      {/* Certificate Modal */}
+      <CertificateModal
+        isOpen={selectedCertificate !== null}
+        onClose={() => setSelectedCertificate(null)}
+        imageUrl={selectedCertificate?.image || ""}
+        title={selectedCertificate?.name || ""}
+      />
     </section>
   );
 }
