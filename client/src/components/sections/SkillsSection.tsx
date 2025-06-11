@@ -2,7 +2,7 @@ import { motion, useAnimation } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { personalData } from "@/data/personalData";
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, MessageSquare, Lightbulb, ListTodo } from "lucide-react";
+import { Users, MessageSquare, Lightbulb, ListTodo, Clock, Zap } from "lucide-react";
 import { CertificateModal } from "@/components/ui/certificate-modal";
 
 export default function SkillsSection() {
@@ -39,6 +39,8 @@ export default function SkillsSection() {
     "Communication": <MessageSquare className="text-primary text-xl" />,
     "Problem Solving": <Lightbulb className="text-primary text-xl" />,
     "Project Management": <ListTodo className="text-primary text-xl" />,
+    "Time Management": <Clock className="text-primary text-xl" />,
+    "Adaptability": <Zap className="text-primary text-xl" />,
   };
 
   return (
