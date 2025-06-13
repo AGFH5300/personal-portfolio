@@ -8,6 +8,7 @@ import VolunteerSection from "@/components/sections/VolunteerSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import ContactSection from "@/components/sections/ContactSection";
 import CompetitionExperienceSection from "@/components/sections/CompetitionExperienceSection";
+import LanguagesSection from "@/components/sections/LanguagesSection";
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
         <SkillsSection />
         <CompetitionExperienceSection />
         <ClubsSection />
+        <LanguagesSection />
         <VolunteerSection />
         <ProjectsSection />
         <ContactSection />
