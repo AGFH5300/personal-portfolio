@@ -40,22 +40,63 @@ export const personalData = {
     },
   ],
 
-  awards: [
+  competitionExperience: [
     {
-      name: "2nd Place - Business Minds Case Study Competition",
-      date: "April 19, 2025",
-      issuer: "Business Minds",
+      name: "World Scholars Cup",
+      position: "Scholar",
+      date: "Apr 2025",
+      description: "Won multiple awards including Trophy as 4th place Scholars Bowl Team and Silver Medal for 22nd place in Challenge-History.",
+      achievements: ["4th Place Scholars Bowl Team", "Silver Medal - 22nd Place Challenge-History"]
     },
     {
-      name: "1st Place - Game Jam Competition",
-      date: "April 21, 2025",
-      issuer: "Dubai International Academy Emirates Hills",
+      name: "AUS School Computing Competition (ASCC-2025)",
+      position: "Python Developer",
+      date: "Apr 2025",
+      description: "Created a python script to sort, grab and graph data from a dataset with team members Ayyukta Ankam.",
+      achievements: ["Python Data Analysis Project"]
     },
     {
-      name: "4th Place - Team Bowl in Seniors Category",
-      date: "April 14 2025",
-      issuer: "World Scholars Cup",
+      name: "DIAMathletes January 2025 Competition",
+      position: "Competitor",
+      date: "Jan 2025",
+      description: "Won 1st place solving multiple math problems as a team with Vihaan Deshpande, Lavitra Dhoot and Ayyukta Ankam.",
+      achievements: ["1st Place Winner"]
     },
+    {
+      name: "DIA Game Jam Competition",
+      position: "Game Developer",
+      date: "Mar-Apr 2025",
+      description: "Created an idle clicker game which won the competition.",
+      achievements: ["Winner - Game Development"]
+    },
+    {
+      name: "Annual Business Minds Case Study Competition",
+      position: "Competitor", 
+      date: "Apr 2025",
+      description: "Won 2nd place with peers Alman Bazaz and Ayyukta Ankam in business case study analysis.",
+      achievements: ["2nd Place Winner"]
+    },
+    {
+      name: "DIAMWEF 2025",
+      position: "Delegate",
+      date: "May 2025 - Present",
+      description: "Participating as a delegate in DIAMWEF 2025.",
+      achievements: ["Active Delegate"]
+    },
+    {
+      name: "EISJMUN 2025",
+      position: "Delegate",
+      date: "Jun 2025",
+      description: "Participating in EISJMUN 2025 as a delegate.",
+      achievements: ["Model UN Delegate"]
+    },
+    {
+      name: "DIAMEC 2025",
+      position: "Delegate",
+      date: "Mar 2025",
+      description: "Won Best Collaborator in the competition with peers Alman Bazaz and Ayyukta Ankam.",
+      achievements: ["Best Collaborator Award"]
+    }
   ],
 
   experience: [
@@ -82,7 +123,7 @@ export const personalData = {
       },
       {
         name: "Communication",
-        description: "Clear communication in both English and Hindi",
+        description: "Clear communication in multiple languages",
       },
       {
         name: "Adaptability",
@@ -95,11 +136,50 @@ export const personalData = {
     ],
   },
 
+  languages: [
+    {
+      name: "English",
+      proficiency: "Native or bilingual proficiency"
+    },
+    {
+      name: "Hindi", 
+      proficiency: "Native or bilingual proficiency"
+    },
+    {
+      name: "Chinese",
+      proficiency: "Professional working proficiency"
+    },
+    {
+      name: "Arabic",
+      proficiency: "Limited working proficiency"
+    },
+    {
+      name: "French",
+      proficiency: "Limited working proficiency"
+    },
+    {
+      name: "German",
+      proficiency: "Limited working proficiency"
+    }
+  ],
+
   certifications: [
+    {
+      name: "CS50 Harvard Course",
+      issuer: "Harvard University",
+      issueDate: "Jun 2025",
+      image: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
+    },
+    {
+      name: "Udemy 100 Days of Code: The Complete Python Pro Bootcamp",
+      issuer: "Udemy",
+      issueDate: "2025",
+      image: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
+    },
     {
       name: "HSK Level 1",
       issuer: "Chinese Proficiency Test",
-      issueDate: "Score: 195/200",
+      issueDate: "Score: 195/200 - Jan 2020",
       image: "https://i.postimg.cc/T38g93qz/hsk-1.jpg",
     },
     {
@@ -111,7 +191,7 @@ export const personalData = {
     {
       name: "HSK Level 3",
       issuer: "Chinese Proficiency Test",
-      issueDate: "Score: 280/300",
+      issueDate: "Score: 280/300 - Sep 2024",
       image: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
     },
   ],
