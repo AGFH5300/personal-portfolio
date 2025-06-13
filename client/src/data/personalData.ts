@@ -128,17 +128,16 @@ export const personalData = {
         "Collaborate with other team members on club initiatives",
       ],
     },
-    [
     {
       name: "Enterprise and Entrepreneurship", 
       role: "Head",
       period: "2022 - 2023",
-      responsibilities:
+      responsibilities: [
         "Create entrepreneurial events for the school students",
-        "Manage leadership roles across the school in events"
+        "Manage leadership roles across the school in events",
         "Create promotional materials for events"
+      ],
     },
-    ]
   ],
 
   volunteerWork: [
