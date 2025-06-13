@@ -38,7 +38,7 @@ export default function ProjectsSection() {
                 alt={project.name}
                 className="w-full object-cover"
               />
-              <div className="p-6">
+                <div className="p-6" style={{paddingBottom:'12px'}}>
                 <h3 className="text-xl font-semibold mb-2">{project.name}</h3>
                 <p className="text-gray-600 text-sm mb-4">
                   {project.description}

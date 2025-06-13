@@ -92,7 +92,7 @@ export default function AboutSection() {
                       <h4 className="font-medium">{exp.position}</h4>
                     </div>
                     <p className="text-sm text-gray-600">
-                      {exp.company}, {exp.period}
+                      {exp.company} {exp.period}
                     </p>
                   </CardContent>
                 </Card>

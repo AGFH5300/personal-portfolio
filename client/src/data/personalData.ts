@@ -24,17 +24,17 @@ export const personalData = {
 
   education: [
     {
-      degree: "Year 9 ~ Current",
+      degree: "Year 9 - Current",
       school: "Dubai International Academy Emirates Hills",
       period: "2023 ~ Current",
     },
     {
-      degree: "Year 5 ~ Year 8",
+      degree: "Year 5 - Year 8",
       school: "The Winchester School Jebal Ali",
       period: "2019 ~ 2022",
     },
     {
-      degree: "FS2 ~ Year 4",
+      degree: "FS2 - Year 4",
       school: "Gems Wellington International School",
       period: "2014 ~ 2018",
     },
@@ -61,8 +61,7 @@ export const personalData = {
   experience: [
     {
       position: "Web Developer",
-      company: "Self-taught Projects",
-      period: "Present",
+      company: "Self Taught"
     },
   ],
 
@@ -129,6 +128,17 @@ export const personalData = {
         "Collaborate with other team members on club initiatives",
       ],
     },
+    [
+    {
+      name: "Enterprise and Entrepreneurship", 
+      role: "Head",
+      period: "2022 - 2023",
+      responsibilities:
+        "Create entrepreneurial events for the school students",
+        "Manage leadership roles across the school in events"
+        "Create promotional materials for events"
+    },
+    ]
   ],
 
   volunteerWork: [
@@ -137,7 +147,7 @@ export const personalData = {
       role: "Volunteer",
       period: "Annual Event",
       description:
-        "Part of a 1000-member organization that travels to Panchgani, India annually to donate essential educational supplies (schoolbooks, bags, desks, stationery) and necessities (food, lunchboxes, blankets) to over 3,000 students each year.",
+        "Part of a 1000+ member organization that travels to Panchgani, India annually to donate essential educational supplies (schoolbooks, bags, desks, stationery) and necessities (food, lunchboxes, blankets) to over 3,000 students each year.",
     },
   ],
 
@@ -158,7 +168,7 @@ export const personalData = {
       name: "Chat Application",
       description:
         "A chat application currently in development using MySQL and HTML to enable real-time communication between users.",
-      image: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
+      image: "https://i.postimg.cc/FsDDMdCY/chat.png",
       technologies: [
         { name: "HTML", color: "orange" },
         { name: "CSS", color: "blue" },
@@ -171,7 +181,7 @@ export const personalData = {
       name: "UAE Guide for New Residents",
       description:
         "A website that helps new residents moving to the UAE learn about the country, its culture, and important information for settling in.",
-      image: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
+      image: "https://i.postimg.cc/Xqnkh4wK/dd.png",
       technologies: [
         { name: "HTML", color: "orange" },
         { name: "CSS", color: "blue" },
