@@ -228,6 +228,34 @@ export const personalData = {
       description:
         "Part of a 1000+ member organization that travels to Panchgani, India annually to donate essential educational supplies (schoolbooks, bags, desks, stationery) and necessities (food, lunchboxes, blankets) to over 3,000 students each year.",
     },
+    {
+      organization: "Donating Hot Meals",
+      role: "Volunteer",
+      period: "May 23, 2025",
+      description:
+        "Distributed hot breakfast from a restaurant and donated it to people in need near our home in Mumbai. The aim was to provide support to those in need by offering a warm meal, especially during the challenging summer months.",
+    },
+    {
+      organization: "Tata Cancer Hospital",
+      role: "Volunteer",
+      period: "Aug 01, 2023",
+      description:
+        "Donated food and snacks to the patients and staff of Tata Cancer Hospital in India. The goal was to provide support and uplift the spirits of those battling cancer by contributing to their well-being during treatment.",
+    },
+    {
+      organization: "Tata Cancer Hospital",
+      role: "Volunteer", 
+      period: "Jul 01, 2024",
+      description:
+        "Repeated donation of food and snacks to the patients at Tata Cancer Hospital. The goal was to provide continued support and upliftment for cancer patients undergoing treatment, offering continued comfort and support to cancer patients and their families.",
+    },
+    {
+      organization: "School for Children with Hearing and Speech Impairments",
+      role: "Volunteer",
+      period: "Aug 01, 2024",
+      description:
+        "Donated stationery items, such as pens, pencils, pencil cases, bags and food like chocolate bars to children with hearing and speech impairments at a school in India. The goal was to help support their educational needs by providing essential supplies and brighten their day with a small treat.",
+    },
   ],
 
   projects: [

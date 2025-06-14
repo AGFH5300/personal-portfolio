@@ -5,7 +5,10 @@ import { Heart, BookOpen, GraduationCap, Gift } from "lucide-react";
 
 export default function VolunteerSection() {
   const volunteerIcons = {
-    "Panchgani Education Initiative": <GraduationCap className="text-white" />
+    "Panchgani Education Initiative": <GraduationCap className="text-white" />,
+    "Donating Hot Meals": <Gift className="text-white" />,
+    "Tata Cancer Hospital": <Heart className="text-white" />,
+    "School for Children with Hearing and Speech Impairments": <BookOpen className="text-white" />
   };
 
   return (
