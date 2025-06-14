@@ -200,7 +200,7 @@ export const personalData = {
     {
       name: "DIAconomics Club",
       role: "Deputy Head of Media",
-      period: "Current",
+      period: "April 2025 - Current",
       responsibilities: [
         "Manage club's media presence and content creation",
         "Create promotional materials for club events",
