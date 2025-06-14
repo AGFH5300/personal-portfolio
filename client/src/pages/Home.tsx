@@ -7,7 +7,7 @@ import ClubsSection from "@/components/sections/ClubsSection";
 import VolunteerSection from "@/components/sections/VolunteerSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import ContactSection from "@/components/sections/ContactSection";
-import CompetitionExperienceSection from "@/components/sections/CompetitionExperienceSection";
+import ExperienceSection from "@/components/sections/ExperienceSection";
 import LanguagesSection from "@/components/sections/LanguagesSection";
 
 export default function Home() {
@@ -18,7 +18,7 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <SkillsSection />
-        <CompetitionExperienceSection />
+        <ExperienceSection />
         <ClubsSection />
         <LanguagesSection />
         <VolunteerSection />

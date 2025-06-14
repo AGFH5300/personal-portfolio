@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { name: "About", href: "#about" },
   { name: "Skills", href: "#skills" },
-  { name: "Competition", href: "#competition" },
+  { name: "Experience", href: "#competition" },
   { name: "Clubs", href: "#clubs" },
   { name: "Languages", href: "#languages" },
   { name: "Volunteer", href: "#volunteer" },
@@ -18,6 +18,7 @@ const navLinks = [
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,9 +27,22 @@ export default function NavBar() {
       } else {
         setScrolled(false);
       }
+
+      // Detect active section
+      const sections = navLinks.map(link => link.href.substring(1));
+      const scrollPosition = window.scrollY + 100; // Offset for navbar height
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i]);
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Call once to set initial state
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -63,17 +77,25 @@ export default function NavBar() {
         {/* Desktop Navigation */}
         <nav className="hidden md:block">
           <ul className="flex space-x-8">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <a
-                  href={link.href}
-                  className="text-foreground hover:text-primary transition-colors duration-300"
-                  onClick={handleLinkClick}
-                >
-                  {link.name}
-                </a>
-              </li>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href.substring(1);
+              return (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className={cn(
+                      "transition-colors duration-300 font-medium",
+                      isActive 
+                        ? "text-primary border-b-2 border-primary" 
+                        : "text-foreground hover:text-primary"
+                    )}
+                    onClick={handleLinkClick}
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </nav>
 
@@ -92,17 +114,25 @@ export default function NavBar() {
       {/* Mobile Navigation */}
       <div className={`md:hidden ${isOpen ? "block" : "hidden"} bg-white shadow-md`}>
         <ul className="px-4 py-2">
-          {navLinks.map((link) => (
-            <li key={link.name}>
-              <a
-                href={link.href}
-                className="block py-2 text-foreground hover:text-primary transition-colors duration-300"
-                onClick={handleLinkClick}
-              >
-                {link.name}
-              </a>
-            </li>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = activeSection === link.href.substring(1);
+            return (
+              <li key={link.name}>
+                <a
+                  href={link.href}
+                  className={cn(
+                    "block py-2 transition-colors duration-300 font-medium",
+                    isActive 
+                      ? "text-primary bg-primary/10 px-3 rounded-md" 
+                      : "text-foreground hover:text-primary"
+                  )}
+                  onClick={handleLinkClick}
+                >
+                  {link.name}
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </header>

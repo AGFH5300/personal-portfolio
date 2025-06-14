@@ -32,7 +32,7 @@ export default function VolunteerSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className="absolute left-0 w-9 h-9 -ml-10 bg-primary rounded-full flex items-center justify-center text-white shadow-md">
+              <div className="absolute left-0 w-9 h-9 -ml-10 bg-primary rounded-full flex items-center justify-center text-white shadow-md z-10">
                 {volunteerIcons[work.organization as keyof typeof volunteerIcons] || <Heart className="text-white" />}
               </div>
               <Card className="shadow-sm ml-4">

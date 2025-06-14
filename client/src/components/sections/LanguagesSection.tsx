@@ -8,6 +8,7 @@ export default function LanguagesSection() {
     if (proficiency.includes("Native") || proficiency.includes("bilingual")) return 5;
     if (proficiency.includes("Professional")) return 4;
     if (proficiency.includes("Limited")) return 2;
+    if (proficiency.includes("Elementary")) return 1;
     return 3;
   };
 

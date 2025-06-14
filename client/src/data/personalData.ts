@@ -40,7 +40,7 @@ export const personalData = {
     },
   ],
 
-  competitionExperience: [
+  Experience: [
     {
       name: "World Scholars Cup",
       position: "Scholar",
@@ -95,7 +95,7 @@ export const personalData = {
       position: "Delegate",
       date: "Mar 2025",
       description: "Won Best Collaborator in the competition with peers Alman Bazaz and Ayyukta Ankam.",
-      achievements: ["Best Collaborator Award"]
+      achievements: ["Best Collaborator Award", "1st Place Team Award"]
     }
   ],
 
@@ -159,7 +159,7 @@ export const personalData = {
     },
     {
       name: "German",
-      proficiency: "Limited working proficiency"
+      proficiency: "Elementary proficiency"
     }
   ],
 
