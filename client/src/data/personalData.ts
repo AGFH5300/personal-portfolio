@@ -279,9 +279,9 @@ export const personalData = {
       demoUrl: "https://game-jam.wuaze.com",
     },
     {
-      name: "Chat Application",
+      name: "Chatting Website",
       description:
-        "A chat application currently in development using MySQL and HTML to enable real-time communication between users.",
+        "A site currently under development to enable real-time chatting between users.",
       image: "https://i.postimg.cc/FsDDMdCY/chat.png",
       technologies: [
         { name: "HTML", color: "orange" },
@@ -292,9 +292,9 @@ export const personalData = {
       demoUrl: "#",
     },
     {
-      name: "UAE Guide for New Residents",
+      name: "UAE Guide for Expats",
       description:
-        "A website that helps new residents moving to the UAE learn about the country, its culture, and important information for settling in.",
+        "A website that helps expats moving to the UAE learn about the country and important information.",
       image: "https://i.postimg.cc/Xqnkh4wK/dd.png",
       technologies: [
         { name: "HTML", color: "orange" },

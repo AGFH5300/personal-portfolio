@@ -95,12 +95,12 @@ export default function ProjectsSection() {
               </h3>
               
               <p className="text-gray-600 mb-6 max-w-2xl mx-auto text-lg">
-                Explore my complete collection of Python projects, web applications, and coding experiments created while learning different programming languages and technologies.
+                Explore my complete collection of Python projects, web applications, and coding experiments created while learning and exploring different programming languages and technologies.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">50+</div>
+                  <div className="text-2xl font-bold text-primary">60+</div>
                   <div className="text-sm text-gray-600">Python Projects</div>
                 </div>
                 <div className="text-center">

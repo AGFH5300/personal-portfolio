@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { z } from "zod";
 import fs from "fs";
 import path from "path";
+import nodemailer from "nodemailer";
 
 const contactSchema = z.object({
   name: z.string().min(2),
@@ -11,6 +12,102 @@ const contactSchema = z.object({
   subject: z.string().min(2),
   message: z.string().min(10),
 });
+
+// Nodemailer configuration
+let transporter: nodemailer.Transporter | null = null;
+
+const initializeNodemailer = async () => {
+  try {
+    console.log('🔧 Initializing nodemailer with Gmail...');
+    console.log('📧 Email user:', process.env.EMAIL_USER ? 'Configured' : 'Not configured');
+    console.log('🔑 App password:', process.env.EMAIL_APP_PASSWORD ? 'Configured' : 'Not configured');
+    
+    transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_APP_PASSWORD
+      }
+    });
+
+    // Verify connection
+    if (transporter) {
+      console.log('🔍 Verifying SMTP connection...');
+      await transporter.verify();
+      console.log('✅ Nodemailer is ready and connected to Gmail');
+      console.log('📬 Contact form emails will be sent to:', process.env.EMAIL_USER);
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error('❌ Nodemailer connection failed:', error);
+    console.error('💡 Please check your EMAIL_USER and EMAIL_APP_PASSWORD environment variables');
+    return false;
+  }
+};
+
+// Send email function
+const sendContactEmail = async (formData: ContactFormData): Promise<boolean> => {
+  if (!transporter) {
+    console.error('❌ Nodemailer not initialized');
+    return false;
+  }
+
+  try {
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_USER, // Send to your own email
+      subject: `Portfolio Contact: ${formData.subject}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px;">
+            New Contact Form Submission
+          </h2>
+          
+          <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <p><strong>Name:</strong> ${formData.name}</p>
+            <p><strong>Email:</strong> ${formData.email}</p>
+            <p><strong>Subject:</strong> ${formData.subject}</p>
+            <p><strong>Date:</strong> ${new Date(formData.date).toLocaleString()}</p>
+          </div>
+          
+          <div style="background: white; padding: 20px; border-left: 4px solid #007bff; margin: 20px 0;">
+            <h3 style="color: #333; margin-top: 0;">Message:</h3>
+            <p style="line-height: 1.6; color: #555;">${formData.message}</p>
+          </div>
+          
+          <div style="border-top: 1px solid #eee; padding-top: 20px; margin-top: 30px;">
+            <p style="color: #888; font-size: 12px;">
+              This email was sent from your portfolio contact form.
+            </p>
+          </div>
+        </div>
+      `,
+      // Also include plain text version
+      text: `
+New Contact Form Submission
+
+Name: ${formData.name}
+Email: ${formData.email}
+Subject: ${formData.subject}
+Date: ${new Date(formData.date).toLocaleString()}
+
+Message:
+${formData.message}
+
+---
+This email was sent from your portfolio contact form.
+      `
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log('✅ Contact email sent successfully');
+    return true;
+  } catch (error) {
+    console.error('❌ Failed to send contact email:', error);
+    return false;
+  }
+};
 
 // Interface for contact form data
 interface ContactFormData {
@@ -59,6 +156,24 @@ const saveContactFormData = (formData: ContactFormData): Promise<void> => {
 };
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Initialize nodemailer on startup
+  const nodemailerReady = await initializeNodemailer();
+  
+  if (nodemailerReady) {
+    console.log('🚀 Email service initialized successfully');
+  } else {
+    console.log('⚠️ Email service failed to initialize - falling back to JSON storage');
+  }
+
+  // Test endpoint to check nodemailer status
+  app.get("/api/email-status", (req, res) => {
+    res.json({
+      nodemailerReady: transporter !== null,
+      emailUser: process.env.EMAIL_USER || 'Not configured',
+      timestamp: new Date().toISOString()
+    });
+  });
+
   // Contact form endpoint
   app.post("/api/contact", async (req, res) => {
     try {
@@ -71,27 +186,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
         date: new Date().toISOString()
       };
       
-      // Save to JSON file
-      await saveContactFormData(formData);
+      // Try to send email first
+      const emailSent = await sendContactEmail(formData);
       
-      // Return success response
-      res.status(200).json({ 
-        success: true, 
-        message: "Message received and saved successfully" 
-      });
+      if (emailSent) {
+        // Also save to JSON file as backup
+        try {
+          await saveContactFormData(formData);
+          console.log('📁 Contact form data also saved to JSON backup');
+        } catch (backupError) {
+          console.warn('⚠️ Failed to save backup, but email was sent successfully');
+        }
+        
+        // Return success response
+        res.status(200).json({ 
+          success: true, 
+          message: "Message sent successfully! I'll get back to you soon." 
+        });
+      } else {
+        // Fallback to JSON storage if email fails
+        await saveContactFormData(formData);
+        res.status(200).json({ 
+          success: true, 
+          message: "Message received and saved. I'll check it soon!" 
+        });
+      }
     } catch (error) {
       if (error instanceof z.ZodError) {
         return res.status(400).json({ 
           success: false, 
-          message: "Validation error", 
+          message: "Please check your form fields", 
           errors: error.errors 
         });
       }
       
-      console.error('Contact form submission error:', error);
+      console.error('❌ Contact form submission error:', error);
       res.status(500).json({ 
         success: false, 
-        message: "Server error" 
+        message: "Something went wrong. Please try again later." 
       });
     }
   });
