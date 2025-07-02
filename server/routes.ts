@@ -35,7 +35,7 @@ const initializeNodemailer = async () => {
       console.log('🔍 Verifying SMTP connection...');
       await transporter.verify();
       console.log('✅ Nodemailer is ready and connected to Gmail');
-      console.log('📬 Contact form emails will be sent to:', process.env.EMAIL_USER);
+      console.log('📬 Contact form emails will be sent to: diatech.ecotechsolutions@gmail.com');
       return true;
     }
     return false;
@@ -55,8 +55,8 @@ const sendContactEmail = async (formData: ContactFormData): Promise<boolean> => 
 
   try {
     const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER, // Send to your own email
+      from: 'diatech.ecotechsolutions@gmail.com',
+      to: 'diatech.ecotechsolutions@gmail.com', // Send to your own email
       subject: `Portfolio Contact: ${formData.subject}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
