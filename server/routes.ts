@@ -21,12 +21,12 @@ const initializeNodemailer = async () => {
     console.log('🔧 Initializing nodemailer with Gmail...');
     console.log('📧 Email user:', process.env.EMAIL_USER ? 'Configured' : 'Not configured');
     console.log('🔑 App password:', process.env.EMAIL_APP_PASSWORD ? 'Configured' : 'Not configured');
-    
+
     transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_APP_PASSWORD
+        user: 'diatech.ecotechsolutions@gmail.com',
+        pass: 'qmofwmptlnfimurv'
       }
     });
 
@@ -63,19 +63,19 @@ const sendContactEmail = async (formData: ContactFormData): Promise<boolean> => 
           <h2 style="color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px;">
             New Contact Form Submission
           </h2>
-          
+
           <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <p><strong>Name:</strong> ${formData.name}</p>
             <p><strong>Email:</strong> ${formData.email}</p>
             <p><strong>Subject:</strong> ${formData.subject}</p>
             <p><strong>Date:</strong> ${new Date(formData.date).toLocaleString()}</p>
           </div>
-          
+
           <div style="background: white; padding: 20px; border-left: 4px solid #007bff; margin: 20px 0;">
             <h3 style="color: #333; margin-top: 0;">Message:</h3>
             <p style="line-height: 1.6; color: #555;">${formData.message}</p>
           </div>
-          
+
           <div style="border-top: 1px solid #eee; padding-top: 20px; margin-top: 30px;">
             <p style="color: #888; font-size: 12px;">
               This email was sent from your portfolio contact form.
@@ -121,11 +121,11 @@ interface ContactFormData {
 // Helper function to save contact form data to a JSON file
 const saveContactFormData = (formData: ContactFormData): Promise<void> => {
   const contactsFilePath = path.join(process.cwd(), 'contact-submissions.json');
-  
+
   return new Promise((resolve, reject) => {
     // Check if file exists already
     let existingData: ContactFormData[] = [];
-    
+
     if (fs.existsSync(contactsFilePath)) {
       try {
         const fileContent = fs.readFileSync(contactsFilePath, 'utf8');
@@ -134,10 +134,10 @@ const saveContactFormData = (formData: ContactFormData): Promise<void> => {
         console.error('Error reading contacts file:', error);
       }
     }
-    
+
     // Add new submission
     existingData.push(formData);
-    
+
     // Write back to file
     fs.writeFile(
       contactsFilePath,
@@ -158,7 +158,7 @@ const saveContactFormData = (formData: ContactFormData): Promise<void> => {
 export async function registerRoutes(app: Express): Promise<Server> {
   // Initialize nodemailer on startup
   const nodemailerReady = await initializeNodemailer();
-  
+
   if (nodemailerReady) {
     console.log('🚀 Email service initialized successfully');
   } else {
@@ -179,16 +179,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       // Validate the incoming request
       const validatedData = contactSchema.parse(req.body);
-      
+
       // Format data with timestamp
       const formData: ContactFormData = {
         ...validatedData,
         date: new Date().toISOString()
       };
-      
+
       // Try to send email first
       const emailSent = await sendContactEmail(formData);
-      
+
       if (emailSent) {
         // Also save to JSON file as backup
         try {
@@ -197,7 +197,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         } catch (backupError) {
           console.warn('⚠️ Failed to save backup, but email was sent successfully');
         }
-        
+
         // Return success response
         res.status(200).json({ 
           success: true, 
@@ -219,7 +219,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           errors: error.errors 
         });
       }
-      
+
       console.error('❌ Contact form submission error:', error);
       res.status(500).json({ 
         success: false, 
