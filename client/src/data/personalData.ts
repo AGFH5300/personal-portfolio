@@ -45,64 +45,72 @@ export const personalData = {
       name: "World Scholars Cup",
       position: "Scholar",
       date: "Apr 2025",
-      description: "Won multiple awards including Trophy as 4th place Scholars Bowl Team and Silver Medal for 22nd place in Challenge-History.",
-      achievements: ["4th Place Scholars Bowl Team", "Silver Medal - 22nd Place Challenge-History"]
+      description:
+        "Won multiple awards including Trophy as 4th place Scholars Bowl Team and Silver Medal for 22nd place in Challenge-History.",
+      achievements: [
+        "4th Place Scholars Bowl Team",
+        "Silver Medal - 22nd Place Challenge - History",
+      ],
     },
     {
       name: "AUS School Computing Competition (ASCC-2025)",
       position: "Python Developer",
       date: "Apr 2025",
-      description: "Created a python script to sort, grab and graph data from a dataset with team members Ayyukta Ankam.",
-      achievements: ["Python Data Analysis Project"]
+      description:
+        "Created a python script to sort, grab and graph data from a dataset with team members Ayyukta Ankam.",
+      achievements: ["Python Data Analysis Project"],
     },
     {
       name: "DIAMathletes January 2025 Competition",
       position: "Competitor",
       date: "Jan 2025",
-      description: "Won 1st place solving multiple math problems as a team with Vihaan Deshpande, Lavitra Dhoot and Ayyukta Ankam.",
-      achievements: ["1st Place Winner"]
+      description:
+        "Won 1st place solving multiple math problems as a team with Vihaan Deshpande, Lavitra Dhoot and Ayyukta Ankam.",
+      achievements: ["1st Place Winner"],
     },
     {
       name: "DIA Game Jam Competition",
       position: "Game Developer",
       date: "Mar-Apr 2025",
       description: "Created an idle clicker game which won the competition.",
-      achievements: ["Winner - Game Development"]
+      achievements: ["Winner - Game Development"],
     },
     {
       name: "Annual Business Minds Case Study Competition",
-      position: "Competitor", 
+      position: "Competitor",
       date: "Apr 2025",
-      description: "Won 2nd place with peers Alman Bazaz and Ayyukta Ankam in business case study analysis.",
-      achievements: ["2nd Place Winner"]
+      description:
+        "Won 2nd place with peers Alman Bazaz and Ayyukta Ankam in business case study analysis.",
+      achievements: ["2nd Place Winner"],
     },
     {
       name: "DIAMWEF 2025",
       position: "Delegate",
       date: "May 2025 - Present",
       description: "Participating as a delegate in DIAMWEF 2025.",
-      achievements: ["Active Delegate"]
+      achievements: ["Active Delegate"],
     },
     {
       name: "EISJMUN 2025",
       position: "Delegate",
       date: "Jun 2025",
-      description: "Participating in EISJMUN 2025 as a delegate.",
-      achievements: ["Model UN Delegate"]
+      description: "Participated in EISJMUN 2025 and got a verbal mention as the Delegate of Guatemala in the UNODC committee.",
+      achievements: ["Model UN Delegate", "Verbal Mention"],
     },
     {
       name: "DIAMEC 2025",
       position: "Delegate",
       date: "Mar 2025",
-      description: "Won Best Collaborator in the competition with peers Alman Bazaz and Ayyukta Ankam.",
-      achievements: ["Best Collaborator Award", "1st Place Team Award"]
-    }
+      description:
+        "Won Best Collaborator in the competition with peers Alman Bazaz and Ayyukta Ankam.",
+      achievements: ["Best Collaborator Award", "1st Place Team Award"],
+    },
   ],
 
   experience: [
     {
       position: "Web Developer",
-      company: "Self Taught"
+      company: "Self Taught",
     },
   ],
 
@@ -139,28 +147,28 @@ export const personalData = {
   languages: [
     {
       name: "English",
-      proficiency: "Native or bilingual proficiency"
+      proficiency: "Native or bilingual proficiency",
     },
     {
-      name: "Hindi", 
-      proficiency: "Native or bilingual proficiency"
+      name: "Hindi",
+      proficiency: "Native or bilingual proficiency",
     },
     {
       name: "Chinese",
-      proficiency: "Professional working proficiency"
+      proficiency: "Professional working proficiency",
     },
     {
       name: "Arabic",
-      proficiency: "Limited working proficiency"
+      proficiency: "Limited working proficiency",
     },
     {
       name: "French",
-      proficiency: "Limited working proficiency"
+      proficiency: "Limited working proficiency",
     },
     {
       name: "German",
-      proficiency: "Elementary proficiency"
-    }
+      proficiency: "Elementary proficiency",
+    },
   ],
 
   certifications: [
@@ -174,7 +182,7 @@ export const personalData = {
       name: "Udemy 100 Days of Code: The Complete Python Pro Bootcamp",
       issuer: "Udemy",
       issueDate: "2025",
-      image: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
+      image: "",
     },
     {
       name: "HSK Level 1",
@@ -204,18 +212,17 @@ export const personalData = {
       responsibilities: [
         "Manage club's media presence and content creation",
         "Create promotional materials for club events",
-        "Coordinate media strategy for economics-related activities",
         "Collaborate with other team members on club initiatives",
       ],
     },
     {
-      name: "Enterprise and Entrepreneurship", 
+      name: "Enterprise and Entrepreneurship",
       role: "Head",
       period: "2022 - 2023",
       responsibilities: [
         "Create entrepreneurial events for the school students",
         "Manage leadership roles across the school in events",
-        "Create promotional materials for events"
+        "Create promotional materials for events",
       ],
     },
   ],
@@ -244,7 +251,7 @@ export const personalData = {
     },
     {
       organization: "Tata Cancer Hospital",
-      role: "Volunteer", 
+      role: "Volunteer",
       period: "Jul 01, 2024",
       description:
         "Repeated donation of food and snacks to the patients at Tata Cancer Hospital. The goal was to provide continued support and upliftment for cancer patients undergoing treatment, offering continued comfort and support to cancer patients and their families.",
