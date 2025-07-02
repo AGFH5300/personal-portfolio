@@ -1,9 +1,33 @@
 import { motion } from "framer-motion";
 import { personalData } from "@/data/personalData";
-import { Briefcase, GraduationCap, Trophy } from "lucide-react";
+import { Briefcase, GraduationCap, Trophy, Loader2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { useState } from "react";
 
 export default function AboutSection() {
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownloadCV = async () => {
+    setIsDownloading(true);
+    try {
+      // Create a temporary link element to trigger download
+      const link = document.createElement('a');
+      link.href = "https://drive.google.com/uc?export=download&id=1-wF2e6ZWHwvQfFtEm-yRt5THF-PreaFP";
+      link.target = "_blank";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Keep loading state for a bit to show feedback
+      setTimeout(() => {
+        setIsDownloading(false);
+      }, 2000);
+    } catch (error) {
+      console.error('Download failed:', error);
+      setIsDownloading(false);
+    }
+  };
+
   return (
     <section className="py-16 bg-light">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -100,24 +124,29 @@ export default function AboutSection() {
             </div>
 
             <div className="flex justify-center mt-8">
-              <a
-                href="https://drive.google.com/uc?export=download&id=1-wF2e6ZWHwvQfFtEm-yRt5THF-PreaFP"
-                className="inline-flex items-center text-primary hover:text-black transition-colors duration-300"
+              <button
+                onClick={handleDownloadCV}
+                disabled={isDownloading}
+                className="inline-flex items-center text-primary hover:text-black transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <span>Download CV</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 ml-2"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </a>
+                <span>{isDownloading ? "Downloading..." : "Download CV"}</span>
+                {isDownloading ? (
+                  <Loader2 className="h-4 w-4 ml-2 animate-spin" />
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 ml-2"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                )}
+              </button>
             </div>
           </motion.div>
         </div>
