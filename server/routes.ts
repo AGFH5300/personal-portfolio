@@ -18,9 +18,6 @@ let transporter: nodemailer.Transporter | null = null;
 
 const initializeNodemailer = async () => {
   try {
-    console.log('🔧 Initializing nodemailer with Gmail...');
-    console.log('📧 Email user:', process.env.EMAIL_USER ? 'Configured' : 'Not configured');
-    console.log('🔑 App password:', process.env.EMAIL_APP_PASSWORD ? 'Configured' : 'Not configured');
 
     transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -32,10 +29,8 @@ const initializeNodemailer = async () => {
 
     // Verify connection
     if (transporter) {
-      console.log('🔍 Verifying SMTP connection...');
       await transporter.verify();
       console.log('✅ Nodemailer is ready and connected to Gmail');
-      console.log('📬 Contact form emails will be sent to: diatech.ecotechsolutions@gmail.com');
       return true;
     }
     return false;

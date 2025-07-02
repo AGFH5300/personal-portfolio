@@ -101,7 +101,7 @@ export default function AboutSection() {
 
             <div className="flex justify-center mt-8">
               <a
-                // href="https://drive.google.com/uc?export=download&id=<id>"
+                href="https://drive.google.com/uc?export=download&id=1-wF2e6ZWHwvQfFtEm-yRt5THF-PreaFP"
                 className="inline-flex items-center text-primary hover:text-black transition-colors duration-300"
               >
                 <span>Download CV</span>
