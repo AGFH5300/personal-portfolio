@@ -98,7 +98,7 @@ export default function ProjectsSection() {
                   transformOrigin: '0 0'
                 }}>
               </div>
-              
+
               {/* Top-right to bottom-left tape */}
               <div 
                 className="absolute h-8 shadow-lg"
@@ -128,11 +128,11 @@ export default function ProjectsSection() {
                   <Code2 className="text-primary" size={32} />
                 </div>
               </div>
-              
+
               <h3 className="text-2xl font-bold text-dark mb-4">
                 My Coding Learning Journey
               </h3>
-              
+
               <p className="text-gray-600 mb-6 max-w-2xl mx-auto text-lg">
                 Explore my complete collection of Python projects, web applications, and coding projects created while learning and exploring different programming languages and technologies.
               </p>
@@ -158,7 +158,7 @@ export default function ProjectsSection() {
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
-              
+
               <p className="text-xs text-gray-500 mt-4">
                 Includes projects from Harvard CS50, Udemy courses, and personal projects
               </p>
