@@ -19,16 +19,16 @@ let transporter: nodemailer.Transporter | null = null;
 const initializeNodemailer = async () => {
   try {
     // Check if environment variables are set
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_APP_PASSWORD) {
-      console.error('❌ EMAIL_USER and EMAIL_APP_PASSWORD must be set in environment variables');
+    if (!process.env.EMAIL || !process.env.EMAIL_PSWD) {
+      console.error('❌ EMAIL_USER and EMAIL_PSWD must be set in environment variables');
       return false;
     }
 
     transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_APP_PASSWORD
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PSWD
       }
     });
 
@@ -41,7 +41,8 @@ const initializeNodemailer = async () => {
     return false;
   } catch (error) {
     console.error('❌ Nodemailer connection failed:', error);
-    console.error('💡 Please check your EMAIL_USER and EMAIL_APP_PASSWORD environment variables');
+    console.error('💡 Please check your EMAIL_USER and EMAIL_PSWD environment variables');
+    console.log(process.env.EMAIL_PSWD)
     return false;
   }
 };
@@ -169,7 +170,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/email-status", (req, res) => {
     res.json({
       nodemailerReady: transporter !== null,
-      emailUser: process.env.EMAIL_USER || 'Not configured',
+      emailUser: process.env.EMAIL || 'Not configured',
       timestamp: new Date().toISOString()
     });
   });
