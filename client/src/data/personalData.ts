@@ -188,7 +188,7 @@ export const personalData = {
       name: "HSK Level 1",
       issuer: "Chinese Proficiency Test",
       issueDate: "Score: 195/200 - Jan 2020",
-      image: "https://i.postimg.cc/T38g93qz/hsk-1.jpg",
+      image: "",
     },
     {
       name: "HSK Level 2",
