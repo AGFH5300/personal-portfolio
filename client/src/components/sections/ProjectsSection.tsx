@@ -85,26 +85,35 @@ export default function ProjectsSection() {
           <Card className="relative bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20 max-w-4xl mx-auto overflow-hidden">
             {/* Construction Tape X */}
             <div className="absolute inset-0 z-10 pointer-events-none">
-              {/* First diagonal tape stripe */}
+              {/* Top-left to bottom-right tape */}
               <div 
-                className="absolute top-0 left-0 h-16 transform rotate-45 origin-left shadow-lg"
+                className="absolute top-0 left-0 h-8 shadow-lg"
                 style={{
-                  width: '140%',
-                  backgroundImage: 'repeating-linear-gradient(90deg, #000 0px, #000 30px, #fbbf24 30px, #fbbf24 60px)',
-                  backgroundSize: '60px 100%',
-                  transform: 'rotate(45deg) translateY(200px)'
+                  width: '141.42%', // diagonal length for square
+                  backgroundImage: 'repeating-linear-gradient(90deg, #000 0px, #000 20px, #fbbf24 20px, #fbbf24 40px)',
+                  backgroundSize: '40px 100%',
+                  transform: 'rotate(45deg)',
+                  transformOrigin: '0 50%'
                 }}>
               </div>
               
-              {/* Second diagonal tape stripe */}
+              {/* Top-right to bottom-left tape */}
               <div 
-                className="absolute top-0 right-0 h-16 transform -rotate-45 origin-right shadow-lg"
+                className="absolute top-0 right-0 h-8 shadow-lg"
                 style={{
-                  width: '140%',
-                  backgroundImage: 'repeating-linear-gradient(90deg, #000 0px, #000 30px, #fbbf24 30px, #fbbf24 60px)',
-                  backgroundSize: '60px 100%',
-                  transform: 'rotate(-45deg) translateY(200px) translateX(100px)'
+                  width: '141.42%', // diagonal length for square
+                  backgroundImage: 'repeating-linear-gradient(90deg, #000 0px, #000 20px, #fbbf24 20px, #fbbf24 40px)',
+                  backgroundSize: '40px 100%',
+                  transform: 'rotate(-45deg)',
+                  transformOrigin: '100% 50%'
                 }}>
+              </div>
+
+              {/* Construction text on tape */}
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-400 border-2 border-black px-4 py-2 rounded shadow-lg">
+                <div className="text-black font-bold text-sm uppercase tracking-wide">
+                  Under Construction
+                </div>
               </div>
             </div>
 
