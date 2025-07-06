@@ -95,7 +95,7 @@ export default function ProjectsSection() {
               </h3>
               
               <p className="text-gray-600 mb-6 max-w-2xl mx-auto text-lg">
-                Explore my complete collection of Python projects, web applications, and coding experiments created while learning and exploring different programming languages and technologies.
+                Explore my complete collection of Python projects, web applications, and coding projects created while learning and exploring different programming languages and technologies.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -121,7 +121,7 @@ export default function ProjectsSection() {
               </Link>
               
               <p className="text-xs text-gray-500 mt-4">
-                Includes projects from Harvard CS50, Udemy courses, and personal experiments
+                Includes projects from Harvard CS50, Udemy courses, and personal projects
               </p>
             </CardContent>
           </Card>
