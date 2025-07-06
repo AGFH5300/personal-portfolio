@@ -87,25 +87,29 @@ export default function ProjectsSection() {
             <div className="absolute inset-0 z-10 pointer-events-none">
               {/* Top-left to bottom-right tape */}
               <div 
-                className="absolute top-0 left-0 h-8 shadow-lg"
+                className="absolute h-8 shadow-lg"
                 style={{
-                  width: '141.42%', // diagonal length for square
+                  top: '0',
+                  left: '0',
+                  width: '141.42%',
                   backgroundImage: 'repeating-linear-gradient(90deg, #000 0px, #000 20px, #fbbf24 20px, #fbbf24 40px)',
                   backgroundSize: '40px 100%',
                   transform: 'rotate(45deg)',
-                  transformOrigin: '0 50%'
+                  transformOrigin: '0 0'
                 }}>
               </div>
               
               {/* Top-right to bottom-left tape */}
               <div 
-                className="absolute top-0 right-0 h-8 shadow-lg"
+                className="absolute h-8 shadow-lg"
                 style={{
-                  width: '141.42%', // diagonal length for square
+                  top: '0',
+                  right: '0',
+                  width: '141.42%',
                   backgroundImage: 'repeating-linear-gradient(90deg, #000 0px, #000 20px, #fbbf24 20px, #fbbf24 40px)',
                   backgroundSize: '40px 100%',
                   transform: 'rotate(-45deg)',
-                  transformOrigin: '100% 50%'
+                  transformOrigin: '100% 0'
                 }}>
               </div>
 
