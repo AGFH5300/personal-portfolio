@@ -20,7 +20,7 @@ const initializeNodemailer = async () => {
   try {
     // Check if environment variables are set
     if (!process.env.EMAIL || !process.env.EMAIL_PSWD) {
-      console.error('❌ EMAIL_USER and EMAIL_PSWD must be set in environment variables');
+      console.error('❌ EMAIL and EMAIL_PSWD must be set in environment variables');
       return false;
     }
 
@@ -41,7 +41,7 @@ const initializeNodemailer = async () => {
     return false;
   } catch (error) {
     console.error('❌ Nodemailer connection failed:', error);
-    console.error('💡 Please check your EMAIL_USER and EMAIL_PSWD environment variables');
+    console.error('💡 Please check your EMAIL and EMAIL_PSWD environment variables');
     console.log(process.env.EMAIL_PSWD)
     return false;
   }

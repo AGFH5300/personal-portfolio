@@ -176,7 +176,7 @@ export const personalData = {
       name: "CS50 Harvard Course",
       issuer: "Harvard University",
       issueDate: "Jun 2025",
-      image: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
+      image: "",
     },
     {
       name: "Udemy 100 Days of Code: The Complete Python Pro Bootcamp",
@@ -194,13 +194,13 @@ export const personalData = {
       name: "HSK Level 2",
       issuer: "Chinese Proficiency Test",
       issueDate: "Score: 195/200",
-      image: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
+      image: "",
     },
     {
       name: "HSK Level 3",
       issuer: "Chinese Proficiency Test",
       issueDate: "Score: 280/300 - Sep 2024",
-      image: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
+      image: "",
     },
   ],
 

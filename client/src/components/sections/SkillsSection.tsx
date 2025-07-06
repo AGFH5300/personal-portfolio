@@ -147,22 +147,24 @@ export default function SkillsSection() {
                   <p className="text-sm text-gray-600 mb-3">{cert.issuer}</p>
                   <p className="text-sm text-gray-700 mb-3">{cert.issueDate}</p>
                 </div>
-                <div
-                  className="relative overflow-hidden cursor-pointer"
-                  style={{ height: "200px" }}
-                  onClick={() => setSelectedCertificate(cert)}
-                >
-                  <div className="absolute inset-0 bg-black/5 hover:bg-black/20 transition-colors flex items-center justify-center">
-                    <span className="bg-white/90 text-primary text-xs px-2 py-1 rounded">
-                      View Certificate
-                    </span>
+                {cert.image && (
+                  <div
+                    className="relative overflow-hidden cursor-pointer"
+                    style={{ height: "200px" }}
+                    onClick={() => setSelectedCertificate({ image: cert.image, name: cert.name })}
+                  >
+                    <div className="absolute inset-0 bg-black/5 hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <span className="bg-white/90 text-primary text-xs px-2 py-1 rounded">
+                        View Certificate
+                      </span>
+                    </div>
+                    <img
+                      src={cert.image}
+                      alt={cert.name}
+                      className="w-full h-full object-cover object-top"
+                    />
                   </div>
-                  <img
-                    src={cert.image}
-                    alt={cert.name}
-                    className="w-full h-full object-cover object-top"
-                  />
-                </div>
+                )}
               </motion.div>
             ))}
           </div>
