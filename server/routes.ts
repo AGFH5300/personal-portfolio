@@ -18,12 +18,17 @@ let transporter: nodemailer.Transporter | null = null;
 
 const initializeNodemailer = async () => {
   try {
+    // Check if environment variables are set
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_APP_PASSWORD) {
+      console.error('❌ EMAIL_USER and EMAIL_APP_PASSWORD must be set in environment variables');
+      return false;
+    }
 
     transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'diatech.ecotechsolutions@gmail.com',
-        pass: 'qmofwmptlnfimurv'
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_APP_PASSWORD
       }
     });
 
