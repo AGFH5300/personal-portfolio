@@ -102,7 +102,7 @@ export const personalData = {
       position: "Delegate",
       date: "Mar 2025",
       description:
-        "Won Best Collaborator in the competition with peers Alman Bazaz and Avyukta Ankam.",
+        "Won Best Collaborator in the competition and won 1st place as team with peers Alman Bazaz and Avyukta Ankam.",
       achievements: ["Best Collaborator Award", "1st Place Team Award"],
     },
   ],
