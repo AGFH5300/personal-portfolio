@@ -152,7 +152,7 @@ export default function ProjectsSection() {
                 </div>
               </div>
 
-              <Link href="/all-projects">
+              <Link href="">
                 <Button size="lg" className="group cursor-not-allowed opacity-60" disabled>
                   View All My Projects
                   <ArrowRight className="ml-2 h-4 w-4" />
