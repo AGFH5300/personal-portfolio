@@ -5,6 +5,7 @@ import { z } from "zod";
 import fs from "fs";
 import path from "path";
 import nodemailer from "nodemailer";
+import { spawn } from "child_process";
 
 const contactSchema = z.object({
   name: z.string().min(2),
@@ -120,6 +121,9 @@ interface ContactFormData {
 }
 
 // Helper function to save contact form data to a JSON file
+// Store running Python processes
+const runningProcesses = new Map<string, any>();
+
 const saveContactFormData = (formData: ContactFormData): Promise<void> => {
   const contactsFilePath = path.join(process.cwd(), 'contact-submissions.json');
 
@@ -170,9 +174,85 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/email-status", (req, res) => {
     res.json({
       nodemailerReady: transporter !== null,
-      emailUser: process.env.EMAIL || 'Not configured',
+      emailUser: process.env.EMAIL_USER || 'Not configured',
       timestamp: new Date().toISOString()
     });
+  });
+
+  // Python project execution endpoint
+  app.post("/api/run-python/:projectId", (req, res) => {
+    const { projectId } = req.params;
+    const projectPath = path.join(__dirname, 'python-projects', `${projectId}.py`);
+    
+    // Check if project file exists
+    if (!fs.existsSync(projectPath)) {
+      return res.status(404).json({ error: 'Project not found' });
+    }
+
+    // Set up streaming response
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+
+    // Spawn Python process
+    const pythonProcess = spawn('python3', [projectPath], {
+      stdio: ['pipe', 'pipe', 'pipe']
+    });
+
+    // Store process for input handling
+    runningProcesses.set(projectId, pythonProcess);
+
+    // Handle stdout
+    pythonProcess.stdout.on('data', (data) => {
+      const output = data.toString();
+      res.write(JSON.stringify({ type: 'output', content: output }) + '\n');
+    });
+
+    // Handle stderr
+    pythonProcess.stderr.on('data', (data) => {
+      const error = data.toString();
+      res.write(JSON.stringify({ type: 'error', content: error }) + '\n');
+    });
+
+    // Handle process completion
+    pythonProcess.on('close', (code) => {
+      res.write(JSON.stringify({ type: 'complete', code }) + '\n');
+      res.end();
+      runningProcesses.delete(projectId);
+    });
+
+    // Handle process errors
+    pythonProcess.on('error', (error) => {
+      res.write(JSON.stringify({ type: 'error', content: error.message }) + '\n');
+      res.end();
+      runningProcesses.delete(projectId);
+    });
+
+    // Clean up on client disconnect
+    req.on('close', () => {
+      if (runningProcesses.has(projectId)) {
+        pythonProcess.kill();
+        runningProcesses.delete(projectId);
+      }
+    });
+  });
+
+  // Handle Python input
+  app.post("/api/python-input/:projectId", (req, res) => {
+    const { projectId } = req.params;
+    const { input } = req.body;
+
+    const process = runningProcesses.get(projectId);
+    if (!process) {
+      return res.status(404).json({ error: 'No running process found' });
+    }
+
+    try {
+      process.stdin.write(input + '\n');
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to send input' });
+    }
   });
 
   // Contact form endpoint

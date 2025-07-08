@@ -14,7 +14,7 @@ export default function NotFound() {
           </div>
 
           <p className="mt-4 text-sm text-gray-600">
-            Did you forget to add the page to the router?
+            The URL may be incorrect or the page may have been moved. <br></br> Please check the URL and try again.
           </p>
           
           <div className="mt-6">
