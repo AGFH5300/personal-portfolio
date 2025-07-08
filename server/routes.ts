@@ -243,9 +243,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const response = JSON.stringify({ type: 'complete', code });
       console.log(`🐍 [RESPONSE] Sending complete: ${response}`);
       res.write(response + '\n');
-      res.end();
-      runningProcesses.delete(projectId);
-      console.log(`🐍 [DEBUG] Process ${projectId} removed from runningProcesses`);
+      
+      // Don't end the response immediately - keep connection alive for potential input
+      setTimeout(() => {
+        if (!res.headersSent) {
+          res.end();
+        }
+        runningProcesses.delete(projectId);
+        console.log(`🐍 [DEBUG] Process ${projectId} removed from runningProcesses after delay`);
+      }, 5000);
     });
 
     // Handle process errors
@@ -258,7 +264,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       runningProcesses.delete(projectId);
     });
 
-    // Clean up on client disconnect - but only after a delay to prevent immediate killing
+    // Clean up on client disconnect - but only after a longer delay to prevent immediate killing
     req.on('close', () => {
       console.log(`🐍 [DEBUG] Client disconnected for ${projectId}`);
       setTimeout(() => {
@@ -267,7 +273,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           pythonProcess.kill();
           runningProcesses.delete(projectId);
         }
-      }, 1000); // 1 second delay
+      }, 10000); // 10 second delay to allow for proper interaction
     });
   });
 

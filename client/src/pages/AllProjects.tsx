@@ -76,16 +76,13 @@ export default function AllProjects() {
     try {
       console.log(`🌐 [DEBUG] Making fetch request to /api/run-code/${projectId}`);
       
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
-      
       const response = await fetch(`/api/run-code/${projectId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        signal: controller.signal
+        headers: { 
+          'Content-Type': 'application/json',
+          'Connection': 'keep-alive'
+        }
       });
-
-      clearTimeout(timeoutId);
       console.log(`🌐 [DEBUG] Response status: ${response.status}`);
 
       if (!response.ok) {
@@ -130,8 +127,11 @@ export default function AllProjects() {
               
               if (data.type === 'complete') {
                 console.log(`🌐 [DEBUG] Process complete for ${projectId}`);
-                updateProjectState(projectId, { isRunning: false });
-              } else if (data.type === 'output' && (data.content.includes('Enter') || data.content.includes(':'))) {
+                // Don't immediately stop running - keep terminal open for potential restarts
+                setTimeout(() => {
+                  updateProjectState(projectId, { isRunning: false });
+                }, 2000);
+              } else if (data.type === 'output' && (data.content.includes('Enter') || data.content.includes(':') || data.content.includes('?'))) {
                 console.log(`🌐 [DEBUG] Waiting for input detected for ${projectId}`);
                 updateProjectState(projectId, { waitingForInput: true });
               }
@@ -292,16 +292,25 @@ export default function AllProjects() {
                 </Button>
               </div>
               
-              <div className="bg-gray-900 p-4 h-96 overflow-y-auto font-mono text-sm text-green-400">
-                {getProjectState(activeTerminal).output.map((output, idx) => (
-                  <div key={idx} className={`whitespace-pre-wrap ${
-                    output.type === 'error' ? 'text-red-400' : 
-                    output.type === 'input' ? 'text-blue-400' :
-                    'text-green-400'
-                  }`}>
-                    {output.content}
-                  </div>
-                ))}
+              <div 
+                ref={(el) => {
+                  if (el && activeTerminal) terminalRefs.current[activeTerminal] = el;
+                }}
+                className="bg-gray-900 p-4 h-96 overflow-y-auto font-mono text-sm text-green-400"
+              >
+                {getProjectState(activeTerminal).output.length === 0 ? (
+                  <div className="text-gray-500">Initializing project...</div>
+                ) : (
+                  getProjectState(activeTerminal).output.map((output, idx) => (
+                    <div key={idx} className={`whitespace-pre-wrap ${
+                      output.type === 'error' ? 'text-red-400' : 
+                      output.type === 'input' ? 'text-blue-400' :
+                      'text-green-400'
+                    }`}>
+                      {output.content}
+                    </div>
+                  ))
+                )}
               </div>
               
               {getProjectState(activeTerminal).waitingForInput && (
