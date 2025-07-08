@@ -188,17 +188,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/run-code/:projectId", (req, res) => {
     const { projectId } = req.params;
     console.log(`🐍 [DEBUG] Starting execution for project: ${projectId}`);
-    
+
     const projectPath = path.join(__dirname, 'code-projects', `${projectId}.py`);
     console.log(`🐍 [DEBUG] Project path: ${projectPath}`);
     console.log(`🐍 [DEBUG] __dirname: ${__dirname}`);
-    
+
     // Check if project file exists
     if (!fs.existsSync(projectPath)) {
       console.log(`🐍 [ERROR] Project file not found: ${projectPath}`);
       return res.status(404).json({ error: 'Project not found' });
     }
-    
+
     console.log(`🐍 [DEBUG] Project file exists, setting up streaming...`);
 
     // Set up streaming response
@@ -207,7 +207,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.setHeader('Connection', 'keep-alive');
 
     console.log(`🐍 [DEBUG] Spawning Python process with: python3 ${projectPath}`);
-    
+
     // Spawn Python process
     const pythonProcess = spawn('python3', [projectPath], {
       stdio: ['pipe', 'pipe', 'pipe']
@@ -243,7 +243,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const response = JSON.stringify({ type: 'complete', code });
       console.log(`🐍 [RESPONSE] Sending complete: ${response}`);
       res.write(response + '\n');
-      
+
       // Don't end the response immediately - keep connection alive for potential input
       setTimeout(() => {
         if (!res.headersSent) {
@@ -281,7 +281,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/code-input/:projectId", (req, res) => {
     const { projectId } = req.params;
     const { input } = req.body;
-    
+
     console.log(`🐍 [INPUT] Received input for ${projectId}: "${input}"`);
 
     const process = runningProcesses.get(projectId);
@@ -292,7 +292,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
 
     console.log(`🐍 [DEBUG] Found process for ${projectId}, writing input...`);
-    
+
     try {
       process.stdin.write(input + '\n');
       console.log(`🐍 [INPUT] Successfully sent input to ${projectId}`);

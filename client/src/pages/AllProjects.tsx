@@ -60,15 +60,14 @@ export default function AllProjects() {
   const runProject = async (projectId: string) => {
     console.log(`🌐 [DEBUG] Starting project: ${projectId}`);
 
-    // Only clear output if this is a fresh start (no existing output)
-    const currentState = getProjectState(projectId);
-    const shouldClearOutput = currentState.output.length === 0;
+    // Show terminal immediately
+    setActiveTerminal(projectId);
+    setLocation(`/all#${projectId}`);
 
     updateProjectState(projectId, {
       isRunning: true,
-      output: shouldClearOutput ? [] : [...currentState.output, { type: 'output', content: '\n--- Restarting ---\n' }],
+      output: [{ type: 'output', content: `Starting ${projectId}...\n---\n` }],
       waitingForInput: false,
-      currentInput: "",
       showTerminal: true
     });
 
@@ -360,27 +359,28 @@ export default function AllProjects() {
                   <CardContent className="flex-1 flex flex-col">
                     <div className="flex items-center gap-2 mb-4">
                       <Badge variant="outline" className="text-xs">{project.language}</Badge>
-                      <Badge className={`text-xs ${getDifficultyColor(project.difficulty)}`}>
-                        {project.difficulty}
-                      </Badge>
+                      <Badge className={`text-xs ${getDifficultyColor(project.difficulty)}`}>{project.difficulty}</Badge>
+                      <Badge className={`text-xs ${getCategoryColor(project.category)}`}>{project.category}</Badge>
                     </div>
 
-                    <div className="mb-6">
-                      <Badge variant="secondary" className={`text-xs ${getCategoryColor(project.category)}`}>
-                        {project.category}
-                      </Badge>
-                    </div>
-
-                    <div className="mt-auto">
-                      <Button 
-                        className="w-full"
-                        onClick={() => runProject(project.id)}
-                        disabled={state.isRunning}
-                      >
-                        <Play className="h-4 w-4 mr-2" />
-                        {state.isRunning ? 'Running...' : 'Run Project'}
-                      </Button>
-                    </div>
+                    <Button
+                      onClick={() => runProject(project.id)}
+                      disabled={state.isRunning}
+                      className="mt-auto"
+                      variant="default"
+                    >
+                      {state.isRunning ? (
+                        <>
+                          <Square className="animate-pulse mr-2 h-4 w-4" />
+                          Running...
+                        </>
+                      ) : (
+                        <>
+                          <Play className="mr-2 h-4 w-4" />
+                          Run Project
+                        </>
+                      )}
+                    </Button>
                   </CardContent>
                 </Card>
               </motion.div>
