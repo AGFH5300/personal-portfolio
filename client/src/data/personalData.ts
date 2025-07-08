@@ -57,7 +57,7 @@ export const personalData = {
       position: "Python Developer",
       date: "Apr 2025",
       description:
-        "Created a python script to sort, grab and graph data from a dataset with team members Ayyukta Ankam.",
+        "Created a python script to sort, grab and graph data from a dataset with team members Avyukta Ankam.",
       achievements: ["Python Data Analysis Project"],
     },
     {
