@@ -188,25 +188,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/run-code/:projectId", (req, res) => {
     const { projectId } = req.params;
     console.log(`🐍 [DEBUG] Starting execution for project: ${projectId}`);
-
+    
     const projectPath = path.join(__dirname, 'code-projects', `${projectId}.py`);
     console.log(`🐍 [DEBUG] Project path: ${projectPath}`);
     console.log(`🐍 [DEBUG] __dirname: ${__dirname}`);
-
+    
     // Check if project file exists
     if (!fs.existsSync(projectPath)) {
       console.log(`🐍 [ERROR] Project file not found: ${projectPath}`);
       return res.status(404).json({ error: 'Project not found' });
     }
-
-    // Kill any existing process for this project
-    const existingProcess = runningProcesses.get(projectId);
-    if (existingProcess && !existingProcess.killed) {
-      console.log(`🐍 [DEBUG] Killing existing process for ${projectId}`);
-      existingProcess.kill('SIGTERM');
-      runningProcesses.delete(projectId);
-    }
-
+    
     console.log(`🐍 [DEBUG] Project file exists, setting up streaming...`);
 
     // Set up streaming response
@@ -215,20 +207,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.setHeader('Connection', 'keep-alive');
 
     console.log(`🐍 [DEBUG] Spawning Python process with: python3 ${projectPath}`);
-
-    // Spawn Python process with unbuffered output
-    const pythonProcess = spawn('python3', ['-u', projectPath], {
+    
+    // Spawn Python process
+    const pythonProcess = spawn('python3', [projectPath], {
       stdio: ['pipe', 'pipe', 'pipe']
     });
 
     console.log(`🐍 [DEBUG] Python process spawned with PID: ${pythonProcess.pid}`);
 
     // Store process for input handling
-    runningProcesses.set(projectId, {
-      process: pythonProcess,
-      isComplete: false,
-      startTime: Date.now()
-    });
+    runningProcesses.set(projectId, pythonProcess);
     console.log(`🐍 [DEBUG] Process stored in runningProcesses for project: ${projectId}`);
 
     // Handle stdout
@@ -237,33 +225,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log(`🐍 [STDOUT] ${projectId}: ${output.replace(/\n/g, '\\n')}`);
       const response = JSON.stringify({ type: 'output', content: output });
       console.log(`🐍 [RESPONSE] Sending: ${response}`);
-      
-      if (!res.headersSent) {
-        res.write(response + '\n');
-      }
-      
-      // Better input detection - look for common input patterns
-      const inputPatterns = [
-        /What's your name\?/i,
-        /Enter your name/i,
-        /Enter/i,
-        /Input/i,
-        /choice\?/i,
-        /:\s*$/,
-        /\?\s*$/,
-        />\s*$/,
-        /name\?\s*$/i
-      ];
-      
-      const needsInput = inputPatterns.some(pattern => pattern.test(output));
-      
-      if (needsInput) {
-        console.log(`🐍 [DEBUG] Input needed detected for ${projectId}`);
-        const inputResponse = JSON.stringify({ type: 'input_needed', content: 'waiting_for_input' });
-        if (!res.headersSent) {
-          res.write(inputResponse + '\n');
-        }
-      }
+      res.write(response + '\n');
     });
 
     // Handle stderr
@@ -272,29 +234,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log(`🐍 [STDERR] ${projectId}: ${error.replace(/\n/g, '\\n')}`);
       const response = JSON.stringify({ type: 'error', content: error });
       console.log(`🐍 [RESPONSE] Sending error: ${response}`);
-      if (!res.headersSent) {
-        res.write(response + '\n');
-      }
+      res.write(response + '\n');
     });
 
     // Handle process completion
     pythonProcess.on('close', (code) => {
       console.log(`🐍 [DEBUG] Process ${projectId} closed with code: ${code}`);
-      
-      const processInfo = runningProcesses.get(projectId);
-      if (processInfo) {
-        processInfo.isComplete = true;
-      }
-      
       const response = JSON.stringify({ type: 'complete', code });
       console.log(`🐍 [RESPONSE] Sending complete: ${response}`);
+      res.write(response + '\n');
       
-      if (!res.headersSent) {
-        res.write(response + '\n');
-      }
-      
-      // Keep process info for potential restart, don't delete immediately
-      console.log(`🐍 [DEBUG] Process ${projectId} marked as complete but keeping connection alive`);
+      // Don't end the response immediately - keep connection alive for potential input
+      setTimeout(() => {
+        if (!res.headersSent) {
+          res.end();
+        }
+        runningProcesses.delete(projectId);
+        console.log(`🐍 [DEBUG] Process ${projectId} removed from runningProcesses after delay`);
+      }, 5000);
     });
 
     // Handle process errors
@@ -302,74 +259,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log(`🐍 [ERROR] Process error for ${projectId}: ${error.message}`);
       const response = JSON.stringify({ type: 'error', content: error.message });
       console.log(`🐍 [RESPONSE] Sending process error: ${response}`);
-      if (!res.headersSent) {
-        res.write(response + '\n');
-      }
+      res.write(response + '\n');
+      res.end();
+      runningProcesses.delete(projectId);
     });
 
-    // Don't kill process on client disconnect - keep it running
+    // Clean up on client disconnect - but only after a longer delay to prevent immediate killing
     req.on('close', () => {
-      console.log(`🐍 [DEBUG] Client disconnected for ${projectId}, but keeping process alive`);
-      // Don't kill the process, just let it continue running
+      console.log(`🐍 [DEBUG] Client disconnected for ${projectId}`);
+      setTimeout(() => {
+        if (runningProcesses.has(projectId)) {
+          console.log(`🐍 [DEBUG] Killing process for ${projectId} after delay`);
+          pythonProcess.kill();
+          runningProcesses.delete(projectId);
+        }
+      }, 10000); // 10 second delay to allow for proper interaction
     });
-
-    // Send initial response to confirm connection
-    res.write(JSON.stringify({ type: 'output', content: `Starting ${projectId}...\n` }) + '\n');
   });
 
   // Handle code input
   app.post("/api/code-input/:projectId", (req, res) => {
     const { projectId } = req.params;
     const { input } = req.body;
-
+    
     console.log(`🐍 [INPUT] Received input for ${projectId}: "${input}"`);
 
-    const processInfo = runningProcesses.get(projectId);
-    if (!processInfo || !processInfo.process) {
+    const process = runningProcesses.get(projectId);
+    if (!process) {
       console.log(`🐍 [ERROR] No running process found for ${projectId}`);
       console.log(`🐍 [DEBUG] Available processes: ${Array.from(runningProcesses.keys()).join(', ')}`);
       return res.status(404).json({ error: 'No running process found' });
     }
 
-    const process = processInfo.process;
     console.log(`🐍 [DEBUG] Found process for ${projectId}, writing input...`);
-
+    
     try {
-      if (!process.killed && process.stdin && process.stdin.writable) {
-        process.stdin.write(input + '\n');
-        console.log(`🐍 [INPUT] Successfully sent input to ${projectId}`);
-        res.json({ success: true });
-      } else {
-        console.log(`🐍 [ERROR] Process stdin not writable for ${projectId}`);
-        res.status(500).json({ error: 'Process not accepting input' });
-      }
+      process.stdin.write(input + '\n');
+      console.log(`🐍 [INPUT] Successfully sent input to ${projectId}`);
+      res.json({ success: true });
     } catch (error) {
       console.log(`🐍 [ERROR] Failed to send input to ${projectId}:`, error);
       res.status(500).json({ error: 'Failed to send input' });
-    }
-  });
-
-  // Add endpoint to stop a running process
-  app.post("/api/stop-code/:projectId", (req, res) => {
-    const { projectId } = req.params;
-    console.log(`🐍 [DEBUG] Stop requested for project: ${projectId}`);
-
-    const processInfo = runningProcesses.get(projectId);
-    if (!processInfo || !processInfo.process) {
-      console.log(`🐍 [ERROR] No running process found for ${projectId}`);
-      return res.status(404).json({ error: 'No running process found' });
-    }
-
-    try {
-      if (!processInfo.process.killed) {
-        processInfo.process.kill('SIGTERM');
-        console.log(`🐍 [DEBUG] Process ${projectId} terminated`);
-      }
-      runningProcesses.delete(projectId);
-      res.json({ success: true, message: 'Process stopped' });
-    } catch (error) {
-      console.log(`🐍 [ERROR] Failed to stop process ${projectId}:`, error);
-      res.status(500).json({ error: 'Failed to stop process' });
     }
   });
 

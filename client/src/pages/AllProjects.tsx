@@ -26,7 +26,7 @@ export default function AllProjects() {
   const [projectStates, setProjectStates] = useState<Record<string, ProjectState>>({});
   const [activeTerminal, setActiveTerminal] = useState<string | null>(null);
   const terminalRefs = useRef<Record<string, HTMLDivElement>>({});
-  
+
   console.log(`🌐 [DEBUG] Current location: ${location}`);
   console.log(`🌐 [DEBUG] Active terminal: ${activeTerminal}`);
 
@@ -59,23 +59,24 @@ export default function AllProjects() {
 
   const runProject = async (projectId: string) => {
     console.log(`🌐 [DEBUG] Starting project: ${projectId}`);
-    
-    // Show terminal immediately
-    setActiveTerminal(projectId);
-    setLocation(`/all#${projectId}`);
-    
+
+    // Only clear output if this is a fresh start (no existing output)
+    const currentState = getProjectState(projectId);
+    const shouldClearOutput = currentState.output.length === 0;
+
     updateProjectState(projectId, {
       isRunning: true,
-      output: [{ type: 'output', content: `Starting ${projectId}...\n---\n` }],
+      output: shouldClearOutput ? [] : [...currentState.output, { type: 'output', content: '\n--- Restarting ---\n' }],
       waitingForInput: false,
+      currentInput: "",
       showTerminal: true
     });
-    
+
     console.log(`🌐 [DEBUG] Terminal activated for: ${projectId}`);
 
     try {
       console.log(`🌐 [DEBUG] Making fetch request to /api/run-code/${projectId}`);
-      
+
       const response = await fetch(`/api/run-code/${projectId}`, {
         method: 'POST',
         headers: { 
@@ -97,14 +98,14 @@ export default function AllProjects() {
       }
 
       console.log(`🌐 [DEBUG] Starting to read streaming response...`);
-      
+
       // Use a different approach for reading the stream
       const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
       let buffer = '';
 
       while (true) {
         const { done, value } = await reader.read();
-        
+
         if (done) {
           console.log(`🌐 [DEBUG] Stream complete`);
           break;
@@ -120,41 +121,20 @@ export default function AllProjects() {
             try {
               const data = JSON.parse(line);
               console.log(`🌐 [DEBUG] Parsed JSON:`, data);
-              
+
               updateProjectState(projectId, {
                 output: [...getProjectState(projectId).output, data]
               });
-              
+
               if (data.type === 'complete') {
                 console.log(`🌐 [DEBUG] Process complete for ${projectId}`);
-                // Keep terminal open, just mark as not running
-                updateProjectState(projectId, { 
-                  isRunning: false,
-                  waitingForInput: false
-                });
-              } else if (data.type === 'input_needed') {
-                console.log(`🌐 [DEBUG] Input needed signal received for ${projectId}`);
+                // Don't immediately stop running - keep terminal open for potential restarts
+                setTimeout(() => {
+                  updateProjectState(projectId, { isRunning: false });
+                }, 2000);
+              } else if (data.type === 'output' && (data.content.includes('Enter') || data.content.includes(':') || data.content.includes('?'))) {
+                console.log(`🌐 [DEBUG] Waiting for input detected for ${projectId}`);
                 updateProjectState(projectId, { waitingForInput: true });
-              } else if (data.type === 'output') {
-                // Additional input detection patterns for fallback
-                const inputPatterns = [
-                  /What's your name\?/i,
-                  /Enter your name/i,
-                  /Enter/i,
-                  /Input/i,
-                  /name\?\s*$/i,
-                  /choice\?/i,
-                  /:\s*$/,
-                  /\?\s*$/,
-                  />\s*$/
-                ];
-                
-                const needsInput = inputPatterns.some(pattern => pattern.test(data.content));
-                
-                if (needsInput) {
-                  console.log(`🌐 [DEBUG] Waiting for input detected from output for ${projectId}`);
-                  updateProjectState(projectId, { waitingForInput: true });
-                }
               }
             } catch (e) {
               console.log(`🌐 [ERROR] Failed to parse JSON line: "${line}"`, e);
@@ -177,7 +157,7 @@ export default function AllProjects() {
   const sendInput = async (projectId: string) => {
     const state = getProjectState(projectId);
     console.log(`🌐 [INPUT] Sending input for ${projectId}: "${state.currentInput}"`);
-    
+
     if (!state.currentInput.trim()) {
       console.log(`🌐 [INPUT] No input provided for ${projectId}`);
       return;
@@ -192,7 +172,7 @@ export default function AllProjects() {
 
     try {
       console.log(`🌐 [INPUT] Making fetch request to /api/code-input/${projectId}`);
-      
+
       const response = await fetch(`/api/code-input/${projectId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -200,16 +180,16 @@ export default function AllProjects() {
       });
 
       console.log(`🌐 [INPUT] Input response status: ${response.status}`);
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         console.log(`🌐 [INPUT] Input response error: ${errorText}`);
         throw new Error(`Input failed: ${response.status} - ${errorText}`);
       }
-      
+
       const result = await response.json();
       console.log(`🌐 [INPUT] Input response result:`, result);
-      
+
     } catch (error) {
       console.log(`🌐 [INPUT] Input error for ${projectId}:`, error);
       updateProjectState(projectId, {
@@ -221,40 +201,8 @@ export default function AllProjects() {
     }
   };
 
-  const stopProject = async (projectId: string) => {
-    console.log(`🌐 [DEBUG] Stopping project: ${projectId}`);
-    
-    try {
-      const response = await fetch(`/api/stop-code/${projectId}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
-      });
-      
-      if (response.ok) {
-        console.log(`🌐 [DEBUG] Project ${projectId} stopped successfully`);
-        updateProjectState(projectId, { 
-          isRunning: false,
-          waitingForInput: false,
-          output: [...getProjectState(projectId).output, { 
-            type: 'output', 
-            content: '\n--- Process stopped by user ---\n' 
-          }]
-        });
-      }
-    } catch (error) {
-      console.log(`🌐 [ERROR] Failed to stop project ${projectId}:`, error);
-    }
-  };
-
   const closeTerminal = (projectId: string) => {
     console.log(`🌐 [DEBUG] Closing terminal for: ${projectId}`);
-    
-    // Stop the process when closing terminal
-    const state = getProjectState(projectId);
-    if (state.isRunning) {
-      stopProject(projectId);
-    }
-    
     setActiveTerminal(null);
     updateProjectState(projectId, {
       isRunning: false,
@@ -264,16 +212,6 @@ export default function AllProjects() {
       showTerminal: false
     });
     setLocation('/all');
-  };
-
-  const restartProject = (projectId: string) => {
-    console.log(`🌐 [DEBUG] Restarting project: ${projectId}`);
-    updateProjectState(projectId, {
-      output: [],
-      waitingForInput: false,
-      currentInput: ""
-    });
-    runProject(projectId);
   };
 
   const getDifficultyColor = (difficulty: string) => {
@@ -344,43 +282,17 @@ export default function AllProjects() {
                   <span className="text-green-400 font-mono">
                     {personalData.codingProjects.find(p => p.id === activeTerminal)?.name || activeTerminal}
                   </span>
-                  {!getProjectState(activeTerminal).isRunning && (
-                    <Badge variant="outline" className="text-xs text-yellow-400 border-yellow-400">
-                      Stopped
-                    </Badge>
-                  )}
                 </div>
-                <div className="flex items-center gap-2">
-                  {getProjectState(activeTerminal).isRunning ? (
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => stopProject(activeTerminal)}
-                      className="text-red-400 hover:text-red-300"
-                    >
-                      <Square className="h-4 w-4" />
-                    </Button>
-                  ) : (
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => restartProject(activeTerminal)}
-                      className="text-blue-400 hover:text-blue-300"
-                    >
-                      <Play className="h-4 w-4" />
-                    </Button>
-                  )}
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => closeTerminal(activeTerminal)}
-                    className="text-gray-400 hover:text-white"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                </div>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => closeTerminal(activeTerminal)}
+                  className="text-gray-400 hover:text-white"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
               </div>
-              
+
               <div 
                 ref={(el) => {
                   if (el && activeTerminal) terminalRefs.current[activeTerminal] = el;
@@ -401,7 +313,7 @@ export default function AllProjects() {
                   ))
                 )}
               </div>
-              
+
               {getProjectState(activeTerminal).waitingForInput && (
                 <div className="border-t border-gray-700 p-3 bg-gray-800 flex gap-2">
                   <Input
@@ -444,7 +356,7 @@ export default function AllProjects() {
                     </div>
                     <p className="text-sm text-gray-600">{project.description}</p>
                   </CardHeader>
-                  
+
                   <CardContent className="flex-1 flex flex-col">
                     <div className="flex items-center gap-2 mb-4">
                       <Badge variant="outline" className="text-xs">{project.language}</Badge>
@@ -452,7 +364,7 @@ export default function AllProjects() {
                         {project.difficulty}
                       </Badge>
                     </div>
-                    
+
                     <div className="mb-6">
                       <Badge variant="secondary" className={`text-xs ${getCategoryColor(project.category)}`}>
                         {project.category}
