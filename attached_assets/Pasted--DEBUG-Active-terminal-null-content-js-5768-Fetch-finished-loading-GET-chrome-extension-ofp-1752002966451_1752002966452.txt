@@ -1,0 +1,77 @@
+🌐 [DEBUG] Active terminal: null
+content.js:5768 Fetch finished loading: GET "chrome-extension://ofpnmcalabcbjgholdjcjblkibolbppb/content.css".
+getRenderRoot @ content.js:5768
+initContentRoot @ content.js:5768
+(anonymous) @ content.js:5768
+onDOMReady @ content.js:2519
+init @ content.js:5768
+await in init
+(anonymous) @ content.js:5768
+Promise.then
+xBt @ content.js:5768
+(anonymous) @ content.js:5768
+(anonymous) @ content.js:5768
+AllProjects.tsx:61 🌐 [DEBUG] Starting project: fizzbuzz
+AllProjects.tsx:74 🌐 [DEBUG] Terminal activated for: fizzbuzz
+AllProjects.tsx:77 🌐 [DEBUG] Making fetch request to /api/run-code/fizzbuzz
+AllProjects.tsx:30 🌐 [DEBUG] Current location: /all
+AllProjects.tsx:31 🌐 [DEBUG] Active terminal: fizzbuzz
+AllProjects.tsx:86 🌐 [DEBUG] Response status: 200
+AllProjects.tsx:99 🌐 [DEBUG] Starting to read streaming response...
+AllProjects.tsx:119 🌐 [DEBUG] Processing line: "{"type":"output","content":"Starting fizzbuzz...\n"}"
+AllProjects.tsx:122 🌐 [DEBUG] Parsed JSON: {type: 'output', content: 'Starting fizzbuzz...\n'}
+AllProjects.tsx:30 🌐 [DEBUG] Current location: /all
+AllProjects.tsx:31 🌐 [DEBUG] Active terminal: fizzbuzz
+AllProjects.tsx:270 🌐 [DEBUG] Restarting project: fizzbuzz
+AllProjects.tsx:61 🌐 [DEBUG] Starting project: fizzbuzz
+AllProjects.tsx:74 🌐 [DEBUG] Terminal activated for: fizzbuzz
+AllProjects.tsx:77 🌐 [DEBUG] Making fetch request to /api/run-code/fizzbuzz
+AllProjects.tsx:30 🌐 [DEBUG] Current location: /all
+AllProjects.tsx:31 🌐 [DEBUG] Active terminal: fizzbuzz
+AllProjects.tsx:79 
+            
+            
+           POST https://e98fc5a6-d6a1-4a3d-9735-6835b1b7cc7b-00-36h1pd58afv9t.spock.replit.dev/api/run-code/fizzbuzz 500 (Internal Server Error)
+runProject @ AllProjects.tsx:79
+restartProject @ AllProjects.tsx:276
+onClick @ AllProjects.tsx:367
+callCallback2 @ chunk-PNGJSGSD.js?v=3ad5c99e:3680
+invokeGuardedCallbackDev @ chunk-PNGJSGSD.js?v=3ad5c99e:3705
+invokeGuardedCallback @ chunk-PNGJSGSD.js?v=3ad5c99e:3739
+invokeGuardedCallbackAndCatchFirstError @ chunk-PNGJSGSD.js?v=3ad5c99e:3742
+executeDispatch @ chunk-PNGJSGSD.js?v=3ad5c99e:7046
+processDispatchQueueItemsInOrder @ chunk-PNGJSGSD.js?v=3ad5c99e:7066
+processDispatchQueue @ chunk-PNGJSGSD.js?v=3ad5c99e:7075
+dispatchEventsForPlugins @ chunk-PNGJSGSD.js?v=3ad5c99e:7083
+(anonymous) @ chunk-PNGJSGSD.js?v=3ad5c99e:7206
+batchedUpdates$1 @ chunk-PNGJSGSD.js?v=3ad5c99e:18966
+batchedUpdates @ chunk-PNGJSGSD.js?v=3ad5c99e:3585
+dispatchEventForPluginEventSystem @ chunk-PNGJSGSD.js?v=3ad5c99e:7205
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-PNGJSGSD.js?v=3ad5c99e:5484
+dispatchEvent @ chunk-PNGJSGSD.js?v=3ad5c99e:5478
+dispatchDiscreteEvent @ chunk-PNGJSGSD.js?v=3ad5c99e:5455Understand this error
+AllProjects.tsx:86 🌐 [DEBUG] Response status: 500
+AllProjects.tsx:90 🌐 [ERROR] Response not OK: 500 - {"message":"existingProcess.kill is not a function"}
+AllProjects.tsx:166 🌐 [ERROR] Project execution failed for fizzbuzz: Error: HTTP error! status: 500 - {"message":"existingProcess.kill is not a function"}
+    at runProject (AllProjects.tsx:91:15)
+AllProjects.tsx:79 Fetch failed loading: POST "https://e98fc5a6-d6a1-4a3d-9735-6835b1b7cc7b-00-36h1pd58afv9t.spock.replit.dev/api/run-code/fizzbuzz".
+runProject @ AllProjects.tsx:79
+restartProject @ AllProjects.tsx:276
+onClick @ AllProjects.tsx:367
+callCallback2 @ chunk-PNGJSGSD.js?v=3ad5c99e:3680
+invokeGuardedCallbackDev @ chunk-PNGJSGSD.js?v=3ad5c99e:3705
+invokeGuardedCallback @ chunk-PNGJSGSD.js?v=3ad5c99e:3739
+invokeGuardedCallbackAndCatchFirstError @ chunk-PNGJSGSD.js?v=3ad5c99e:3742
+executeDispatch @ chunk-PNGJSGSD.js?v=3ad5c99e:7046
+processDispatchQueueItemsInOrder @ chunk-PNGJSGSD.js?v=3ad5c99e:7066
+processDispatchQueue @ chunk-PNGJSGSD.js?v=3ad5c99e:7075
+dispatchEventsForPlugins @ chunk-PNGJSGSD.js?v=3ad5c99e:7083
+(anonymous) @ chunk-PNGJSGSD.js?v=3ad5c99e:7206
+batchedUpdates$1 @ chunk-PNGJSGSD.js?v=3ad5c99e:18966
+batchedUpdates @ chunk-PNGJSGSD.js?v=3ad5c99e:3585
+dispatchEventForPluginEventSystem @ chunk-PNGJSGSD.js?v=3ad5c99e:7205
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-PNGJSGSD.js?v=3ad5c99e:5484
+dispatchEvent @ chunk-PNGJSGSD.js?v=3ad5c99e:5478
+dispatchDiscreteEvent @ chunk-PNGJSGSD.js?v=3ad5c99e:5455
+AllProjects.tsx:30 🌐 [DEBUG] Current location: /all
+AllProjects.tsx:31 🌐 [DEBUG] Active terminal: fizzbuzz
