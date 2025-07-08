@@ -132,12 +132,17 @@ export default function AllProjects() {
                   isRunning: false,
                   waitingForInput: false
                 });
+              } else if (data.type === 'input_needed') {
+                console.log(`🌐 [DEBUG] Input needed signal received for ${projectId}`);
+                updateProjectState(projectId, { waitingForInput: true });
               } else if (data.type === 'output') {
-                // Better input detection - look for common input patterns
+                // Additional input detection patterns for fallback
                 const inputPatterns = [
+                  /What's your name\?/i,
+                  /Enter your name/i,
                   /Enter/i,
                   /Input/i,
-                  /name\?/i,
+                  /name\?\s*$/i,
                   /choice\?/i,
                   /:\s*$/,
                   /\?\s*$/,
@@ -147,7 +152,7 @@ export default function AllProjects() {
                 const needsInput = inputPatterns.some(pattern => pattern.test(data.content));
                 
                 if (needsInput) {
-                  console.log(`🌐 [DEBUG] Waiting for input detected for ${projectId}`);
+                  console.log(`🌐 [DEBUG] Waiting for input detected from output for ${projectId}`);
                   updateProjectState(projectId, { waitingForInput: true });
                 }
               }
@@ -216,8 +221,40 @@ export default function AllProjects() {
     }
   };
 
+  const stopProject = async (projectId: string) => {
+    console.log(`🌐 [DEBUG] Stopping project: ${projectId}`);
+    
+    try {
+      const response = await fetch(`/api/stop-code/${projectId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      
+      if (response.ok) {
+        console.log(`🌐 [DEBUG] Project ${projectId} stopped successfully`);
+        updateProjectState(projectId, { 
+          isRunning: false,
+          waitingForInput: false,
+          output: [...getProjectState(projectId).output, { 
+            type: 'output', 
+            content: '\n--- Process stopped by user ---\n' 
+          }]
+        });
+      }
+    } catch (error) {
+      console.log(`🌐 [ERROR] Failed to stop project ${projectId}:`, error);
+    }
+  };
+
   const closeTerminal = (projectId: string) => {
     console.log(`🌐 [DEBUG] Closing terminal for: ${projectId}`);
+    
+    // Stop the process when closing terminal
+    const state = getProjectState(projectId);
+    if (state.isRunning) {
+      stopProject(projectId);
+    }
+    
     setActiveTerminal(null);
     updateProjectState(projectId, {
       isRunning: false,
@@ -314,7 +351,16 @@ export default function AllProjects() {
                   )}
                 </div>
                 <div className="flex items-center gap-2">
-                  {!getProjectState(activeTerminal).isRunning && (
+                  {getProjectState(activeTerminal).isRunning ? (
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => stopProject(activeTerminal)}
+                      className="text-red-400 hover:text-red-300"
+                    >
+                      <Square className="h-4 w-4" />
+                    </Button>
+                  ) : (
                     <Button
                       size="sm"
                       variant="ghost"
