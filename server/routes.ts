@@ -179,10 +179,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  // Python project execution endpoint
-  app.post("/api/run-python/:projectId", (req, res) => {
+  // Code project execution endpoint  
+  app.post("/api/run-code/:projectId", (req, res) => {
     const { projectId } = req.params;
-    const projectPath = path.join(__dirname, 'python-projects', `${projectId}.py`);
+    const projectPath = path.join(__dirname, 'code-projects', `${projectId}.py`);
     
     // Check if project file exists
     if (!fs.existsSync(projectPath)) {
@@ -237,8 +237,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  // Handle Python input
-  app.post("/api/python-input/:projectId", (req, res) => {
+  // Handle code input
+  app.post("/api/code-input/:projectId", (req, res) => {
     const { projectId } = req.params;
     const { input } = req.body;
 
