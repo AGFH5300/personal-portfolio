@@ -16,11 +16,21 @@ export default function HeroSection() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <img
+{/*             <img
               src={personalData.profileImage}
               alt={`${personalData.name} Profile Picture`}
               className="rounded-full w-64 h-64 object-cover border-4 border-white shadow-xl mx-auto md:mx-0"
-            />
+            /> */}
+            <div className="relative">
+              <div
+                aria-label="Profile initials placeholder"
+                className="absolute top-0 left-1/3 transform -translate-x-1/2 -translate-y-1/2 z-50
+                           flex items-center justify-center rounded-full w-64 h-64 border-4 border-white
+                           shadow-xl bg-blue-600 text-white text-7xl font-extrabold select-none"
+              >
+                AG
+              </div>
+            </div>
           </motion.div>
           <motion.div
             className="md:w-1/2 text-center md:text-left"
