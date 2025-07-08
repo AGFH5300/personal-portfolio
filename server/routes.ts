@@ -202,9 +202,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     // Kill any existing process for this project
     const existingProcessInfo = runningProcesses.get(projectId);
     if (existingProcessInfo && existingProcessInfo.process && !existingProcessInfo.process.killed) {
-      console.log(`🐍 [DEBUG] Killing existing process for ${projectId}`);
-      existingProcessInfo.process.kill('SIGTERM');
-      runningProcesses.delete(projectId);
+      // Only kill if the process has been running for at least 100ms to avoid killing processes that just started
+      const processAge = Date.now() - existingProcessInfo.startTime;
+      if (processAge > 100) {
+        console.log(`🐍 [DEBUG] Killing existing process for ${projectId} (age: ${processAge}ms)`);
+        try {
+          existingProcessInfo.process.kill('SIGTERM');
+          console.log(`🐍 [DEBUG] Successfully killed existing process for ${projectId}`);
+        } catch (error) {
+          console.log(`🐍 [DEBUG] Error killing existing process for ${projectId}:`, error);
+        }
+        runningProcesses.delete(projectId);
+      } else {
+        console.log(`🐍 [DEBUG] Skipping kill of recent process for ${projectId} (age: ${processAge}ms)`);
+      }
     }
 
     console.log(`🐍 [DEBUG] Project file exists, setting up streaming...`);
