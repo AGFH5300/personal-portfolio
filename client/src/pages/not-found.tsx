@@ -1,5 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { AlertCircle, Home } from "lucide-react";
+import { Link } from "wouter";
 
 export default function NotFound() {
   return (
@@ -12,8 +14,17 @@ export default function NotFound() {
           </div>
 
           <p className="mt-4 text-sm text-gray-600">
-            The address may be incorrect or outdated.
+            The URL may be incorrect or the page may have been moved. <br></br> Please check the URL and try again.
           </p>
+          
+          <div className="mt-6">
+            <Link href="/">
+              <Button className="w-full">
+                <Home className="h-4 w-4 mr-2" />
+                Go Back Home
+              </Button>
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>
