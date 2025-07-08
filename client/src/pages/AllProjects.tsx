@@ -24,10 +24,11 @@ interface ProjectState {
 export default function AllProjects() {
   const [location, setLocation] = useLocation();
   const [projectStates, setProjectStates] = useState<Record<string, ProjectState>>({});
+  const [activeTerminal, setActiveTerminal] = useState<string | null>(null);
   const terminalRefs = useRef<Record<string, HTMLDivElement>>({});
   
-  // Get active project from URL hash
-  const activeProject = location.includes('#') ? location.split('#')[1] : null;
+  console.log(`🌐 [DEBUG] Current location: ${location}`);
+  console.log(`🌐 [DEBUG] Active terminal: ${activeTerminal}`);
 
   useEffect(() => {
     // Auto-scroll terminals when output changes
@@ -59,7 +60,8 @@ export default function AllProjects() {
   const runProject = async (projectId: string) => {
     console.log(`🌐 [DEBUG] Starting project: ${projectId}`);
     
-    // Show terminal and update URL
+    // Show terminal immediately
+    setActiveTerminal(projectId);
     setLocation(`/all#${projectId}`);
     
     updateProjectState(projectId, {
@@ -68,6 +70,8 @@ export default function AllProjects() {
       waitingForInput: false,
       showTerminal: true
     });
+    
+    console.log(`🌐 [DEBUG] Terminal activated for: ${projectId}`);
 
     try {
       console.log(`🌐 [DEBUG] Making fetch request to /api/run-code/${projectId}`);
@@ -197,6 +201,8 @@ export default function AllProjects() {
   };
 
   const closeTerminal = (projectId: string) => {
+    console.log(`🌐 [DEBUG] Closing terminal for: ${projectId}`);
+    setActiveTerminal(null);
     updateProjectState(projectId, {
       isRunning: false,
       output: [],
@@ -262,7 +268,7 @@ export default function AllProjects() {
         </motion.div>
 
         {/* Terminal Overlay */}
-        {activeProject && (
+        {activeTerminal && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -273,13 +279,13 @@ export default function AllProjects() {
                 <div className="flex items-center gap-2">
                   <Terminal className="h-5 w-5 text-green-400" />
                   <span className="text-green-400 font-mono">
-                    {personalData.codingProjects.find(p => p.id === activeProject)?.name || activeProject}
+                    {personalData.codingProjects.find(p => p.id === activeTerminal)?.name || activeTerminal}
                   </span>
                 </div>
                 <Button
                   size="sm"
                   variant="ghost"
-                  onClick={() => closeTerminal(activeProject)}
+                  onClick={() => closeTerminal(activeTerminal)}
                   className="text-gray-400 hover:text-white"
                 >
                   <X className="h-4 w-4" />
@@ -287,7 +293,7 @@ export default function AllProjects() {
               </div>
               
               <div className="bg-gray-900 p-4 h-96 overflow-y-auto font-mono text-sm text-green-400">
-                {getProjectState(activeProject).output.map((output, idx) => (
+                {getProjectState(activeTerminal).output.map((output, idx) => (
                   <div key={idx} className={`whitespace-pre-wrap ${
                     output.type === 'error' ? 'text-red-400' : 
                     output.type === 'input' ? 'text-blue-400' :
@@ -298,21 +304,21 @@ export default function AllProjects() {
                 ))}
               </div>
               
-              {getProjectState(activeProject).waitingForInput && (
+              {getProjectState(activeTerminal).waitingForInput && (
                 <div className="border-t border-gray-700 p-3 bg-gray-800 flex gap-2">
                   <Input
-                    value={getProjectState(activeProject).currentInput}
-                    onChange={(e) => updateProjectState(activeProject, { currentInput: e.target.value })}
+                    value={getProjectState(activeTerminal).currentInput}
+                    onChange={(e) => updateProjectState(activeTerminal, { currentInput: e.target.value })}
                     onKeyPress={(e) => {
                       if (e.key === 'Enter') {
-                        sendInput(activeProject);
+                        sendInput(activeTerminal);
                       }
                     }}
                     placeholder="Enter input..."
                     className="bg-gray-700 border-gray-600 text-green-400 font-mono"
                     autoFocus
                   />
-                  <Button onClick={() => sendInput(activeProject)}>
+                  <Button onClick={() => sendInput(activeTerminal)}>
                     Send
                   </Button>
                 </div>
