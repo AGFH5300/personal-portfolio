@@ -2,7 +2,7 @@ export const personalData = {
   name: "Ansh Gupta",
   title: "Web Developer & Student",
   shortBio:
-    "Passionate about creating web applications and learning new technologies. I specialize in front-end development with experience in HTML, CSS, JavaScript, PHP, and React.",
+    "Passionate about creating web applications and learning new technologies. I do front and back-end development with experience in HTML, CSS, JavaScript, PHP, and React.",
   fullBio: [
     "I'm a 15-year-old developer with a growing portfolio of web projects. It began with creating websites using HTML, CSS, and JavaScript, and has expanded to include more complex applications using React, TypeScript and backend like PHP.",
     "I am also a language enthusiast with HSK certifications in Chinese, having achieved excellent scores across all levels I've done.",
