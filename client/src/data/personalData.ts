@@ -247,7 +247,7 @@ export const personalData = {
       role: "Volunteer",
       period: "Aug 01, 2023",
       description:
-        "Donated food and snacks to the patients and staff of Tata Cancer Hospital in India. The goal was to provide support and uplift the spirits of those battling cancer by contributing to their well-being during treatment.",
+        "Donated food and snacks to the patients and staff of a Tata Cancer Hospital in Mumbai. The goal was to provide support and uplift the spirits of those battling cancer by contributing to their well-being during treatment.",
     },
     {
       organization: "Tata Cancer Hospital",
@@ -261,7 +261,7 @@ export const personalData = {
       role: "Volunteer",
       period: "Aug 01, 2024",
       description:
-        "Donated stationery items, such as pens, pencils, pencil cases, bags and food like chocolate bars to children with hearing and speech impairments at a school in India. The goal was to help support their educational needs by providing essential supplies and brighten their day with a small treat.",
+        "Donated stationery items, such as pens, pencils, pencil cases, bags and food like chocolate bars to children with hearing and speech impairments at a school in Mumbai. The goal was to help support their educational needs by providing essential supplies and brighten their day with a small treat.",
     },
   ],
 
