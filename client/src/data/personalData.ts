@@ -65,7 +65,7 @@ export const personalData = {
       position: "Competitor",
       date: "Jan 2025",
       description:
-        "Won 1st place solving multiple math problems as a team with Vihaan Deshpande, Lavitra Dhoot and Ayyukta Ankam.",
+        "Won 1st place solving multiple math problems as a team with Vihaan Deshpande, Lavitra Dhoot and Avyukta Ankam.",
       achievements: ["1st Place Winner"],
     },
     {
@@ -80,7 +80,7 @@ export const personalData = {
       position: "Competitor",
       date: "Apr 2025",
       description:
-        "Won 2nd place with peers Alman Bazaz and Ayyukta Ankam in business case study analysis.",
+        "Won 2nd place with peers Alman Bazaz and Avyukta Ankam in business case study analysis.",
       achievements: ["2nd Place Winner"],
     },
     {
@@ -102,7 +102,7 @@ export const personalData = {
       position: "Delegate",
       date: "Mar 2025",
       description:
-        "Won Best Collaborator in the competition with peers Alman Bazaz and Ayyukta Ankam.",
+        "Won Best Collaborator in the competition with peers Alman Bazaz and Avyukta Ankam.",
       achievements: ["Best Collaborator Award", "1st Place Team Award"],
     },
   ],
