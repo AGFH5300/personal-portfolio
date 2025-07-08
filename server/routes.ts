@@ -129,6 +129,39 @@ interface ContactFormData {
 // Store running Python processes
 const runningProcesses = new Map<string, any>();
 
+// Store session data for each project
+interface SessionData {
+  output: Array<{ type: 'output' | 'error' | 'input' | 'complete'; content: string; timestamp: string }>;
+  isRunning: boolean;
+  lastActivity: string;
+}
+
+const projectSessions = new Map<string, SessionData>();
+
+// Helper function to get or create session
+const getOrCreateSession = (projectId: string): SessionData => {
+  if (!projectSessions.has(projectId)) {
+    projectSessions.set(projectId, {
+      output: [],
+      isRunning: false,
+      lastActivity: new Date().toISOString()
+    });
+  }
+  return projectSessions.get(projectId)!;
+};
+
+// Helper function to add output to session
+const addToSession = (projectId: string, type: 'output' | 'error' | 'input' | 'complete', content: string) => {
+  const session = getOrCreateSession(projectId);
+  session.output.push({
+    type,
+    content,
+    timestamp: new Date().toISOString()
+  });
+  session.lastActivity = new Date().toISOString();
+  console.log(`🐍 [SESSION] Added ${type} to ${projectId}: "${content.replace(/\n/g, '\\n')}"`);
+};
+
 const saveContactFormData = (formData: ContactFormData): Promise<void> => {
   const contactsFilePath = path.join(process.cwd(), 'contact-submissions.json');
 
@@ -219,10 +252,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     runningProcesses.set(projectId, pythonProcess);
     console.log(`🐍 [DEBUG] Process stored in runningProcesses for project: ${projectId}`);
 
+    // Mark session as running
+    const session = getOrCreateSession(projectId);
+    session.isRunning = true;
+
     // Handle stdout
     pythonProcess.stdout.on('data', (data) => {
       const output = data.toString();
       console.log(`🐍 [STDOUT] ${projectId}: ${output.replace(/\n/g, '\\n')}`);
+      
+      // Save to session
+      addToSession(projectId, 'output', output);
+      
       const response = JSON.stringify({ type: 'output', content: output });
       console.log(`🐍 [RESPONSE] Sending: ${response}`);
       res.write(response + '\n');
@@ -232,6 +273,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     pythonProcess.stderr.on('data', (data) => {
       const error = data.toString();
       console.log(`🐍 [STDERR] ${projectId}: ${error.replace(/\n/g, '\\n')}`);
+      
+      // Save to session
+      addToSession(projectId, 'error', error);
+      
       const response = JSON.stringify({ type: 'error', content: error });
       console.log(`🐍 [RESPONSE] Sending error: ${response}`);
       res.write(response + '\n');
@@ -240,6 +285,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     // Handle process completion
     pythonProcess.on('close', (code) => {
       console.log(`🐍 [DEBUG] Process ${projectId} closed with code: ${code}`);
+      
+      // Save to session and mark as not running
+      addToSession(projectId, 'complete', `Process completed with exit code: ${code}`);
+      const session = getOrCreateSession(projectId);
+      session.isRunning = false;
+      
       const response = JSON.stringify({ type: 'complete', code });
       console.log(`🐍 [RESPONSE] Sending complete: ${response}`);
       res.write(response + '\n');
@@ -279,12 +330,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       process.kill('SIGTERM');
       runningProcesses.delete(projectId);
+      
+      // Mark session as not running but keep the history
+      const session = getOrCreateSession(projectId);
+      session.isRunning = false;
+      addToSession(projectId, 'complete', 'Process manually stopped by user');
+      
       console.log(`🐍 [DEBUG] Successfully stopped process for ${projectId}`);
       res.json({ success: true });
     } catch (error) {
       console.log(`🐍 [ERROR] Failed to stop process for ${projectId}:`, error);
       res.status(500).json({ error: 'Failed to stop process' });
     }
+  });
+
+  // Get session history for a project
+  app.get("/api/session/:projectId", (req, res) => {
+    const { projectId } = req.params;
+    console.log(`🐍 [SESSION] Getting session data for ${projectId}`);
+
+    const session = projectSessions.get(projectId);
+    if (!session) {
+      console.log(`🐍 [SESSION] No session found for ${projectId}`);
+      return res.json({ 
+        output: [], 
+        isRunning: false, 
+        lastActivity: null 
+      });
+    }
+
+    console.log(`🐍 [SESSION] Returning ${session.output.length} items for ${projectId}`);
+    res.json(session);
+  });
+
+  // Clear session history for a project
+  app.delete("/api/session/:projectId", (req, res) => {
+    const { projectId } = req.params;
+    console.log(`🐍 [SESSION] Clearing session data for ${projectId}`);
+
+    if (projectSessions.has(projectId)) {
+      projectSessions.delete(projectId);
+      console.log(`🐍 [SESSION] Session cleared for ${projectId}`);
+    }
+
+    res.json({ success: true });
   });
 
   // Handle code input
@@ -304,6 +393,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     console.log(`🐍 [DEBUG] Found process for ${projectId}, writing input...`);
 
     try {
+      // Save input to session
+      addToSession(projectId, 'input', `> ${input}`);
+      
       process.stdin.write(input + '\n');
       console.log(`🐍 [INPUT] Successfully sent input to ${projectId}`);
       res.json({ success: true });

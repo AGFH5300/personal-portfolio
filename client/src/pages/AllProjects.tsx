@@ -57,6 +57,34 @@ export default function AllProjects() {
     }));
   };
 
+  const loadSessionHistory = async (projectId: string) => {
+    try {
+      console.log(`🌐 [SESSION] Loading history for ${projectId}`);
+      const response = await fetch(`/api/session/${projectId}`);
+      if (response.ok) {
+        const sessionData = await response.json();
+        console.log(`🌐 [SESSION] Loaded ${sessionData.output.length} items for ${projectId}`);
+        
+        // Convert session data to our format
+        const output = sessionData.output.map((item: any) => ({
+          type: item.type,
+          content: item.content
+        }));
+
+        updateProjectState(projectId, {
+          output: output.length > 0 ? output : [{ type: 'output', content: `Session restored for ${projectId}\n---\n` }],
+          isRunning: sessionData.isRunning,
+          showTerminal: true
+        });
+
+        return sessionData.output.length > 0;
+      }
+    } catch (error) {
+      console.log(`🌐 [SESSION] Error loading history for ${projectId}:`, error);
+    }
+    return false;
+  };
+
   const runProject = async (projectId: string) => {
     console.log(`🌐 [DEBUG] Starting project: ${projectId}`);
 
@@ -64,12 +92,24 @@ export default function AllProjects() {
     setActiveTerminal(projectId);
     setLocation(`/all#${projectId}`);
 
-    updateProjectState(projectId, {
-      isRunning: true,
-      output: [{ type: 'output', content: `Starting ${projectId}...\n---\n` }],
-      waitingForInput: false,
-      showTerminal: true
-    });
+    // Load existing session history first
+    const hasHistory = await loadSessionHistory(projectId);
+    
+    if (!hasHistory) {
+      updateProjectState(projectId, {
+        isRunning: true,
+        output: [{ type: 'output', content: `Starting ${projectId}...\n---\n` }],
+        waitingForInput: false,
+        showTerminal: true
+      });
+    } else {
+      // If we have history, just mark as running if we're about to start a new process
+      updateProjectState(projectId, {
+        isRunning: true,
+        waitingForInput: false,
+        showTerminal: true
+      });
+    }
 
     console.log(`🌐 [DEBUG] Terminal activated for: ${projectId}`);
 
@@ -198,6 +238,41 @@ export default function AllProjects() {
     }
   };
 
+  const clearSessionHistory = async (projectId: string) => {
+    try {
+      const response = await fetch(`/api/session/${projectId}`, {
+        method: 'DELETE'
+      });
+      
+      if (response.ok) {
+        console.log(`🌐 [SESSION] Cleared history for ${projectId}`);
+        updateProjectState(projectId, {
+          output: [{ type: 'output', content: `Session history cleared for ${projectId}\n---\n` }]
+        });
+      }
+    } catch (error) {
+      console.log(`🌐 [SESSION] Error clearing history for ${projectId}:`, error);
+    }
+  };
+
+  const openTerminalWithHistory = async (projectId: string) => {
+    console.log(`🌐 [DEBUG] Opening terminal with history for: ${projectId}`);
+    setActiveTerminal(projectId);
+    setLocation(`/all#${projectId}`);
+
+    // Load existing session history
+    const hasHistory = await loadSessionHistory(projectId);
+    
+    if (!hasHistory) {
+      updateProjectState(projectId, {
+        output: [{ type: 'output', content: `Terminal opened for ${projectId}\n---\n` }],
+        isRunning: false,
+        waitingForInput: false,
+        showTerminal: true
+      });
+    }
+  };
+
   const closeTerminal = async (projectId: string) => {
     console.log(`🌐 [DEBUG] Closing terminal for: ${projectId}`);
     
@@ -217,9 +292,9 @@ export default function AllProjects() {
     }
 
     setActiveTerminal(null);
+    // Don't clear the output - keep it in state for next time
     updateProjectState(projectId, {
       isRunning: false,
-      output: [],
       waitingForInput: false,
       currentInput: "",
       showTerminal: false
@@ -296,14 +371,25 @@ export default function AllProjects() {
                     {personalData.codingProjects.find(p => p.id === activeTerminal)?.name || activeTerminal}
                   </span>
                 </div>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => closeTerminal(activeTerminal)}
-                  className="text-gray-400 hover:text-white"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => clearSessionHistory(activeTerminal)}
+                    className="text-gray-400 hover:text-yellow-400"
+                    title="Clear History"
+                  >
+                    Clear
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => closeTerminal(activeTerminal)}
+                    className="text-gray-400 hover:text-white"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
 
               <div 
@@ -377,24 +463,36 @@ export default function AllProjects() {
                       <Badge className={`text-xs ${getCategoryColor(project.category)}`}>{project.category}</Badge>
                     </div>
 
-                    <Button
-                      onClick={() => runProject(project.id)}
-                      disabled={state.isRunning}
-                      className="mt-auto"
-                      variant="default"
-                    >
-                      {state.isRunning ? (
-                        <>
-                          <Square className="animate-pulse mr-2 h-4 w-4" />
-                          Running...
-                        </>
-                      ) : (
-                        <>
-                          <Play className="mr-2 h-4 w-4" />
-                          Run Project
-                        </>
-                      )}
-                    </Button>
+                    <div className="flex gap-2 mt-auto">
+                      <Button
+                        onClick={() => runProject(project.id)}
+                        disabled={state.isRunning}
+                        className="flex-1"
+                        variant="default"
+                      >
+                        {state.isRunning ? (
+                          <>
+                            <Square className="animate-pulse mr-2 h-4 w-4" />
+                            Running...
+                          </>
+                        ) : (
+                          <>
+                            <Play className="mr-2 h-4 w-4" />
+                            Run Project
+                          </>
+                        )}
+                      </Button>
+                      
+                      <Button
+                        onClick={() => openTerminalWithHistory(project.id)}
+                        variant="outline"
+                        size="sm"
+                        className="px-3"
+                        title="Open Terminal"
+                      >
+                        <Terminal className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
               </motion.div>
