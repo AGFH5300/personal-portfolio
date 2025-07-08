@@ -200,10 +200,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
 
     // Kill any existing process for this project
-    const existingProcess = runningProcesses.get(projectId);
-    if (existingProcess && !existingProcess.killed) {
+    const existingProcessInfo = runningProcesses.get(projectId);
+    if (existingProcessInfo && existingProcessInfo.process && !existingProcessInfo.process.killed) {
       console.log(`🐍 [DEBUG] Killing existing process for ${projectId}`);
-      existingProcess.kill('SIGTERM');
+      existingProcessInfo.process.kill('SIGTERM');
       runningProcesses.delete(projectId);
     }
 
@@ -361,7 +361,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
 
     try {
-      if (!processInfo.process.killed) {
+      if (processInfo.process && !processInfo.process.killed) {
         processInfo.process.kill('SIGTERM');
         console.log(`🐍 [DEBUG] Process ${projectId} terminated`);
       }
