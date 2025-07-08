@@ -127,13 +127,29 @@ export default function AllProjects() {
               
               if (data.type === 'complete') {
                 console.log(`🌐 [DEBUG] Process complete for ${projectId}`);
-                // Don't immediately stop running - keep terminal open for potential restarts
-                setTimeout(() => {
-                  updateProjectState(projectId, { isRunning: false });
-                }, 2000);
-              } else if (data.type === 'output' && (data.content.includes('Enter') || data.content.includes(':') || data.content.includes('?'))) {
-                console.log(`🌐 [DEBUG] Waiting for input detected for ${projectId}`);
-                updateProjectState(projectId, { waitingForInput: true });
+                // Keep terminal open, just mark as not running
+                updateProjectState(projectId, { 
+                  isRunning: false,
+                  waitingForInput: false
+                });
+              } else if (data.type === 'output') {
+                // Better input detection - look for common input patterns
+                const inputPatterns = [
+                  /Enter/i,
+                  /Input/i,
+                  /name\?/i,
+                  /choice\?/i,
+                  /:\s*$/,
+                  /\?\s*$/,
+                  />\s*$/
+                ];
+                
+                const needsInput = inputPatterns.some(pattern => pattern.test(data.content));
+                
+                if (needsInput) {
+                  console.log(`🌐 [DEBUG] Waiting for input detected for ${projectId}`);
+                  updateProjectState(projectId, { waitingForInput: true });
+                }
               }
             } catch (e) {
               console.log(`🌐 [ERROR] Failed to parse JSON line: "${line}"`, e);
@@ -213,6 +229,16 @@ export default function AllProjects() {
     setLocation('/all');
   };
 
+  const restartProject = (projectId: string) => {
+    console.log(`🌐 [DEBUG] Restarting project: ${projectId}`);
+    updateProjectState(projectId, {
+      output: [],
+      waitingForInput: false,
+      currentInput: ""
+    });
+    runProject(projectId);
+  };
+
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty.toLowerCase()) {
       case 'beginner':
@@ -281,15 +307,32 @@ export default function AllProjects() {
                   <span className="text-green-400 font-mono">
                     {personalData.codingProjects.find(p => p.id === activeTerminal)?.name || activeTerminal}
                   </span>
+                  {!getProjectState(activeTerminal).isRunning && (
+                    <Badge variant="outline" className="text-xs text-yellow-400 border-yellow-400">
+                      Stopped
+                    </Badge>
+                  )}
                 </div>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => closeTerminal(activeTerminal)}
-                  className="text-gray-400 hover:text-white"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+                <div className="flex items-center gap-2">
+                  {!getProjectState(activeTerminal).isRunning && (
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => restartProject(activeTerminal)}
+                      className="text-blue-400 hover:text-blue-300"
+                    >
+                      <Play className="h-4 w-4" />
+                    </Button>
+                  )}
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => closeTerminal(activeTerminal)}
+                    className="text-gray-400 hover:text-white"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
               
               <div 
