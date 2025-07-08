@@ -4,8 +4,13 @@ import { storage } from "./storage";
 import { z } from "zod";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 import nodemailer from "nodemailer";
 import { spawn } from "child_process";
+
+// Get __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const contactSchema = z.object({
   name: z.string().min(2),
