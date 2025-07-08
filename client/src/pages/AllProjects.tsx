@@ -50,11 +50,27 @@ export default function AllProjects() {
     };
   };
 
-  const updateProjectState = (projectId: string, updates: Partial<ProjectState>) => {
-    setProjectStates(prev => ({
-      ...prev,
-      [projectId]: { ...getProjectState(projectId), ...updates }
-    }));
+  const updateProjectState = (projectId: string, updates: Partial<ProjectState> | ((prev: ProjectState) => ProjectState)) => {
+    setProjectStates(prev => {
+      const currentState = prev[projectId] || {
+        isRunning: false,
+        output: [],
+        waitingForInput: false,
+        currentInput: "",
+        showTerminal: false
+      };
+      
+      const newState = typeof updates === 'function' 
+        ? updates(currentState)
+        : { ...currentState, ...updates };
+        
+      console.log(`🌐 [STATE] Updating ${projectId}:`, newState);
+      
+      return {
+        ...prev,
+        [projectId]: newState
+      };
+    });
   };
 
   const loadSessionHistory = async (projectId: string) => {
@@ -138,7 +154,7 @@ export default function AllProjects() {
 
       console.log(`🌐 [DEBUG] Starting to read streaming response...`);
 
-      // Read the response as text chunks
+      // Read the response as text chunks with proper connection handling
       const reader = response.body?.getReader();
       if (!reader) {
         throw new Error('No reader available');
@@ -146,52 +162,69 @@ export default function AllProjects() {
 
       const decoder = new TextDecoder();
       let buffer = '';
+      let isReading = true;
 
-      try {
-        while (true) {
-          const { done, value } = await reader.read();
+      const readStream = async () => {
+        try {
+          while (isReading) {
+            const { done, value } = await reader.read();
 
-          if (done) {
-            console.log(`🌐 [DEBUG] Stream complete`);
-            break;
-          }
+            if (done) {
+              console.log(`🌐 [DEBUG] Stream complete`);
+              break;
+            }
 
-          // Decode the chunk and add to buffer
-          const chunk = decoder.decode(value, { stream: true });
-          buffer += chunk;
+            // Decode the chunk and add to buffer
+            const chunk = decoder.decode(value, { stream: true });
+            buffer += chunk;
+            console.log(`🌐 [DEBUG] Received chunk: "${chunk}"`);
 
-          // Process complete lines
-          const lines = buffer.split('\n');
-          buffer = lines.pop() || ''; // Keep the last incomplete line in buffer
+            // Process complete lines
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || ''; // Keep the last incomplete line in buffer
 
-          for (const line of lines) {
-            if (line.trim()) {
-              console.log(`🌐 [DEBUG] Processing line: "${line}"`);
-              try {
-                const data = JSON.parse(line);
-                console.log(`🌐 [DEBUG] Parsed JSON:`, data);
+            for (const line of lines) {
+              if (line.trim()) {
+                console.log(`🌐 [DEBUG] Processing line: "${line}"`);
+                try {
+                  const data = JSON.parse(line);
+                  console.log(`🌐 [DEBUG] Parsed JSON:`, data);
 
-                updateProjectState(projectId, {
-                  output: [...getProjectState(projectId).output, data]
-                });
+                  // Use callback to ensure state is properly updated
+                  updateProjectState(projectId, (prevState) => ({
+                    ...prevState,
+                    output: [...prevState.output, data]
+                  }));
 
-                if (data.type === 'complete') {
-                  console.log(`🌐 [DEBUG] Process complete for ${projectId}`);
-                  // Keep terminal open and mark as not running so user can restart if needed
-                  updateProjectState(projectId, { isRunning: false });
-                } else if (data.type === 'output' && (data.content.includes('Enter') || data.content.includes(':') || data.content.includes('?'))) {
-                  console.log(`🌐 [DEBUG] Waiting for input detected for ${projectId}`);
-                  updateProjectState(projectId, { waitingForInput: true });
+                  if (data.type === 'complete') {
+                    console.log(`🌐 [DEBUG] Process complete for ${projectId}`);
+                    // Keep terminal open and mark as not running so user can restart if needed
+                    updateProjectState(projectId, { isRunning: false });
+                    isReading = false;
+                  } else if (data.type === 'output' && (data.content.includes('Enter') || data.content.includes(':') || data.content.includes('?'))) {
+                    console.log(`🌐 [DEBUG] Waiting for input detected for ${projectId}`);
+                    updateProjectState(projectId, { waitingForInput: true });
+                  }
+                } catch (e) {
+                  console.log(`🌐 [ERROR] Failed to parse JSON line: "${line}"`, e);
                 }
-              } catch (e) {
-                console.log(`🌐 [ERROR] Failed to parse JSON line: "${line}"`, e);
               }
             }
           }
+        } catch (error) {
+          console.log(`🌐 [ERROR] Error reading stream:`, error);
+          isReading = false;
+        } finally {
+          try {
+            reader.releaseLock();
+          } catch (e) {
+            console.log(`🌐 [DEBUG] Reader already released`);
+          }
         }
-      } finally {
-        reader.releaseLock();
-      }
+      };
+
+      // Start reading the stream
+      readStream();
     } catch (error) {
       console.log(`🌐 [ERROR] Project execution failed for ${projectId}:`, error);
       updateProjectState(projectId, {
