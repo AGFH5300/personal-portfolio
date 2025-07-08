@@ -187,55 +187,82 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Code project execution endpoint  
   app.post("/api/run-code/:projectId", (req, res) => {
     const { projectId } = req.params;
+    console.log(`🐍 [DEBUG] Starting execution for project: ${projectId}`);
+    
     const projectPath = path.join(__dirname, 'code-projects', `${projectId}.py`);
+    console.log(`🐍 [DEBUG] Project path: ${projectPath}`);
+    console.log(`🐍 [DEBUG] __dirname: ${__dirname}`);
     
     // Check if project file exists
     if (!fs.existsSync(projectPath)) {
+      console.log(`🐍 [ERROR] Project file not found: ${projectPath}`);
       return res.status(404).json({ error: 'Project not found' });
     }
+    
+    console.log(`🐍 [DEBUG] Project file exists, setting up streaming...`);
 
     // Set up streaming response
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
 
+    console.log(`🐍 [DEBUG] Spawning Python process with: python3 ${projectPath}`);
+    
     // Spawn Python process
     const pythonProcess = spawn('python3', [projectPath], {
       stdio: ['pipe', 'pipe', 'pipe']
     });
 
+    console.log(`🐍 [DEBUG] Python process spawned with PID: ${pythonProcess.pid}`);
+
     // Store process for input handling
     runningProcesses.set(projectId, pythonProcess);
+    console.log(`🐍 [DEBUG] Process stored in runningProcesses for project: ${projectId}`);
 
     // Handle stdout
     pythonProcess.stdout.on('data', (data) => {
       const output = data.toString();
-      res.write(JSON.stringify({ type: 'output', content: output }) + '\n');
+      console.log(`🐍 [STDOUT] ${projectId}: ${output.replace(/\n/g, '\\n')}`);
+      const response = JSON.stringify({ type: 'output', content: output });
+      console.log(`🐍 [RESPONSE] Sending: ${response}`);
+      res.write(response + '\n');
     });
 
     // Handle stderr
     pythonProcess.stderr.on('data', (data) => {
       const error = data.toString();
-      res.write(JSON.stringify({ type: 'error', content: error }) + '\n');
+      console.log(`🐍 [STDERR] ${projectId}: ${error.replace(/\n/g, '\\n')}`);
+      const response = JSON.stringify({ type: 'error', content: error });
+      console.log(`🐍 [RESPONSE] Sending error: ${response}`);
+      res.write(response + '\n');
     });
 
     // Handle process completion
     pythonProcess.on('close', (code) => {
-      res.write(JSON.stringify({ type: 'complete', code }) + '\n');
+      console.log(`🐍 [DEBUG] Process ${projectId} closed with code: ${code}`);
+      const response = JSON.stringify({ type: 'complete', code });
+      console.log(`🐍 [RESPONSE] Sending complete: ${response}`);
+      res.write(response + '\n');
       res.end();
       runningProcesses.delete(projectId);
+      console.log(`🐍 [DEBUG] Process ${projectId} removed from runningProcesses`);
     });
 
     // Handle process errors
     pythonProcess.on('error', (error) => {
-      res.write(JSON.stringify({ type: 'error', content: error.message }) + '\n');
+      console.log(`🐍 [ERROR] Process error for ${projectId}: ${error.message}`);
+      const response = JSON.stringify({ type: 'error', content: error.message });
+      console.log(`🐍 [RESPONSE] Sending process error: ${response}`);
+      res.write(response + '\n');
       res.end();
       runningProcesses.delete(projectId);
     });
 
     // Clean up on client disconnect
     req.on('close', () => {
+      console.log(`🐍 [DEBUG] Client disconnected for ${projectId}`);
       if (runningProcesses.has(projectId)) {
+        console.log(`🐍 [DEBUG] Killing process for ${projectId}`);
         pythonProcess.kill();
         runningProcesses.delete(projectId);
       }
@@ -246,16 +273,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/code-input/:projectId", (req, res) => {
     const { projectId } = req.params;
     const { input } = req.body;
+    
+    console.log(`🐍 [INPUT] Received input for ${projectId}: "${input}"`);
 
     const process = runningProcesses.get(projectId);
     if (!process) {
+      console.log(`🐍 [ERROR] No running process found for ${projectId}`);
+      console.log(`🐍 [DEBUG] Available processes: ${Array.from(runningProcesses.keys()).join(', ')}`);
       return res.status(404).json({ error: 'No running process found' });
     }
 
+    console.log(`🐍 [DEBUG] Found process for ${projectId}, writing input...`);
+    
     try {
       process.stdin.write(input + '\n');
+      console.log(`🐍 [INPUT] Successfully sent input to ${projectId}`);
       res.json({ success: true });
     } catch (error) {
+      console.log(`🐍 [ERROR] Failed to send input to ${projectId}:`, error);
       res.status(500).json({ error: 'Failed to send input' });
     }
   });
