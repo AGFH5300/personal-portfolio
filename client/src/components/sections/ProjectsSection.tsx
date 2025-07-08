@@ -74,7 +74,7 @@ export default function ProjectsSection() {
           ))}
         </div>
 
-        {/* Learning Journey Section - Under Construction */}
+        {/* Learning Journey Section - Under Maintenance */}
         <motion.div
           className="mt-16 text-center"
           initial={{ opacity: 0, y: 20 }}
@@ -114,9 +114,9 @@ export default function ProjectsSection() {
               </div>
 
               {/* Construction text on tape */}
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-400 border-2 border-black px-4 py-2 rounded shadow-lg">
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-400 border-2 border-black px-4 py-2 rounded shadow-lg"  style={{ marginTop: '10px' }}>
                 <div className="text-black font-bold text-sm uppercase tracking-wide">
-                  Under Construction
+                  Under Maintenance
                 </div>
               </div>
             </div>
@@ -152,7 +152,7 @@ export default function ProjectsSection() {
                 </div>
               </div>
 
-              <Link href="/all-projects">
+              <Link href="">
                 <Button size="lg" className="group cursor-not-allowed opacity-60" disabled>
                   View All My Projects
                   <ArrowRight className="ml-2 h-4 w-4" />
