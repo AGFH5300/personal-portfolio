@@ -244,14 +244,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log(`🐍 [RESPONSE] Sending complete: ${response}`);
       res.write(response + '\n');
 
-      // Don't end the response immediately - keep connection alive for potential input
-      setTimeout(() => {
-        if (!res.headersSent) {
-          res.end();
-        }
-        runningProcesses.delete(projectId);
-        console.log(`🐍 [DEBUG] Process ${projectId} removed from runningProcesses after delay`);
-      }, 5000);
+      // Keep the process in memory and connection alive - don't clean up automatically
+      console.log(`🐍 [DEBUG] Process ${projectId} completed but keeping connection alive`);
     });
 
     // Handle process errors
@@ -264,17 +258,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
       runningProcesses.delete(projectId);
     });
 
-    // Clean up on client disconnect - but only after a longer delay to prevent immediate killing
+    // Keep track of client disconnect but don't kill process automatically
     req.on('close', () => {
-      console.log(`🐍 [DEBUG] Client disconnected for ${projectId}`);
-      setTimeout(() => {
-        if (runningProcesses.has(projectId)) {
-          console.log(`🐍 [DEBUG] Killing process for ${projectId} after delay`);
-          pythonProcess.kill();
-          runningProcesses.delete(projectId);
-        }
-      }, 10000); // 10 second delay to allow for proper interaction
+      console.log(`🐍 [DEBUG] Client disconnected for ${projectId} - keeping process alive`);
+      // Don't kill the process - let it continue running
     });
+  });
+
+  // Stop a running process
+  app.post("/api/stop-code/:projectId", (req, res) => {
+    const { projectId } = req.params;
+    console.log(`🐍 [DEBUG] Stopping process for ${projectId}`);
+
+    const process = runningProcesses.get(projectId);
+    if (!process) {
+      console.log(`🐍 [ERROR] No running process found for ${projectId}`);
+      return res.status(404).json({ error: 'No running process found' });
+    }
+
+    try {
+      process.kill('SIGTERM');
+      runningProcesses.delete(projectId);
+      console.log(`🐍 [DEBUG] Successfully stopped process for ${projectId}`);
+      res.json({ success: true });
+    } catch (error) {
+      console.log(`🐍 [ERROR] Failed to stop process for ${projectId}:`, error);
+      res.status(500).json({ error: 'Failed to stop process' });
+    }
   });
 
   // Handle code input

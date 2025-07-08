@@ -127,10 +127,8 @@ export default function AllProjects() {
 
               if (data.type === 'complete') {
                 console.log(`🌐 [DEBUG] Process complete for ${projectId}`);
-                // Don't immediately stop running - keep terminal open for potential restarts
-                setTimeout(() => {
-                  updateProjectState(projectId, { isRunning: false });
-                }, 2000);
+                // Keep terminal open and mark as not running so user can restart if needed
+                updateProjectState(projectId, { isRunning: false });
               } else if (data.type === 'output' && (data.content.includes('Enter') || data.content.includes(':') || data.content.includes('?'))) {
                 console.log(`🌐 [DEBUG] Waiting for input detected for ${projectId}`);
                 updateProjectState(projectId, { waitingForInput: true });
@@ -200,8 +198,24 @@ export default function AllProjects() {
     }
   };
 
-  const closeTerminal = (projectId: string) => {
+  const closeTerminal = async (projectId: string) => {
     console.log(`🌐 [DEBUG] Closing terminal for: ${projectId}`);
+    
+    // Stop the running process
+    try {
+      const response = await fetch(`/api/stop-code/${projectId}`, {
+        method: 'POST'
+      });
+      
+      if (response.ok) {
+        console.log(`🌐 [DEBUG] Process stopped successfully for ${projectId}`);
+      } else {
+        console.log(`🌐 [DEBUG] Process may have already stopped for ${projectId}`);
+      }
+    } catch (error) {
+      console.log(`🌐 [DEBUG] Error stopping process for ${projectId}:`, error);
+    }
+
     setActiveTerminal(null);
     updateProjectState(projectId, {
       isRunning: false,
