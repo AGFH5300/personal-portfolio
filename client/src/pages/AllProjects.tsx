@@ -398,19 +398,15 @@ export default function AllProjects() {
                 }}
                 className="bg-gray-900 p-4 h-96 overflow-y-auto font-mono text-sm text-green-400"
               >
-                {getProjectState(activeTerminal).output.length === 0 ? (
-                  <div className="text-gray-500">Initializing project...</div>
-                ) : (
-                  getProjectState(activeTerminal).output.map((output, idx) => (
-                    <div key={idx} className={`whitespace-pre-wrap ${
-                      output.type === 'error' ? 'text-red-400' : 
-                      output.type === 'input' ? 'text-blue-400' :
-                      'text-green-400'
-                    }`}>
-                      {output.content}
-                    </div>
-                  ))
-                )}
+                {getProjectState(activeTerminal).output.map((output, idx) => (
+                  <div key={idx} className={`whitespace-pre-wrap ${
+                    output.type === 'error' ? 'text-red-400' : 
+                    output.type === 'input' ? 'text-blue-400' :
+                    'text-green-400'
+                  }`}>
+                    {output.content}
+                  </div>
+                ))}
               </div>
 
               {getProjectState(activeTerminal).waitingForInput && (
