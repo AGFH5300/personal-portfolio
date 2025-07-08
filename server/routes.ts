@@ -258,14 +258,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       runningProcesses.delete(projectId);
     });
 
-    // Clean up on client disconnect
+    // Clean up on client disconnect - but only after a delay to prevent immediate killing
     req.on('close', () => {
       console.log(`🐍 [DEBUG] Client disconnected for ${projectId}`);
-      if (runningProcesses.has(projectId)) {
-        console.log(`🐍 [DEBUG] Killing process for ${projectId}`);
-        pythonProcess.kill();
-        runningProcesses.delete(projectId);
-      }
+      setTimeout(() => {
+        if (runningProcesses.has(projectId)) {
+          console.log(`🐍 [DEBUG] Killing process for ${projectId} after delay`);
+          pythonProcess.kill();
+          runningProcesses.delete(projectId);
+        }
+      }, 1000); // 1 second delay
     });
   });
 

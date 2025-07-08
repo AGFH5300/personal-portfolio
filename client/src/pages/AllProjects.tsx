@@ -4,9 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Code2, Play, Square, Terminal } from "lucide-react";
+import { ArrowLeft, Code2, Play, Square, Terminal, X } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 
 interface TerminalOutput {
   type: 'output' | 'error' | 'input' | 'complete';
@@ -18,11 +18,16 @@ interface ProjectState {
   output: TerminalOutput[];
   waitingForInput: boolean;
   currentInput: string;
+  showTerminal: boolean;
 }
 
 export default function AllProjects() {
+  const [location, setLocation] = useLocation();
   const [projectStates, setProjectStates] = useState<Record<string, ProjectState>>({});
   const terminalRefs = useRef<Record<string, HTMLDivElement>>({});
+  
+  // Get active project from URL hash
+  const activeProject = location.includes('#') ? location.split('#')[1] : null;
 
   useEffect(() => {
     // Auto-scroll terminals when output changes
@@ -39,7 +44,8 @@ export default function AllProjects() {
       isRunning: false,
       output: [],
       waitingForInput: false,
-      currentInput: ""
+      currentInput: "",
+      showTerminal: false
     };
   };
 
@@ -53,22 +59,30 @@ export default function AllProjects() {
   const runProject = async (projectId: string) => {
     console.log(`🌐 [DEBUG] Starting project: ${projectId}`);
     
+    // Show terminal and update URL
+    setLocation(`/all#${projectId}`);
+    
     updateProjectState(projectId, {
       isRunning: true,
       output: [{ type: 'output', content: `Starting ${projectId}...\n---\n` }],
-      waitingForInput: false
+      waitingForInput: false,
+      showTerminal: true
     });
 
     try {
       console.log(`🌐 [DEBUG] Making fetch request to /api/run-code/${projectId}`);
       
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+      
       const response = await fetch(`/api/run-code/${projectId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal
       });
 
+      clearTimeout(timeoutId);
       console.log(`🌐 [DEBUG] Response status: ${response.status}`);
-      console.log(`🌐 [DEBUG] Response headers:`, Object.fromEntries(response.headers.entries()));
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -76,50 +90,50 @@ export default function AllProjects() {
         throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
       }
 
-      const reader = response.body?.getReader();
-      if (!reader) {
-        console.log(`🌐 [ERROR] No response body reader available`);
+      if (!response.body) {
+        console.log(`🌐 [ERROR] No response body available`);
         throw new Error('No response body');
       }
 
       console.log(`🌐 [DEBUG] Starting to read streaming response...`);
-      let chunkCount = 0;
+      
+      // Use a different approach for reading the stream
+      const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
+      let buffer = '';
 
       while (true) {
         const { done, value } = await reader.read();
-        chunkCount++;
-        console.log(`🌐 [DEBUG] Chunk ${chunkCount}: done=${done}, value length=${value?.length || 0}`);
         
         if (done) {
-          console.log(`🌐 [DEBUG] Stream complete after ${chunkCount} chunks`);
+          console.log(`🌐 [DEBUG] Stream complete`);
           break;
         }
 
-        const chunk = new TextDecoder().decode(value);
-        console.log(`🌐 [DEBUG] Chunk content: "${chunk}"`);
-        
-        const lines = chunk.split('\n').filter(line => line.trim());
-        console.log(`🌐 [DEBUG] Lines extracted: ${lines.length}`);
+        buffer += value;
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || ''; // Keep the last incomplete line in buffer
 
         for (const line of lines) {
-          console.log(`🌐 [DEBUG] Processing line: "${line}"`);
-          try {
-            const data = JSON.parse(line);
-            console.log(`🌐 [DEBUG] Parsed JSON:`, data);
-            
-            updateProjectState(projectId, {
-              output: [...getProjectState(projectId).output, data]
-            });
-            
-            if (data.type === 'complete') {
-              console.log(`🌐 [DEBUG] Process complete for ${projectId}`);
-              updateProjectState(projectId, { isRunning: false });
-            } else if (data.type === 'output' && (data.content.includes('Enter') || data.content.includes(':'))) {
-              console.log(`🌐 [DEBUG] Waiting for input detected for ${projectId}`);
-              updateProjectState(projectId, { waitingForInput: true });
+          if (line.trim()) {
+            console.log(`🌐 [DEBUG] Processing line: "${line}"`);
+            try {
+              const data = JSON.parse(line);
+              console.log(`🌐 [DEBUG] Parsed JSON:`, data);
+              
+              updateProjectState(projectId, {
+                output: [...getProjectState(projectId).output, data]
+              });
+              
+              if (data.type === 'complete') {
+                console.log(`🌐 [DEBUG] Process complete for ${projectId}`);
+                updateProjectState(projectId, { isRunning: false });
+              } else if (data.type === 'output' && (data.content.includes('Enter') || data.content.includes(':'))) {
+                console.log(`🌐 [DEBUG] Waiting for input detected for ${projectId}`);
+                updateProjectState(projectId, { waitingForInput: true });
+              }
+            } catch (e) {
+              console.log(`🌐 [ERROR] Failed to parse JSON line: "${line}"`, e);
             }
-          } catch (e) {
-            console.log(`🌐 [ERROR] Failed to parse JSON line: "${line}"`, e);
           }
         }
       }
@@ -144,8 +158,9 @@ export default function AllProjects() {
       return;
     }
 
+    const inputValue = state.currentInput;
     updateProjectState(projectId, {
-      output: [...state.output, { type: 'input', content: `> ${state.currentInput}\n` }],
+      output: [...state.output, { type: 'input', content: `> ${inputValue}\n` }],
       waitingForInput: false,
       currentInput: ""
     });
@@ -156,7 +171,7 @@ export default function AllProjects() {
       const response = await fetch(`/api/code-input/${projectId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ input: state.currentInput })
+        body: JSON.stringify({ input: inputValue })
       });
 
       console.log(`🌐 [INPUT] Input response status: ${response.status}`);
@@ -181,13 +196,15 @@ export default function AllProjects() {
     }
   };
 
-  const stopProject = (projectId: string) => {
+  const closeTerminal = (projectId: string) => {
     updateProjectState(projectId, {
       isRunning: false,
       output: [],
       waitingForInput: false,
-      currentInput: ""
+      currentInput: "",
+      showTerminal: false
     });
+    setLocation('/all');
   };
 
   const getDifficultyColor = (difficulty: string) => {
@@ -240,9 +257,69 @@ export default function AllProjects() {
           <h2 className="text-3xl font-bold text-dark mb-4">Interactive Coding Projects</h2>
           <div className="w-20 h-1 bg-accent mx-auto"></div>
           <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
-            Run and interact with my coding projects directly in your browser. Each project has its own terminal for real-time execution.
+            Run and interact with my coding projects directly in your browser. Click any project to execute it.
           </p>
         </motion.div>
+
+        {/* Terminal Overlay */}
+        {activeProject && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+          >
+            <div className="bg-white rounded-lg w-full max-w-4xl max-h-[80vh] overflow-hidden">
+              <div className="bg-gray-800 px-4 py-3 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Terminal className="h-5 w-5 text-green-400" />
+                  <span className="text-green-400 font-mono">
+                    {personalData.codingProjects.find(p => p.id === activeProject)?.name || activeProject}
+                  </span>
+                </div>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => closeTerminal(activeProject)}
+                  className="text-gray-400 hover:text-white"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+              
+              <div className="bg-gray-900 p-4 h-96 overflow-y-auto font-mono text-sm text-green-400">
+                {getProjectState(activeProject).output.map((output, idx) => (
+                  <div key={idx} className={`whitespace-pre-wrap ${
+                    output.type === 'error' ? 'text-red-400' : 
+                    output.type === 'input' ? 'text-blue-400' :
+                    'text-green-400'
+                  }`}>
+                    {output.content}
+                  </div>
+                ))}
+              </div>
+              
+              {getProjectState(activeProject).waitingForInput && (
+                <div className="border-t border-gray-700 p-3 bg-gray-800 flex gap-2">
+                  <Input
+                    value={getProjectState(activeProject).currentInput}
+                    onChange={(e) => updateProjectState(activeProject, { currentInput: e.target.value })}
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        sendInput(activeProject);
+                      }
+                    }}
+                    placeholder="Enter input..."
+                    className="bg-gray-700 border-gray-600 text-green-400 font-mono"
+                    autoFocus
+                  />
+                  <Button onClick={() => sendInput(activeProject)}>
+                    Send
+                  </Button>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
 
         {/* Projects Grid - 3 columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -254,15 +331,14 @@ export default function AllProjects() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="flex flex-col"
               >
-                <Card className="flex-1 flex flex-col">
+                <Card className="h-full flex flex-col">
                   <CardHeader className="pb-3">
                     <div className="flex items-center gap-2 mb-2">
                       <Code2 className="h-5 w-5 text-accent" />
                       <CardTitle className="text-lg">{project.name}</CardTitle>
                     </div>
-                    <p className="text-sm text-gray-600 line-clamp-2">{project.description}</p>
+                    <p className="text-sm text-gray-600">{project.description}</p>
                   </CardHeader>
                   
                   <CardContent className="flex-1 flex flex-col">
@@ -273,85 +349,21 @@ export default function AllProjects() {
                       </Badge>
                     </div>
                     
-                    <div className="mb-4">
+                    <div className="mb-6">
                       <Badge variant="secondary" className={`text-xs ${getCategoryColor(project.category)}`}>
                         {project.category}
                       </Badge>
                     </div>
 
-                    <div className="flex gap-2 mb-4">
+                    <div className="mt-auto">
                       <Button 
-                        size="sm" 
-                        className="flex-1"
+                        className="w-full"
                         onClick={() => runProject(project.id)}
                         disabled={state.isRunning}
                       >
-                        <Play className="h-4 w-4 mr-1" />
-                        Run
+                        <Play className="h-4 w-4 mr-2" />
+                        {state.isRunning ? 'Running...' : 'Run Project'}
                       </Button>
-                      {state.isRunning && (
-                        <Button 
-                          size="sm" 
-                          variant="destructive"
-                          onClick={() => stopProject(project.id)}
-                        >
-                          <Square className="h-4 w-4" />
-                        </Button>
-                      )}
-                    </div>
-
-                    {/* Individual Terminal */}
-                    <div className="bg-gray-900 rounded-lg overflow-hidden flex-1 flex flex-col min-h-[300px]">
-                      <div className="bg-gray-800 px-3 py-2 flex items-center gap-2">
-                        <Terminal className="h-4 w-4 text-green-400" />
-                        <span className="text-green-400 text-xs font-mono">
-                          {state.isRunning ? `Running ${project.id}...` : `Terminal - ${project.id}`}
-                        </span>
-                      </div>
-                      
-                      <div 
-                        ref={(el) => {
-                          if (el) terminalRefs.current[project.id] = el;
-                        }}
-                        className="p-3 flex-1 overflow-y-auto font-mono text-xs text-green-400 bg-gray-900"
-                      >
-                        {state.output.length === 0 ? (
-                          <div className="text-gray-500">Click "Run" to execute this project...</div>
-                        ) : (
-                          state.output.map((output, idx) => (
-                            <div key={idx} className={`whitespace-pre-wrap ${
-                              output.type === 'error' ? 'text-red-400' : 
-                              output.type === 'input' ? 'text-blue-400' :
-                              'text-green-400'
-                            }`}>
-                              {output.content}
-                            </div>
-                          ))
-                        )}
-                      </div>
-                      
-                      {state.waitingForInput && (
-                        <div className="border-t border-gray-700 p-2 flex gap-2">
-                          <Input
-                            value={state.currentInput}
-                            onChange={(e) => updateProjectState(project.id, { currentInput: e.target.value })}
-                            onKeyPress={(e) => {
-                              if (e.key === 'Enter') {
-                                sendInput(project.id);
-                              }
-                            }}
-                            placeholder="Enter input..."
-                            className="bg-gray-800 border-gray-600 text-green-400 font-mono text-xs"
-                          />
-                          <Button 
-                            size="sm" 
-                            onClick={() => sendInput(project.id)}
-                            className="text-xs"
-                          >
-                            Send
-                          </Button>
-                        </div>
-                      )}
                     </div>
                   </CardContent>
                 </Card>
