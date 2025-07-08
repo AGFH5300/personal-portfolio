@@ -24,8 +24,8 @@ export default function HeroSection() {
             <div className="relative">
               <div
                 aria-label="Profile initials placeholder"
-                className="flex items-center justify-center rounded-full w-40 h-40 sm:w-64 sm:h-64 mx-auto mb-8 border-4 border-white
-                           shadow-xl bg-gradient-to-tr from-primary to-secondary text-white text-5xl sm:text-7xl font-extrabold select-none"
+                className="relative z-50 flex items-center justify-center rounded-full w-40 h-40 sm:w-64 sm:h-64 mx-auto mb-8 border-4 border-white
+                           shadow-xl bg-blue-600 text-white text-5xl sm:text-7xl font-extrabold select-none"
               >
                 AG
               </div>
