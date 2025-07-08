@@ -138,46 +138,59 @@ export default function AllProjects() {
 
       console.log(`🌐 [DEBUG] Starting to read streaming response...`);
 
-      // Use a different approach for reading the stream
-      const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
+      // Read the response as text chunks
+      const reader = response.body?.getReader();
+      if (!reader) {
+        throw new Error('No reader available');
+      }
+
+      const decoder = new TextDecoder();
       let buffer = '';
 
-      while (true) {
-        const { done, value } = await reader.read();
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
 
-        if (done) {
-          console.log(`🌐 [DEBUG] Stream complete`);
-          break;
-        }
+          if (done) {
+            console.log(`🌐 [DEBUG] Stream complete`);
+            break;
+          }
 
-        buffer += value;
-        const lines = buffer.split('\n');
-        buffer = lines.pop() || ''; // Keep the last incomplete line in buffer
+          // Decode the chunk and add to buffer
+          const chunk = decoder.decode(value, { stream: true });
+          buffer += chunk;
 
-        for (const line of lines) {
-          if (line.trim()) {
-            console.log(`🌐 [DEBUG] Processing line: "${line}"`);
-            try {
-              const data = JSON.parse(line);
-              console.log(`🌐 [DEBUG] Parsed JSON:`, data);
+          // Process complete lines
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || ''; // Keep the last incomplete line in buffer
 
-              updateProjectState(projectId, {
-                output: [...getProjectState(projectId).output, data]
-              });
+          for (const line of lines) {
+            if (line.trim()) {
+              console.log(`🌐 [DEBUG] Processing line: "${line}"`);
+              try {
+                const data = JSON.parse(line);
+                console.log(`🌐 [DEBUG] Parsed JSON:`, data);
 
-              if (data.type === 'complete') {
-                console.log(`🌐 [DEBUG] Process complete for ${projectId}`);
-                // Keep terminal open and mark as not running so user can restart if needed
-                updateProjectState(projectId, { isRunning: false });
-              } else if (data.type === 'output' && (data.content.includes('Enter') || data.content.includes(':') || data.content.includes('?'))) {
-                console.log(`🌐 [DEBUG] Waiting for input detected for ${projectId}`);
-                updateProjectState(projectId, { waitingForInput: true });
+                updateProjectState(projectId, {
+                  output: [...getProjectState(projectId).output, data]
+                });
+
+                if (data.type === 'complete') {
+                  console.log(`🌐 [DEBUG] Process complete for ${projectId}`);
+                  // Keep terminal open and mark as not running so user can restart if needed
+                  updateProjectState(projectId, { isRunning: false });
+                } else if (data.type === 'output' && (data.content.includes('Enter') || data.content.includes(':') || data.content.includes('?'))) {
+                  console.log(`🌐 [DEBUG] Waiting for input detected for ${projectId}`);
+                  updateProjectState(projectId, { waitingForInput: true });
+                }
+              } catch (e) {
+                console.log(`🌐 [ERROR] Failed to parse JSON line: "${line}"`, e);
               }
-            } catch (e) {
-              console.log(`🌐 [ERROR] Failed to parse JSON line: "${line}"`, e);
             }
           }
         }
+      } finally {
+        reader.releaseLock();
       }
     } catch (error) {
       console.log(`🌐 [ERROR] Project execution failed for ${projectId}:`, error);
