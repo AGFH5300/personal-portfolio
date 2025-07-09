@@ -1,49 +1,48 @@
 import random
 
-print("=== Rock Paper Scissors ===")
-print("Best of 3 rounds wins!")
-print("Enter: rock, paper, or scissors")
-print()
+rock = '''
+                _    
+               | |   
+ _ __ ___   ___| | __
+| '__/ _ \ / __| |/ /
+| | | (_) | (__|   < 
+|_|  \___/ \___|_|\_
+'''
 
-player_score = 0
-computer_score = 0
-round_num = 1
+paper = '''
+ _ __   __ _ _ __   ___ _ __ 
+| '_ \ / _` | '_ \ / _ \ '__|
+| |_) | (_| | |_) |  __/ |   
+| .__/ \__,_| .__/ \___|_|   
+| |         | |              
+|_|         |_|       
+'''
 
-while player_score < 2 and computer_score < 2:
-    print(f"--- Round {round_num} ---")
-    
-    # Get player choice
-    player_choice = input("Your choice: ").lower().strip()
-    
-    if player_choice not in ['rock', 'paper', 'scissors']:
-        print("Invalid choice! Please enter rock, paper, or scissors.")
-        continue
-    
-    # Computer choice
-    computer_choice = random.choice(['rock', 'paper', 'scissors'])
-    print(f"Computer choice: {computer_choice}")
-    
-    # Determine winner
-    if player_choice == computer_choice:
-        print("It's a tie!")
-    elif (player_choice == 'rock' and computer_choice == 'scissors') or \
-         (player_choice == 'paper' and computer_choice == 'rock') or \
-         (player_choice == 'scissors' and computer_choice == 'paper'):
-        print("You win this round!")
-        player_score += 1
-    else:
-        print("Computer wins this round!")
-        computer_score += 1
-    
-    print(f"Score - You: {player_score}, Computer: {computer_score}")
-    print()
-    round_num += 1
+scissors = '''
+          _                        
+         (_)                       
+ ___  ___ _ ___ ___  ___  _ __ ___ 
+/ __|/ __| / __/ __|/ _ \| '__/ __|
+\__ \ (__| \__ \__ \ (_) | |  \__ 
+|___/\___|_|___/___/\___/|_|  |___/
+'''
 
-# Final result
-print("=== GAME OVER ===")
-if player_score > computer_score:
-    print("🎉 Congratulations! You won the game!")
+options = [rock, paper, scissors]
+
+user_choice = int(input("What do you choose? Type 0 for Rock, 1 for Paper or 2 for Scissors.\n"))
+if user_choice >= 3 or user_choice < 0:
+    print("You entered an invalid choice")
 else:
-    print("💻 Computer wins the game! Better luck next time!")
-    
-print(f"Final Score - You: {player_score}, Computer: {computer_score}")
+    print(f"You chose\n {options[user_choice]}")
+
+    computer_choice = random.randint(0, 2)
+    print(f"The computer chose\n {options[computer_choice]}")
+
+    if user_choice == 0 and computer_choice == 2:
+        print("You Win!")
+    elif computer_choice == 0 and user_choice == 2:
+        print("You Lose :(")
+    elif computer_choice > user_choice:
+        print("You Lose :(")
+    elif computer_choice == user_choice:
+        print("It is a draw")

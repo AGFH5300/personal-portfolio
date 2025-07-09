@@ -204,51 +204,6 @@ export const personalData = {
     },
   ],
 
-  pythonProjects: [
-    {
-      id: "bmi-calculator",
-      name: "BMI Calculator",
-      description: "Calculate your Body Mass Index and get health recommendations based on your height and weight.",
-      category: "Health & Fitness",
-      difficulty: "Beginner"
-    },
-    {
-      id: "rock-paper-scissors",
-      name: "Rock Paper Scissors",
-      description: "Classic game where you play against the computer. Best of three rounds wins!",
-      category: "Games",
-      difficulty: "Beginner"
-    },
-    {
-      id: "fizzbuzz",
-      name: "FizzBuzz",
-      description: "The classic programming challenge. Numbers divisible by 3 print Fizz, by 5 print Buzz, by both print FizzBuzz.",
-      category: "Logic",
-      difficulty: "Beginner"
-    },
-    {
-      id: "password-generator",
-      name: "Password Generator",
-      description: "Generate secure random passwords with customizable length and character types for better security.",
-      category: "Utility",
-      difficulty: "Intermediate"
-    },
-    {
-      id: "hangman",
-      name: "Hangman",
-      description: "Guess the word letter by letter before running out of attempts in this classic word game.",
-      category: "Games",
-      difficulty: "Intermediate"
-    },
-    {
-      id: "life-left-weeks",
-      name: "Life Left in Weeks",
-      description: "Calculate how many weeks you have left based on average life expectancy. A perspective on time.",
-      category: "Life",
-      difficulty: "Beginner"
-    }
-  ],
-
   clubs: [
     {
       name: "DIAconomics Club",
@@ -351,7 +306,6 @@ export const personalData = {
     },
   ],
 
-  // Coding Projects - Add your project files to server/code-projects/ and list them here
   codingProjects: [
     {
       id: "bmi-calculator",
@@ -372,7 +326,7 @@ export const personalData = {
     {
       id: "fizzbuzz",
       name: "FizzBuzz Challenge",
-      description: "Programming classic: print numbers 1-100, but replace multiples of 3 with 'Fizz' and 5 with 'Buzz'.",
+      description: "Print numbers 1-100, but replace multiples of 3 with 'Fizz' and 5 with 'Buzz' and of both with 'FizzBuzz'.",
       language: "Python",
       difficulty: "Beginner", 
       category: "Logic & Math"

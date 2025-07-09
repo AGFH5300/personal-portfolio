@@ -1,49 +1,25 @@
 import random
-import string
+letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
-print("=== Password Generator ===")
-print("Generate secure random passwords!")
-print()
+print("Welcome to the PyPassword Generator!")
+nr_letters = int(input("How many letters would you like in your password?\n"))
+nr_symbols = int(input(f"How many symbols would you like?\n"))
+nr_numbers = int(input(f"How many numbers would you like?\n"))
 
-# Get user preferences
-length = int(input("Enter password length (8-128): "))
-if length < 8:
-    length = 8
-    print("Minimum length set to 8 for security.")
-elif length > 128:
-    length = 128
-    print("Maximum length set to 128.")
+passwordList = []
+for n in range(0, nr_letters):
+    passwordList.append(random.choice(letters))
+for n in range(0, nr_symbols):
+    passwordList.append(random.choice(symbols))
+for n in range(0, nr_numbers):
+    passwordList.append(random.choice(numbers))
 
-include_lowercase = input("Include lowercase letters? (y/n): ").lower().startswith('y')
-include_uppercase = input("Include uppercase letters? (y/n): ").lower().startswith('y')
-include_numbers = input("Include numbers? (y/n): ").lower().startswith('y')
-include_symbols = input("Include symbols? (y/n): ").lower().startswith('y')
+random.shuffle(passwordList)
 
-# Build character set
-characters = ""
-if include_lowercase:
-    characters += string.ascii_lowercase
-if include_uppercase:
-    characters += string.ascii_uppercase
-if include_numbers:
-    characters += string.digits
-if include_symbols:
-    characters += "!@#$%^&*()_+-=[]{}|;:,.<>?"
+password = ""
+for character in passwordList:
+    password += character
 
-if not characters:
-    print("No character types selected! Using all types.")
-    characters = string.ascii_letters + string.digits + "!@#$%^&*()_+-=[]{}|;:,.<>?"
-
-# Generate password
-password = ''.join(random.choice(characters) for _ in range(length))
-
-print(f"\nGenerated Password: {password}")
-print(f"Password Length: {length}")
-print(f"Character types used: {len(set(characters))} different characters")
-
-# Security tips
-print("\n=== Security Tips ===")
-print("• Store your password in a secure password manager")
-print("• Don't reuse this password for multiple accounts")
-print("• Consider using 2-factor authentication")
-print("• Update passwords regularly")
+print(password)

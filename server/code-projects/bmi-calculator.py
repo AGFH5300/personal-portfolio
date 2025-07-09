@@ -12,7 +12,6 @@ bmi = weight / (height ** 2)
 
 print(f"\nYour BMI is: {bmi:.1f}")
 
-# Provide health recommendations
 if bmi < 18.5:
     category = "Underweight"
     recommendation = "Consider consulting a healthcare provider about healthy weight gain."
