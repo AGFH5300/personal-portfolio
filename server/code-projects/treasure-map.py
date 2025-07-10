@@ -64,7 +64,7 @@ def get_treasure_type():
 def main():
     """Main function to run the treasure map game."""
     while True:
-        print("🗺️  Welcome to Treasure Map! 🗺️")
+        print("Welcome to Treasure Map!")
         print("Place treasures on a 3x3 grid.")
         print("Position format: RC (Row Column), e.g., 23 = Row 2, Column 3")
 
@@ -84,7 +84,7 @@ def main():
 
             if command == 'done':
                 if placed_treasures > 0:
-                    print("\n🎉 Your treasure map is complete!")
+                    print("\nYour treasure map is complete!")
                     display_map(game_map)
                     break
                 else:
@@ -121,7 +121,7 @@ def main():
         print()
         create_another = input("Would you like to create another treasure map? (y/n): ").lower().strip()
         if create_another not in ['y']:
-            print("Thanks for playing Treasure Map! 🗺️")
+            print("Thanks for playing Treasure Map!")
             break
         print()
 
