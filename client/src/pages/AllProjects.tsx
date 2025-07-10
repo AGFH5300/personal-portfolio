@@ -596,40 +596,32 @@ export default function AllProjects() {
           })}
         </div>
 
-        {/* Coming Soon Section */}
+        {/* More Projects Section */}
         <motion.div
-          className="mt-16 text-center"
+          className="mt-20 w-full"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <Card className="max-w-2xl mx-auto bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20">
-            <CardContent className="p-8">
-              <div className="flex items-center justify-center mb-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Code2 className="text-primary" size={24} />
+          <div className="bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-xl p-8 mx-4">
+            <div className="text-center max-w-4xl mx-auto">
+              <div className="flex items-center justify-center mb-6">
+                <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
+                  <Code2 className="text-gray-600" size={28} />
                 </div>
               </div>
               
-              <h3 className="text-xl font-bold text-dark mb-3">
-                More Projects Coming Soon!
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                Project Collection Growing
               </h3>
               
-              <p className="text-gray-600 mb-4">
-                This page is constantly being updated with new coding projects. Check back regularly to discover my latest work and experiments across different programming languages and technologies.
+              <p className="text-gray-600 text-lg leading-relaxed max-w-3xl mx-auto">
+                This collection represents my journey through various programming concepts and challenges. 
+                As I continue learning and building, new projects may be added to showcase different 
+                skills and technologies I explore.
               </p>
-              
-              <div className="flex items-center justify-center gap-4 text-sm text-gray-500">
-                <span>•</span>
-                <span>New projects added weekly</span>
-                <span>•</span>
-                <span>Various difficulty levels</span>
-                <span>•</span>
-                <span>Multiple programming languages</span>
-                <span>•</span>
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </motion.div>
       </div>
     </div>
