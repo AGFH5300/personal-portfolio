@@ -595,6 +595,42 @@ export default function AllProjects() {
             );
           })}
         </div>
+
+        {/* Coming Soon Section */}
+        <motion.div
+          className="mt-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <Card className="max-w-2xl mx-auto bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20">
+            <CardContent className="p-8">
+              <div className="flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Code2 className="text-primary" size={24} />
+                </div>
+              </div>
+              
+              <h3 className="text-xl font-bold text-dark mb-3">
+                More Projects Coming Soon!
+              </h3>
+              
+              <p className="text-gray-600 mb-4">
+                This page is constantly being updated with new coding projects. Check back regularly to discover my latest work and experiments across different programming languages and technologies.
+              </p>
+              
+              <div className="flex items-center justify-center gap-4 text-sm text-gray-500">
+                <span>•</span>
+                <span>New projects added weekly</span>
+                <span>•</span>
+                <span>Various difficulty levels</span>
+                <span>•</span>
+                <span>Multiple programming languages</span>
+                <span>•</span>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
     </div>
   );
