@@ -97,5 +97,4 @@ a8"     "" 88 88P'    "8a 88P'    "8a a8P_____88 88P'   "Y8
             break
         print()
 
-if __name__ == "__main__":
-    main()
+main()

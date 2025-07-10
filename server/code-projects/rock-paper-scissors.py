@@ -142,5 +142,4 @@ def main():
             print("Thanks for playing Rock Paper Scissors! 🪨📄✂️")
             break
 
-if __name__ == "__main__":
-    main()
+main()

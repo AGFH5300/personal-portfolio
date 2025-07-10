@@ -120,5 +120,4 @@ def main():
         print("Starting new calculation...")
         print("="*50)
 
-if __name__ == "__main__":
-    main()
+main()
