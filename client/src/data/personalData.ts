@@ -58,7 +58,7 @@ export const personalData = {
       position: "Python Developer",
       date: "Apr 2025",
       description:
-        "Created a python script to sort, grab and graph data from a dataset with team members Ayyukta Ankam.",
+        "Created a python script to sort, grab and graph data from a dataset with team members Avyukta Ankam.",
       achievements: ["Python Data Analysis Project"],
       image: "",
     },
@@ -67,26 +67,26 @@ export const personalData = {
       position: "Competitor",
       date: "Jan 2025",
       description:
-        "Won 1st place solving multiple math problems as a team with Vihaan Deshpande, Lavitra Dhoot and Ayyukta Ankam.",
+        "Won 1st place solving multiple math problems as a team with Vihaan Deshpande, Lavitra Dhoot and Avyukta Ankam.",
       achievements: ["1st Place Winner"],
-      image: "",
+      image: "https://i.postimg.cc/CKK4Xd4h/mathletes.jpg",
     },
     {
       name: "DIA Game Jam Competition",
       position: "Game Developer",
       date: "Mar-Apr 2025",
       description: "Created an idle clicker game which won the competition.",
-      achievements: ["Winner - Game Development"],
+      achievements: ["1st Place Winner"],
       image: "",
     },
     {
-      name: "Annual Business Minds Case Study Competition",
+      name: "Business Minds Case Study Competition",
       position: "Competitor",
       date: "Apr 2025",
       description:
-        "Won 2nd place with peers Alman Bazaz and Ayyukta Ankam in business case study analysis.",
+        "Won 2nd place with peers Alman Bazaz and Avyukta Ankam in business case study analysis.",
       achievements: ["2nd Place Winner"],
-      image: "",
+      image: "https://i.postimg.cc/DfpxTrM9/business-minds.jpg",
     },
     {
       name: "DIAMWEF 2025",
@@ -109,9 +109,18 @@ export const personalData = {
       position: "Delegate",
       date: "Mar 2025",
       description:
-        "Won Best Collaborator in the competition with peers Alman Bazaz and Ayyukta Ankam.",
+        "Won Best Collaborator in the competition with peers Alman Bazaz and Avyukta Ankam.",
       achievements: ["Best Collaborator Award", "1st Place Team Award"],
-      image: "",
+      image: "https://i.postimg.cc/MKhtcWxt/diamec-best-collab.jpg",
+    },
+    {
+      name: "DIATECH 2025",
+      position: "Competitor",
+      date: "Jun 2025",
+      description:
+        "Won best team in Year 10 Digital Design as a team, me Avyukta Ankam, Vihaan Deshpande, Lavitra Dhoot and Sanat Marwah",
+      achievements: ["Best Product", "1st Place Team Award"],
+      image: "https://i.postimg.cc/8CnbSDyh/diatech.jpg"
     },
   ],
 
