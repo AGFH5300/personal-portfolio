@@ -47,7 +47,57 @@ export default function AllProjects() {
       waitingForInput: false,
       currentInput: "",
       showTerminal: false
-    };
+    }
+  };
+
+  const isWaitingForInput = (content: string): boolean => {
+    const inputIndicators = [
+      'Enter',
+      'Type',
+      'Input',
+      'enter',
+      'type',
+      'input',
+      ':',
+      '?',
+      'choose',
+      'Choose',
+      'select',
+      'Select',
+      'What',
+      'what',
+      'Which',
+      'which',
+      'How',
+      'how',
+      'Do you',
+      'do you',
+      'Would you',
+      'would you',
+      'want to',
+      'size pizza',
+      'pepperoni',
+      'cheese',
+      'continue',
+      'yes or no',
+      'y or n',
+      'Y or N'
+    ];
+
+    // Check if the content ends with common input prompts
+    const trimmed = content.trim();
+    const endsWithPrompt = trimmed.endsWith(':') || 
+                          trimmed.endsWith('?') || 
+                          trimmed.endsWith(': ') ||
+                          trimmed.endsWith('? ') ||
+                          trimmed.includes('\n') === false; // Single line output often indicates input needed
+
+    // Check for specific input indicators
+    const hasInputIndicator = inputIndicators.some(indicator => 
+      content.toLowerCase().includes(indicator.toLowerCase())
+    );
+
+    return endsWithPrompt || hasInputIndicator;
   };
 
   const updateProjectState = (projectId: string, updates: Partial<ProjectState> | ((prev: ProjectState) => ProjectState)) => {
@@ -59,13 +109,13 @@ export default function AllProjects() {
         currentInput: "",
         showTerminal: false
       };
-      
+
       const newState = typeof updates === 'function' 
         ? updates(currentState)
         : { ...currentState, ...updates };
-        
+
       console.log(`🌐 [STATE] Updating ${projectId}:`, newState);
-      
+
       return {
         ...prev,
         [projectId]: newState
@@ -80,7 +130,7 @@ export default function AllProjects() {
       if (response.ok) {
         const sessionData = await response.json();
         console.log(`🌐 [SESSION] Loaded ${sessionData.output.length} items for ${projectId}`);
-        
+
         // Convert session data to our format
         const output = sessionData.output.map((item: any) => ({
           type: item.type,
@@ -110,7 +160,7 @@ export default function AllProjects() {
 
     // Load existing session history first
     const hasHistory = await loadSessionHistory(projectId);
-    
+
     if (!hasHistory) {
       updateProjectState(projectId, {
         isRunning: true,
@@ -201,7 +251,7 @@ export default function AllProjects() {
                     // Keep terminal open and mark as not running so user can restart if needed
                     updateProjectState(projectId, { isRunning: false });
                     isReading = false;
-                  } else if (data.type === 'output' && (data.content.includes('Enter') || data.content.includes(':') || data.content.includes('?'))) {
+                  } else if (data.type === 'output' && isWaitingForInput(data.content)) {
                     console.log(`🌐 [DEBUG] Waiting for input detected for ${projectId}`);
                     updateProjectState(projectId, { waitingForInput: true });
                   }
@@ -289,7 +339,7 @@ export default function AllProjects() {
       const response = await fetch(`/api/session/${projectId}`, {
         method: 'DELETE'
       });
-      
+
       if (response.ok) {
         console.log(`🌐 [SESSION] Cleared history for ${projectId}`);
         updateProjectState(projectId, {
@@ -308,7 +358,7 @@ export default function AllProjects() {
 
     // Load existing session history
     const hasHistory = await loadSessionHistory(projectId);
-    
+
     if (!hasHistory) {
       updateProjectState(projectId, {
         output: [{ type: 'output', content: `Terminal opened for ${projectId}\n---\n` }],
@@ -321,13 +371,13 @@ export default function AllProjects() {
 
   const closeTerminal = async (projectId: string) => {
     console.log(`🌐 [DEBUG] Closing terminal for: ${projectId}`);
-    
+
     // Stop the running process
     try {
       const response = await fetch(`/api/stop-code/${projectId}`, {
         method: 'POST'
       });
-      
+
       if (response.ok) {
         console.log(`🌐 [DEBUG] Process stopped successfully for ${projectId}`);
       } else {
@@ -528,7 +578,7 @@ export default function AllProjects() {
                           </>
                         )}
                       </Button>
-                      
+
                       <Button
                         onClick={() => openTerminalWithHistory(project.id)}
                         variant="outline"
