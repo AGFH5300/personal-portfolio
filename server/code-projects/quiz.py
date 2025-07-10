@@ -191,13 +191,12 @@ def main():
     print(f"That's {percentage:.1f}%!")
     
     if percentage >= 80:
-        print("Excellent work! 🎉")
+        print("Excellent work!")
     elif percentage >= 60:
-        print("Good job! 👍")
+        print("Good job!")
     elif percentage >= 40:
-        print("Not bad, keep practicing! 📚")
+        print("Not bad, keep practicing!")
     else:
-        print("Better luck next time! 💪")
+        print("Better luck next time!")
 
-if __name__ == "__main__":
-    main()
+main()
