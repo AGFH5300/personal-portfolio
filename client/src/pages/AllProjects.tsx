@@ -337,10 +337,14 @@ export default function AllProjects() {
       console.log(`🌐 [DEBUG] Error stopping process for ${projectId}:`, error);
     }
 
+    // Clear session history
+    await clearSessionHistory(projectId);
+
     setActiveTerminal(null);
-    // Don't clear the output - keep it in state for next time
+    // Clear the output state as well
     updateProjectState(projectId, {
       isRunning: false,
+      output: [],
       waitingForInput: false,
       currentInput: "",
       showTerminal: false
