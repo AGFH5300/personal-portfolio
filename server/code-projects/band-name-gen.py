@@ -28,7 +28,7 @@ def generate_band_name():
         f"The {pet} of {city}"
     ]
     
-    print(f"\n🎵 Here are your band name suggestions:")
+    print(f"\nHere are your band name suggestions:")
     print("=" * 40)
     for i, name in enumerate(variations, 1):
         print(f"{i}. {name}")
@@ -41,13 +41,13 @@ def main():
     while True:
         band_names = generate_band_name()
         
-        print(f"\n✨ Hope you found the perfect band name!")
+        print(f"\nHope you found the perfect band name!")
         
         # Ask if user wants to generate another
         print()
         continue_choice = input("Would you like to generate another band name? (y/n): ").lower().strip()
         if continue_choice not in ['y']:
-            print("🎸 Rock on with your new band name! 🎸")
+            print("Rock on with your new band name!")
             break
         print()
 

@@ -83,7 +83,7 @@ def get_processing_options():
 
 def display_results(original_text, delimiter_name, original_list, processed_list, options):
     """Display the results in a formatted way."""
-    print(f"\n📝 Results:")
+    print(f"\nResults:")
     print("=" * 50)
     
     print(f"Original text: {original_text}")
@@ -104,7 +104,7 @@ def display_results(original_text, delimiter_name, original_list, processed_list
         for option, enabled in options.items():
             if enabled:
                 option_name = option.replace("_", " ").title()
-                print(f"  ✅ {option_name}")
+                print(f"  {option_name}")
     
     print(f"\nFinal Python list:")
     print(f"  {processed_list}")
@@ -114,7 +114,7 @@ def display_results(original_text, delimiter_name, original_list, processed_list
 def main():
     """Main function to run the list maker."""
     while True:
-        print("📋 Welcome to the Advanced List Maker! 📋")
+        print("Welcome to the Advanced List Maker!")
         print()
         
         # Get text input
@@ -139,7 +139,7 @@ def main():
         print()
         create_another = input("Would you like to create another list? (y/n): ").lower().strip()
         if create_another not in ['y']:
-            print("Thanks for using the Advanced List Maker! 📋")
+            print("Thanks for using the Advanced List Maker!")
             break
         print()
 

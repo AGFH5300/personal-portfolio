@@ -38,7 +38,7 @@ def kelvin_to_fahrenheit(kelvin):
 
 def display_all_conversions(temp, from_unit):
     """Display temperature in all units."""
-    print(f"\n🌡️  Temperature Conversions:")
+    print(f"\nTemperature Conversions:")
     print("=" * 40)
     
     if from_unit == "Celsius":
@@ -54,22 +54,22 @@ def display_all_conversions(temp, from_unit):
         celsius = kelvin_to_celsius(kelvin)
         fahrenheit = kelvin_to_fahrenheit(kelvin)
     
-    print(f"🔥 Celsius:    {celsius:.2f}°C")
-    print(f"🌡️  Fahrenheit: {fahrenheit:.2f}°F")
-    print(f"❄️  Kelvin:     {kelvin:.2f}K")
+    print(f"Celsius:    {celsius:.2f}°C")
+    print(f"Fahrenheit: {fahrenheit:.2f}°F")
+    print(f"Kelvin:     {kelvin:.2f}K")
     print("=" * 40)
     
     # Add temperature context
     if celsius <= 0:
-        print("💧 Water freezes at this temperature!")
+        print("Water freezes at this temperature!")
     elif celsius >= 100:
-        print("💨 Water boils at this temperature!")
+        print("Water boils at this temperature!")
     elif 20 <= celsius <= 25:
-        print("🌤️  Perfect room temperature!")
+        print("Perfect room temperature!")
     elif celsius < 10:
-        print("🧊 Pretty cold!")
+        print("Pretty cold!")
     elif celsius > 35:
-        print("🔥 Getting hot!")
+        print("Getting hot!")
 
 def get_conversion_choice():
     """Get user's conversion choice."""
@@ -88,7 +88,7 @@ def get_conversion_choice():
 def main():
     """Main function to run the temperature converter."""
     while True:
-        print("🌡️  Temperature Converter 🌡️")
+        print("Temperature Converter")
         
         choice = get_conversion_choice()
         
@@ -127,7 +127,7 @@ def main():
         print()
         convert_again = input("Would you like to convert another temperature? (y/n): ").lower().strip()
         if convert_again not in ['y']:
-            print("Thanks for using the Temperature Converter! 🌡️")
+            print("Thanks for using the Temperature Converter!")
             break
         print()
 

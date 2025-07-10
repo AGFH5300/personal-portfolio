@@ -64,9 +64,9 @@ def display_prime_info(number):
     """Display detailed information about a number."""
     prime_status = is_prime(number)
     
-    print(f"\n🔢 Analysis of {number}:")
+    print(f"\nAnalysis of {number}:")
     print("=" * 30)
-    print(f"Is prime: {'✅ Yes' if prime_status else '❌ No'}")
+    print(f"Is prime: {'Yes' if prime_status else 'No'}")
     
     if number < 2:
         print("Note: Numbers less than 2 are not considered prime.")
@@ -98,7 +98,7 @@ def display_prime_info(number):
 
 def display_range_results(start, end, primes):
     """Display prime numbers found in a range."""
-    print(f"\n🔍 Prime numbers between {start} and {end}:")
+    print(f"\nPrime numbers between {start} and {end}:")
     print("=" * 40)
     
     if primes:
@@ -127,7 +127,7 @@ def display_range_results(start, end, primes):
 def main():
     """Main function to run the prime number checker."""
     while True:
-        print("🔢 Welcome to the Prime Number Checker! 🔢")
+        print("Welcome to the Prime Number Checker!")
         print()
         print("Choose an option:")
         print("1. Check a single number")
@@ -147,7 +147,7 @@ def main():
             display_range_results(start, end, primes)
             
         elif choice == '3':
-            print("\n📚 About Prime Numbers:")
+            print("\nAbout Prime Numbers:")
             print("=" * 40)
             print("• A prime number is a natural number greater than 1")
             print("• It has exactly two factors: 1 and itself")
@@ -165,7 +165,7 @@ def main():
         print()
         check_again = input("Would you like to check more numbers? (y/n): ").lower().strip()
         if check_again not in ['y']:
-            print("Thanks for using the Prime Number Checker! 🔢")
+            print("Thanks for using the Prime Number Checker!")
             break
         print()
 

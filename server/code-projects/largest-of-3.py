@@ -34,21 +34,21 @@ def find_largest_and_smallest(numbers):
 
 def display_results(numbers, largest, smallest, largest_indices, smallest_indices):
     """Display the results in a formatted way."""
-    print(f"\n📊 Results:")
+    print(f"\nResults:")
     print("=" * 40)
     
     print(f"Numbers entered: {', '.join(map(str, numbers))}")
     print(f"Count: {len(numbers)}")
     print()
     
-    print(f"🔺 Largest number: {largest}")
+    print(f"Largest number: {largest}")
     if len(largest_indices) > 1:
         positions = [str(i + 1) for i in largest_indices]
         print(f"   Found at positions: {', '.join(positions)}")
     else:
         print(f"   Found at position: {largest_indices[0] + 1}")
     
-    print(f"🔻 Smallest number: {smallest}")
+    print(f"Smallest number: {smallest}")
     if len(smallest_indices) > 1:
         positions = [str(i + 1) for i in smallest_indices]
         print(f"   Found at positions: {', '.join(positions)}")
@@ -59,18 +59,18 @@ def display_results(numbers, largest, smallest, largest_indices, smallest_indice
         print("   All numbers are equal!")
     else:
         difference = largest - smallest
-        print(f"📏 Difference: {difference}")
+        print(f"Difference: {difference}")
     
     # Calculate average
     average = sum(numbers) / len(numbers)
-    print(f"📈 Average: {average:.2f}")
+    print(f"Average: {average:.2f}")
     
     print("=" * 40)
 
 def main():
     """Main function to run the largest number finder."""
     while True:
-        print("🔢 Welcome to the Largest Number Finder! 🔢")
+        print("Welcome to the Largest Number Finder!")
         print()
         
         # Get number count
@@ -92,7 +92,7 @@ def main():
         print()
         compare_again = input("Would you like to compare more numbers? (y/n): ").lower().strip()
         if compare_again not in ['y']:
-            print("Thanks for using the Largest Number Finder! 🔢")
+            print("Thanks for using the Largest Number Finder!")
             break
         print()
 
