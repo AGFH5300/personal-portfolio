@@ -605,11 +605,6 @@ export default function AllProjects() {
         >
           <div className="bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-xl p-8 mx-4">
             <div className="text-center max-w-4xl mx-auto">
-              <div className="flex items-center justify-center mb-6">
-                <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
-                  <Code2 className="text-gray-600" size={28} />
-                </div>
-              </div>
               
               <h3 className="text-2xl font-bold text-gray-800 mb-4">
                 Project Collection Growing
@@ -617,7 +612,7 @@ export default function AllProjects() {
               
               <p className="text-gray-600 text-lg leading-relaxed max-w-3xl mx-auto">
                 This collection represents my journey through various programming concepts and challenges. 
-                As I continue learning and building, new projects may be added to showcase different 
+                As I continue learning and building, new projects will be added to show the different 
                 skills and technologies I explore.
               </p>
             </div>
