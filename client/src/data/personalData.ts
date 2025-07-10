@@ -308,62 +308,6 @@ export const personalData = {
 
   codingProjects: [
     {
-      id: "bmi-calculator",
-      name: "BMI Calculator",
-      description: "Calculate Body Mass Index based on height and weight with health recommendations.",
-      language: "Python",
-      difficulty: "Beginner",
-      category: "Health & Fitness"
-    },
-    {
-      id: "rock-paper-scissors",
-      name: "Rock Paper Scissors",
-      description: "Classic game against the computer with score tracking and multiple rounds.",
-      language: "Python", 
-      difficulty: "Beginner",
-      category: "Games"
-    },
-    {
-      id: "fizzbuzz",
-      name: "FizzBuzz Challenge",
-      description: "Print numbers 1-100, but replace multiples of 3 with 'Fizz' and 5 with 'Buzz' and of both with 'FizzBuzz'.",
-      language: "Python",
-      difficulty: "Beginner", 
-      category: "Logic & Math"
-    },
-    {
-      id: "password-generator",
-      name: "Password Generator",
-      description: "Generate secure random passwords with customizable length and character types.",
-      language: "Python",
-      difficulty: "Intermediate",
-      category: "Security & Tools"
-    },
-    {
-      id: "hangman",
-      name: "Hangman Game",
-      description: "Guess the word letter by letter in this classic word guessing game with ASCII art.",
-      language: "Python",
-      difficulty: "Intermediate", 
-      category: "Games"
-    },
-    {
-      id: "life-left-weeks",
-      name: "Life Left in Weeks",
-      description: "Calculate how many weeks you have left based on your age and life expectancy.",
-      language: "Python",
-      difficulty: "Beginner",
-      category: "Life & Planning"
-    },
-    {
-      id: "list-maker",
-      name: "List Maker",
-      description: "Convert your text into a list of words with simple string manipulation.",
-      language: "Python",
-      difficulty: "Beginner",
-      category: "Text Processing"
-    },
-    {
       id: "band-name-gen",
       name: "Band Name Generator",
       description: "Generate creative band names by combining city and pet names.",
@@ -386,6 +330,14 @@ export const personalData = {
       language: "Python",
       difficulty: "Advanced",
       category: "Games"
+    },
+    {
+      id: "bmi-calculator",
+      name: "BMI Calculator",
+      description: "Calculate Body Mass Index based on height and weight with health recommendations.",
+      language: "Python",
+      difficulty: "Beginner",
+      category: "Health & Fitness"
     },
     {
       id: "caesar-cipher",
@@ -412,19 +364,19 @@ export const personalData = {
       category: "Logic & Math"
     },
     {
-      id: "coffee-machine-OOP",
-      name: "Coffee Machine (OOP)",
-      description: "Object-oriented coffee machine simulator with ingredients and money management.",
-      language: "Python",
-      difficulty: "Advanced",
-      category: "Simulation"
-    },
-    {
       id: "coffee-machine",
       name: "Coffee Machine",
       description: "Procedural coffee machine simulator with drink selection and payment system.",
       language: "Python",
       difficulty: "Intermediate",
+      category: "Simulation"
+    },
+    {
+      id: "coffee-machine-OOP",
+      name: "Coffee Machine (OOP)",
+      description: "Object-oriented coffee machine simulator with ingredients and money management.",
+      language: "Python",
+      difficulty: "Advanced",
       category: "Simulation"
     },
     {
@@ -442,6 +394,22 @@ export const personalData = {
       language: "Python",
       difficulty: "Beginner",
       category: "Logic & Math"
+    },
+    {
+      id: "fizzbuzz",
+      name: "FizzBuzz Challenge",
+      description: "Print numbers 1-100, but replace multiples of 3 with 'Fizz' and 5 with 'Buzz' and of both with 'FizzBuzz'.",
+      language: "Python",
+      difficulty: "Beginner", 
+      category: "Logic & Math"
+    },
+    {
+      id: "hangman",
+      name: "Hangman Game",
+      description: "Guess the word letter by letter in this classic word guessing game with ASCII art.",
+      language: "Python",
+      difficulty: "Intermediate", 
+      category: "Games"
     },
     {
       id: "higher-lower",
@@ -468,6 +436,22 @@ export const personalData = {
       category: "Logic & Math"
     },
     {
+      id: "life-left-weeks",
+      name: "Life Left in Weeks",
+      description: "Calculate how many weeks you have left based on your age and life expectancy.",
+      language: "Python",
+      difficulty: "Beginner",
+      category: "Life & Planning"
+    },
+    {
+      id: "list-maker",
+      name: "List Maker",
+      description: "Convert your text into a list of words with simple string manipulation.",
+      language: "Python",
+      difficulty: "Beginner",
+      category: "Text Processing"
+    },
+    {
       id: "love-calc",
       name: "Love Calculator",
       description: "Calculate love compatibility between two names using a fun algorithm.",
@@ -490,6 +474,14 @@ export const personalData = {
       language: "Python",
       difficulty: "Beginner",
       category: "Games"
+    },
+    {
+      id: "password-generator",
+      name: "Password Generator",
+      description: "Generate secure random passwords with customizable length and character types.",
+      language: "Python",
+      difficulty: "Intermediate",
+      category: "Security & Tools"
     },
     {
       id: "pizza-order",
@@ -522,6 +514,14 @@ export const personalData = {
       language: "Python",
       difficulty: "Intermediate",
       category: "Educational"
+    },
+    {
+      id: "rock-paper-scissors",
+      name: "Rock Paper Scissors",
+      description: "Classic game against the computer with score tracking and multiple rounds.",
+      language: "Python", 
+      difficulty: "Beginner",
+      category: "Games"
     },
     {
       id: "secret-auction",
