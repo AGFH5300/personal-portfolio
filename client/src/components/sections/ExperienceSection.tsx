@@ -2,8 +2,15 @@ import { motion } from "framer-motion";
 import { personalData } from "@/data/personalData";
 import { Card, CardContent } from "@/components/ui/card";
 import { Award, Medal, Trophy, ImageIcon } from "lucide-react";
+import { CertificateModal } from "@/components/ui/certificate-modal";
+import { useState } from "react";
 
 export default function ExperienceSection() {
+  const [selectedImage, setSelectedImage] = useState<{
+    image: string;
+    name: string;
+  } | null>(null);
+
   const competitionIcons = {
     "Python Developer": <Award className="text-blue-500" />,
     Scholar: <Trophy className="text-yellow-500" />,
@@ -69,12 +76,20 @@ export default function ExperienceSection() {
                       </div>
                       {competition.image && (
                         <div className="ml-4 flex-shrink-0">
-                          <div className="w-16 h-16 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+                          <div 
+                            className="w-16 h-16 rounded-lg overflow-hidden border border-gray-200 shadow-sm cursor-pointer relative group"
+                            onClick={() => setSelectedImage({ image: competition.image, name: competition.name })}
+                          >
                             <img
                               src={competition.image}
                               alt={`${competition.name} award`}
                               className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
                             />
+                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                              <span className="bg-white/0 group-hover:bg-white/90 text-primary text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                                View
+                              </span>
+                            </div>
                           </div>
                         </div>
                       )}
@@ -99,6 +114,14 @@ export default function ExperienceSection() {
           ))}
         </div>
       </div>
+      
+      {/* Image Modal */}
+      <CertificateModal
+        isOpen={selectedImage !== null}
+        onClose={() => setSelectedImage(null)}
+        imageUrl={selectedImage?.image || ""}
+        title={selectedImage?.name || ""}
+      />
     </section>
   );
 }
