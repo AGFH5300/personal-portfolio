@@ -22,16 +22,7 @@ def get_names():
 
         return names
 
-def get_seed():
-    """Get random seed from user."""
-    while True:
-        try:
-            seed_input = input("Enter a seed number (or press Enter for random): ").strip()
-            if not seed_input:
-                return None
-            return int(seed_input)
-        except ValueError:
-            print("Please enter a valid number.")
+
 
 def main():
     """Main function to run banker roulette."""
@@ -43,13 +34,7 @@ def main():
         names = get_names()
         print(f"\nParticipants: {', '.join(names)}")
 
-        # Get seed
-        seed = get_seed()
-        if seed is not None:
-            random.seed(seed)
-            print(f"Using seed: {seed}")
-        else:
-            print("Using random selection")
+        print("Using random selection")
 
         # Select winner
         chosen_person = random.choice(names)

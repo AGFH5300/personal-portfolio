@@ -4,16 +4,7 @@ print("=== Coin Flip Simulator ===")
 print("Flip a virtual coin and test your luck!")
 print()
 
-def get_seed():
-    """Get random seed from user."""
-    while True:
-        try:
-            seed_input = input("Enter a seed number for consistent results (or press Enter for random): ").strip()
-            if not seed_input:
-                return None
-            return int(seed_input)
-        except ValueError:
-            print("Please enter a valid number.")
+
 
 def get_flip_count():
     """Get number of flips from user."""
@@ -37,13 +28,7 @@ def main():
         print("Coin Flip Simulator")
         print()
 
-        # Get seed
-        seed = get_seed()
-        if seed is not None:
-            random.seed(seed)
-            print(f"Using seed: {seed}")
-        else:
-            print("Using random flips")
+        print("Using random flips")
 
         # Get number of flips
         flip_count = get_flip_count()
