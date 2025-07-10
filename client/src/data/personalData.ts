@@ -51,7 +51,7 @@ export const personalData = {
         "4th Place Scholars Bowl Team",
         "Silver Medal - 22nd Place Challenge - History",
       ],
-      image: "", // Add your image URL here
+      image: "https://i.postimg.cc/43Lkzkmy/wsc.png",
     },
     {
       name: "AUS School Computing Competition (ASCC-2025)",
@@ -60,7 +60,7 @@ export const personalData = {
       description:
         "Created a python script to sort, grab and graph data from a dataset with team members Ayyukta Ankam.",
       achievements: ["Python Data Analysis Project"],
-      image: "", // Add your image URL here
+      image: "",
     },
     {
       name: "DIAMathletes January 2025 Competition",
@@ -69,7 +69,7 @@ export const personalData = {
       description:
         "Won 1st place solving multiple math problems as a team with Vihaan Deshpande, Lavitra Dhoot and Ayyukta Ankam.",
       achievements: ["1st Place Winner"],
-      image: "", // Add your image URL here
+      image: "",
     },
     {
       name: "DIA Game Jam Competition",
@@ -77,7 +77,7 @@ export const personalData = {
       date: "Mar-Apr 2025",
       description: "Created an idle clicker game which won the competition.",
       achievements: ["Winner - Game Development"],
-      image: "", // Add your image URL here
+      image: "",
     },
     {
       name: "Annual Business Minds Case Study Competition",
@@ -86,7 +86,7 @@ export const personalData = {
       description:
         "Won 2nd place with peers Alman Bazaz and Ayyukta Ankam in business case study analysis.",
       achievements: ["2nd Place Winner"],
-      image: "", // Add your image URL here
+      image: "",
     },
     {
       name: "DIAMWEF 2025",
@@ -94,7 +94,7 @@ export const personalData = {
       date: "May 2025 - Present",
       description: "Participating as a delegate in DIAMWEF 2025.",
       achievements: ["Active Delegate"],
-      image: "", // Add your image URL here
+      image: "",
     },
     {
       name: "EISJMUN 2025",
@@ -102,7 +102,7 @@ export const personalData = {
       date: "Jun 2025",
       description: "Participated in EISJMUN 2025 and got a verbal mention as the Delegate of Guatemala in the UNODC committee.",
       achievements: ["Model UN Delegate", "Verbal Mention"],
-      image: "", // Add your image URL here
+      image: "",
     },
     {
       name: "DIAMEC 2025",
@@ -111,7 +111,7 @@ export const personalData = {
       description:
         "Won Best Collaborator in the competition with peers Alman Bazaz and Ayyukta Ankam.",
       achievements: ["Best Collaborator Award", "1st Place Team Award"],
-      image: "", // Add your image URL here
+      image: "",
     },
   ],
 
