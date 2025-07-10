@@ -60,7 +60,7 @@ def check_year_range(start_year, end_year):
         if is_leap_year(year):
             leap_years.append(year)
     
-    print(f"\n🗓️  Leap years between {start_year} and {end_year}:")
+    print(f"\nLeap years between {start_year} and {end_year}:")
     print("=" * 40)
     
     if leap_years:
@@ -96,7 +96,7 @@ def display_year_info(year):
 def main():
     """Main function to run the leap year checker."""
     while True:
-        print("🗓️  Welcome to the Leap Year Checker! 🗓️")
+        print("Welcome to the Leap Year Checker!")
         print()
         print("Choose an option:")
         print("1. Check a single year")
@@ -125,7 +125,7 @@ def main():
         print()
         check_again = input("Would you like to check more years? (y/n): ").lower().strip()
         if check_again not in ['y', 'yes']:
-            print("Thanks for using the Leap Year Checker! 🗓️")
+            print("Thanks for using the Leap Year Checker!")
             break
         print()
 
