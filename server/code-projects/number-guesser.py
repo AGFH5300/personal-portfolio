@@ -1,5 +1,9 @@
 import random
 
+print("=== Number Guessing Game ===")
+print("I'm thinking of a number - can you guess it?")
+print()
+
 EASY_LEVEL = 10
 HARD_LEVEL = 5
 logo = '''

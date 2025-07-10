@@ -1,3 +1,7 @@
+print("=== List Maker ===")
+print("Convert your text into a list of words!")
+print()
+
 def convert(string):
   li = list(string.split(" "))
   return li

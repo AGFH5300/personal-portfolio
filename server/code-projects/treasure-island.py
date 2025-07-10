@@ -1,6 +1,10 @@
 # Indentation is VERY IMPORTANT
 # Use three single apostrophe (''') to print multiple lines
 
+print("=== Treasure Island Adventure ===")
+print("Choose your path wisely to find the treasure!")
+print()
+
 print('''
 *******************************************************************************
           |                   |                  |                     |

@@ -1,4 +1,3 @@
-
 import requests
 import html
 
@@ -12,16 +11,16 @@ class QuizBrain:
         self.question_list = question_list
         self.question_number = 0
         self.score = 0
-    
+
     def still_has_questions(self):
         return self.question_number < len(self.question_list)
-    
+
     def next_question(self):
         current_question = self.question_list[self.question_number]
         self.question_number += 1
         user_answer = input(f"Q.{self.question_number}: {current_question.text} (True/False): ")
         self.check_answer(user_answer, current_question.answer)
-    
+
     def check_answer(self, user_answer, correct_answer):
         if user_answer.lower() == correct_answer.lower():
             print("You got it right!")
@@ -29,7 +28,7 @@ class QuizBrain:
         else:
             print("That's wrong")
             print(f"The correct answer is {correct_answer}")
-        
+
         print(f"Your score is {self.score}/{self.question_number}")
         print()
 
@@ -39,9 +38,9 @@ def get_number_of_questions():
     print("2. 15 questions") 
     print("3. 20 questions")
     print("4. Custom amount")
-    
+
     choice = input("Enter your choice (1-4): ")
-    
+
     if choice == "1":
         return 10
     elif choice == "2":
@@ -90,13 +89,13 @@ def get_category():
         "24": ("Entertainment: Japanese Anime & Manga", "31"),
         "25": ("Entertainment: Cartoon & Animations", "32")
     }
-    
+
     print("\nSelect Category:")
     for key, (name, _) in categories.items():
         print(f"{key}. {name}")
-    
+
     choice = input("Enter your choice (1-25): ")
-    
+
     if choice in categories:
         return categories[choice][1]
     else:
@@ -109,9 +108,9 @@ def get_difficulty():
     print("2. Medium") 
     print("3. Hard")
     print("4. Any Difficulty")
-    
+
     choice = input("Enter your choice (1-4): ")
-    
+
     if choice == "1":
         return "easy"
     elif choice == "2":
@@ -123,23 +122,23 @@ def get_difficulty():
 
 def fetch_questions(amount, category, difficulty):
     url = "https://opentdb.com/api.php"
-    
+
     params = {
         "amount": amount,
         "type": "boolean"
     }
-    
+
     if category:
         params["category"] = category
-    
+
     if difficulty:
         params["difficulty"] = difficulty
-    
+
     try:
         response = requests.get(url, params=params)
         response.raise_for_status()
         data = response.json()
-        
+
         if data["response_code"] == 0:
             return data["results"]
         else:
@@ -153,21 +152,21 @@ def main():
     print("=== OpenTDB Quiz Game ===")
     print("Welcome to the trivia quiz!")
     print()
-    
+
     # Get user preferences
     num_questions = get_number_of_questions()
     category = get_category()
     difficulty = get_difficulty()
-    
+
     print(f"\nFetching {num_questions} questions...")
-    
+
     # Fetch questions from API
     question_data = fetch_questions(num_questions, category, difficulty)
-    
+
     if not question_data:
         print("Failed to fetch questions. Please try again later.")
         return
-    
+
     # Create question objects
     question_bank = []
     for question in question_data:
@@ -175,21 +174,21 @@ def main():
         question_answer = question["correct_answer"]
         new_question = Question(question_text, question_answer)
         question_bank.append(new_question)
-    
+
     print(f"Successfully loaded {len(question_bank)} questions!")
     print("Answer with 'True' or 'False'\n")
-    
+
     # Start the quiz
     quiz = QuizBrain(question_bank)
     while quiz.still_has_questions():
         quiz.next_question()
-    
+
     print("You completed all questions!")
     print(f"Your final score is {quiz.score}/{quiz.question_number}")
-    
+
     percentage = (quiz.score / quiz.question_number) * 100
     print(f"That's {percentage:.1f}%!")
-    
+
     if percentage >= 80:
         print("Excellent work!")
     elif percentage >= 60:

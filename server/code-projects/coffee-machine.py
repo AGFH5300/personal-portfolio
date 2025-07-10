@@ -1,3 +1,7 @@
+print("=== Coffee Machine ===")
+print("Order your favorite coffee drinks!")
+print()
+
 MENU = {
   "espresso": {
       "ingredients": {

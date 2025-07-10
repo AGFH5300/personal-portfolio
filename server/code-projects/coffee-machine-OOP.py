@@ -1,3 +1,7 @@
+print("=== Coffee Machine (OOP) ===")
+print("Advanced coffee machine with object-oriented design!")
+print()
+
 class MenuItem:
     """Models each Menu Item."""
     def __init__(self, name, water, milk, coffee, cost):

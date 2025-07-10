@@ -1,5 +1,9 @@
 import random
 
+print("=== Rock Paper Scissors ===")
+print("Play the classic game against the computer!")
+print()
+
 rock = '''
     _______
 ---'   ____)

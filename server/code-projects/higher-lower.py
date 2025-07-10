@@ -1,24 +1,8 @@
 import random
 
-logo = """
-    __  ___       __             
-   / / / (_)___ _/ /_  ___  _____
-  / /_/ / / __ `/ __ \/ _ \/ ___/
- / __  / / /_/ / / / /  __/ /    
-/_/ ///_/\__, /_/ /_/\___/_/     
-   / /  /____/_      _____  _____
-  / /   / __ \ | /| / / _ \/ ___/
- / /___/ /_/ / |/ |/ /  __/ /    
-/_____/\____/|__/|__/\___/_/     
-"""
-
-vs = """
- _    __    
-| |  / /____
-| | / / ___/
-| |/ (__  ) 
-|___/____(_)
-"""
+print("=== Higher Lower Game ===")
+print("Guess which celebrity has more Instagram followers!")
+print()
 
 data = [
     {'name': 'Instagram', 'follower_count': 690, 'description': 'Social media platform', 'country': 'United States'},  
@@ -73,6 +57,26 @@ data = [
     {'name': 'NBA', 'follower_count': 90, 'description': 'Club Basketball Competition', 'country': 'United States'}  
 ]
 
+
+logo = """
+    __  ___       __             
+   / / / (_)___ _/ /_  ___  _____
+  / /_/ / / __ `/ __ \/ _ \/ ___/
+ / __  / / /_/ / / / /  __/ /    
+/_/ ///_/\__, /_/ /_/\___/_/     
+   / /  /____/_      _____  _____
+  / /   / __ \ | /| / / _ \/ ___/
+ / /___/ /_/ / |/ |/ /  __/ /    
+/_____/\____/|__/|__/\___/_/     
+"""
+
+vs = """
+ _    __    
+| |  / /____
+| | / / ___/
+| |/ (__  ) 
+|___/____(_)
+"""
 
 def game_loop():
     score = 0

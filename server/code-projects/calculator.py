@@ -1,3 +1,7 @@
+print("=== Calculator ===")
+print("Perform basic mathematical operations!")
+print()
+
 logo = """
  _____________________
 |  _________________  |

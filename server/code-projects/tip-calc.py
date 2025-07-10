@@ -1,3 +1,7 @@
+print("=== Tip Calculator ===")
+print("Calculate how much each person should pay including tip!")
+print()
+
 print("Welcome to the tip calculator")
 
 bill = float(input("What was the total bill"))

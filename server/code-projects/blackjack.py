@@ -1,5 +1,9 @@
 import random
 
+print("=== Blackjack Game ===")
+print("Try to get as close to 21 as possible without going over!")
+print()
+
 logo = """
 .------.            _     _            _    _            _    
 |A_  _ |.          | |   | |          | |  (_)          | |   

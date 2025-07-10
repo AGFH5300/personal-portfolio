@@ -1,4 +1,6 @@
-print("Welcome to the Love Calculator!")
+print("=== Love Calculator ===")
+print("Find out your love compatibility score!")
+print()
 name1 = input("What is your name? \n")
 name2 = input("What is their name? \n")
 

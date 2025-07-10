@@ -1,3 +1,6 @@
+print("=== Secret Auction ===")
+print("Place your bids in this blind auction!")
+print()
 logo = '''
                          ___________
                          \         /
