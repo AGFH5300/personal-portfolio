@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Code2, Play, Square, Terminal, X } from "lucide-react";
+import { ArrowLeft, Code2, Play, Square, Terminal, X, Search, ArrowUp } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 
@@ -26,6 +26,8 @@ export default function AllProjects() {
   const [projectStates, setProjectStates] = useState<Record<string, ProjectState>>({});
   const [activeTerminal, setActiveTerminal] = useState<string | null>(null);
   const terminalRefs = useRef<Record<string, HTMLDivElement>>({});
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   console.log(`🌐 [DEBUG] Current location: ${location}`);
   console.log(`🌐 [DEBUG] Active terminal: ${activeTerminal}`);
@@ -39,6 +41,29 @@ export default function AllProjects() {
       }
     });
   }, [projectStates]);
+
+  useEffect(() => {
+    // Handle scroll for back-to-top button
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 300);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Filter projects based on search term
+  const filteredProjects = personalData.codingProjects.filter(project =>
+    project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    project.language.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    project.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    project.difficulty.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const getProjectState = (projectId: string): ProjectState => {
     return projectStates[projectId] || {
@@ -428,16 +453,30 @@ export default function AllProjects() {
 
   return (
     <div className="min-h-screen bg-light">
-      {/* Header */}
-      <div className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center gap-4">
-            <Link href="/" className="flex items-center gap-2 hover:text-primary cursor-click">
-              <ArrowLeft className="h-5 w-5" />
-              Back to Portfolio
-            </Link>
-            <div className="w-px h-6 bg-gray-300"></div>
-            <h1 className="text-2xl font-bold text-dark">All Projects</h1>
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-40 bg-white shadow-sm border-b">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <Link href="/" className="flex items-center gap-2 hover:text-primary cursor-click">
+                <ArrowLeft className="h-5 w-5" />
+                Back to Portfolio
+              </Link>
+              <div className="w-px h-6 bg-gray-300"></div>
+              <h1 className="text-2xl font-bold text-dark">All Projects</h1>
+            </div>
+            
+            {/* Search Bar */}
+            <div className="relative max-w-md w-full">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Input
+                type="text"
+                placeholder="Search projects..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 pr-4 py-2 w-full"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -534,7 +573,16 @@ export default function AllProjects() {
 
         {/* Projects Grid - 3 columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {personalData.codingProjects.map((project, index) => {
+          {filteredProjects.length === 0 ? (
+            <div className="col-span-full text-center py-12">
+              <div className="text-gray-500">
+                <Search className="h-12 w-12 mx-auto mb-4" />
+                <p className="text-lg">No projects found matching "{searchTerm}"</p>
+                <p className="text-sm mt-2">Try adjusting your search terms</p>
+              </div>
+            </div>
+          ) : (
+            filteredProjects.map((project, index) => {
             const state = getProjectState(project.id);
             return (
               <motion.div
@@ -593,7 +641,7 @@ export default function AllProjects() {
                 </Card>
               </motion.div>
             );
-          })}
+          }))}
         </div>
 
         {/* More Projects Section */}
@@ -618,6 +666,20 @@ export default function AllProjects() {
             </div>
           </div>
         </motion.div>
+
+        {/* Back to Top Button */}
+        {showBackToTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            onClick={scrollToTop}
+            className="fixed bottom-6 right-6 z-50 bg-primary hover:bg-primary/90 text-white p-3 rounded-lg shadow-lg transition-all duration-300 hover:scale-110"
+            aria-label="Back to top"
+          >
+            <ArrowUp className="h-5 w-5" />
+          </motion.button>
+        )}
       </div>
     </div>
   );
