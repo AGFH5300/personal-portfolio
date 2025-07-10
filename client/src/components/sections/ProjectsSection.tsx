@@ -83,7 +83,7 @@ export default function ProjectsSection() {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <Card className="relative bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20 max-w-4xl mx-auto overflow-hidden">
-            
+
             {/* Original content - slightly grayed */}
             <CardContent className="p-8 filter">
               <div className="flex items-center justify-center mb-6">
@@ -115,12 +115,18 @@ export default function ProjectsSection() {
                 </div>
               </div>
 
-              <Link href="all">
-                <Button size="lg" className="group">
-                  View All My Projects
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+              <Link 
+              href="/all"
+              onClick={() => {
+                // Save current scroll position before navigating
+                sessionStorage.setItem('homeScrollPosition', window.scrollY.toString());
+              }}
+            >
+              <Button size="lg" className="group">
+                View All My Projects
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
 
               <p className="text-xs text-gray-500 mt-4">
                 Includes projects from Harvard CS50, Udemy courses, and personal projects

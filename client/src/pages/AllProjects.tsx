@@ -28,6 +28,7 @@ export default function AllProjects() {
   const terminalRefs = useRef<Record<string, HTMLDivElement>>({});
   const [searchTerm, setSearchTerm] = useState("");
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const scrollPositionRef = useRef<number>(0); // Ref to store scroll position
 
   console.log(`🌐 [DEBUG] Current location: ${location}`);
   console.log(`🌐 [DEBUG] Active terminal: ${activeTerminal}`);
@@ -43,9 +44,13 @@ export default function AllProjects() {
   }, [projectStates]);
 
   useEffect(() => {
+    // Restore scroll position on component mount
+    window.scrollTo(0, scrollPositionRef.current);
+
     // Handle scroll for back-to-top button
     const handleScroll = () => {
       setShowBackToTop(window.scrollY > 300);
+      scrollPositionRef.current = window.scrollY; // Update the scroll position
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -451,6 +456,12 @@ export default function AllProjects() {
     return colors[category as keyof typeof colors] || 'bg-gray-100 text-gray-800';
   };
 
+  // Function to handle navigation and preserve scroll position
+  const navigateWithScroll = (path: string) => {
+    scrollPositionRef.current = window.scrollY; // Save current scroll position
+    setLocation(path);
+  };
+
   return (
     <div className="min-h-screen bg-light">
       {/* Sticky Header */}
@@ -458,14 +469,14 @@ export default function AllProjects() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-              <Link href="/" className="flex items-center gap-2 hover:text-primary cursor-click">
+              <Link href="/" className="flex items-center gap-2 hover:text-primary cursor-click" onClick={() => navigateWithScroll("/")}>
                 <ArrowLeft className="h-5 w-5" />
                 Back to Portfolio
               </Link>
               <div className="w-px h-6 bg-gray-300"></div>
               <h1 className="text-2xl font-bold text-dark">All Projects</h1>
             </div>
-            
+
             {/* Search Bar */}
             <div className="relative max-w-md w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -643,11 +654,11 @@ export default function AllProjects() {
         >
           <div className="bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-xl p-8 mx-4">
             <div className="text-center max-w-4xl mx-auto">
-              
+
               <h3 className="text-2xl font-bold text-gray-800 mb-4">
                 Project Collection Growing
               </h3>
-              
+
               <p className="text-gray-600 text-lg leading-relaxed max-w-3xl mx-auto">
                 This collection represents my journey through various programming concepts and challenges. 
                 As I continue learning and building, new projects will be added to show the different 
