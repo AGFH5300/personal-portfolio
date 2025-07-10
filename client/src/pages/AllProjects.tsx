@@ -30,6 +30,7 @@ export default function AllProjects() {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
   const scrollPositionRef = useRef<number>(0); // Ref to store scroll position
 
   console.log(`🌐 [DEBUG] Current location: ${location}`);
@@ -44,6 +45,18 @@ export default function AllProjects() {
       }
     });
   }, [projectStates]);
+
+  useEffect(() => {
+    // Listen for ESC key to close active terminal
+    const handleCloseModal = () => {
+      if (activeTerminal) {
+        closeTerminal(activeTerminal);
+      }
+    };
+
+    window.addEventListener('closeModal', handleCloseModal);
+    return () => window.removeEventListener('closeModal', handleCloseModal);
+  }, [activeTerminal]);
 
   useEffect(() => {
     // Restore scroll position on component mount
@@ -69,8 +82,9 @@ export default function AllProjects() {
     
     const matchesDifficulty = !selectedDifficulty || project.difficulty === selectedDifficulty;
     const matchesCategory = !selectedCategory || project.category === selectedCategory;
+    const matchesLanguage = !selectedLanguage || project.language === selectedLanguage;
     
-    return matchesSearch && matchesDifficulty && matchesCategory;
+    return matchesSearch && matchesDifficulty && matchesCategory && matchesLanguage;
   });
 
   const scrollToTop = () => {
@@ -511,9 +525,36 @@ export default function AllProjects() {
     setSelectedCategory(selectedCategory === category ? null : category);
   };
 
+  const handleLanguageFilter = (language: string) => {
+    setSelectedLanguage(selectedLanguage === language ? null : language);
+  };
+
+  const getLanguageColor = (language: string) => {
+    const isSelected = selectedLanguage === language;
+    switch (language.toLowerCase()) {
+      case 'python':
+        return isSelected 
+          ? 'bg-blue-200 text-blue-900 border-blue-300 ring-2 ring-blue-400' 
+          : 'bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200 hover:border-blue-300';
+      case 'javascript':
+        return isSelected 
+          ? 'bg-yellow-200 text-yellow-900 border-yellow-300 ring-2 ring-yellow-400' 
+          : 'bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-200 hover:border-yellow-300';
+      case 'typescript':
+        return isSelected 
+          ? 'bg-blue-200 text-blue-900 border-blue-300 ring-2 ring-blue-400' 
+          : 'bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200 hover:border-blue-300';
+      default:
+        return isSelected 
+          ? 'bg-gray-200 text-gray-900 border-gray-300 ring-2 ring-gray-400' 
+          : 'bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-200 hover:border-gray-300';
+    }
+  };
+
   const clearFilters = () => {
     setSelectedDifficulty(null);
     setSelectedCategory(null);
+    setSelectedLanguage(null);
     setSearchTerm("");
   };
 
@@ -544,7 +585,7 @@ export default function AllProjects() {
                   className="pl-10 pr-4 py-2 w-full"
                 />
               </div>
-              {(selectedDifficulty || selectedCategory || searchTerm) && (
+              {(selectedDifficulty || selectedCategory || selectedLanguage || searchTerm) && (
                 <Button
                   variant="outline"
                   size="sm"
@@ -573,7 +614,7 @@ export default function AllProjects() {
           </p>
           
           {/* Active Filters */}
-          {(selectedDifficulty || selectedCategory) && (
+          {(selectedDifficulty || selectedCategory || selectedLanguage) && (
             <div className="flex justify-center gap-2 mt-4">
               <span className="text-sm text-gray-500">Active filters:</span>
               {selectedDifficulty && (
@@ -584,6 +625,11 @@ export default function AllProjects() {
               {selectedCategory && (
                 <Badge className={`text-xs cursor-pointer ${getCategoryColor(selectedCategory)}`} variant="outline">
                   {selectedCategory}
+                </Badge>
+              )}
+              {selectedLanguage && (
+                <Badge className={`text-xs cursor-pointer ${getLanguageColor(selectedLanguage)}`} variant="outline">
+                  {selectedLanguage}
                 </Badge>
               )}
             </div>
@@ -697,7 +743,13 @@ export default function AllProjects() {
 
                   <CardContent className="flex-1 flex flex-col">
                     <div className="flex items-center gap-2 mb-4">
-                      <Badge variant="outline" className="text-xs">{project.language}</Badge>
+                      <Badge 
+                        className={`text-xs cursor-pointer transition-all duration-200 hover:scale-105 ${getLanguageColor(project.language)}`}
+                        onClick={() => handleLanguageFilter(project.language)}
+                        variant="outline"
+                      >
+                        {project.language}
+                      </Badge>
                       <Badge 
                         className={`text-xs cursor-pointer transition-all duration-200 hover:scale-105 ${getDifficultyColor(project.difficulty)}`}
                         onClick={() => handleDifficultyFilter(project.difficulty)}
