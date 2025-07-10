@@ -73,7 +73,7 @@ bos_total = bos_total / 100
 if is_decimal(bos_total):
     final = round(death_chance * sci_redu) * (1 - bos_total)
     final = round(final, 2)
-    final = f"{final}%"
+    final = f"There is a {final}% that your scientist will die."
     print(final)
 else:
     bos_total = int(bos_total)
