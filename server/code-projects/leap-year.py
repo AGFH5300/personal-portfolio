@@ -26,7 +26,7 @@ def get_year():
 
 def explain_leap_year_rules():
     """Explain the leap year rules."""
-    print("\n📚 Leap Year Rules:")
+    print("\nLeap Year Rules:")
     print("=" * 30)
     print("1. If divisible by 400 → Leap year")
     print("2. If divisible by 100 → Not a leap year")
@@ -79,17 +79,17 @@ def display_year_info(year):
     """Display detailed information about a year."""
     is_leap = is_leap_year(year)
     
-    print(f"\n📅 Year {year} Analysis:")
+    print(f"\nYear {year} Analysis:")
     print("=" * 30)
-    print(f"Leap year: {'✅ Yes' if is_leap else '❌ No'}")
+    print(f"Leap year: {'Yes' if is_leap else 'No'}")
     print(f"Days in year: {366 if is_leap else 365}")
     print(f"Days in February: {29 if is_leap else 28}")
     
     # Show divisibility
     print(f"\nDivisibility:")
-    print(f"  By 4: {'✅' if year % 4 == 0 else '❌'}")
-    print(f"  By 100: {'✅' if year % 100 == 0 else '❌'}")
-    print(f"  By 400: {'✅' if year % 400 == 0 else '❌'}")
+    print(f"  By 4: {'Yes' if year % 4 == 0 else 'No'}")
+    print(f"  By 100: {'Yes' if year % 100 == 0 else 'No'}")
+    print(f"  By 400: {'Yes' if year % 400 == 0 else 'No'}")
     
     print("=" * 30)
 
