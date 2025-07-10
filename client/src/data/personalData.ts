@@ -354,6 +354,214 @@ export const personalData = {
       language: "Python",
       difficulty: "Beginner",
       category: "Life & Planning"
+    },
+    {
+      id: "list-maker",
+      name: "List Maker",
+      description: "Convert your text into a list of words with simple string manipulation.",
+      language: "Python",
+      difficulty: "Beginner",
+      category: "Text Processing"
+    },
+    {
+      id: "band-name-gen",
+      name: "Band Name Generator",
+      description: "Generate creative band names by combining city and pet names.",
+      language: "Python",
+      difficulty: "Beginner",
+      category: "Fun & Creative"
+    },
+    {
+      id: "banker-roulette",
+      name: "Banker Roulette",
+      description: "Randomly select someone to pay the bill from a list of names.",
+      language: "Python",
+      difficulty: "Beginner",
+      category: "Fun & Creative"
+    },
+    {
+      id: "blackjack",
+      name: "Blackjack Game",
+      description: "Play the classic card game of Blackjack against the dealer.",
+      language: "Python",
+      difficulty: "Advanced",
+      category: "Games"
+    },
+    {
+      id: "caesar-cipher",
+      name: "Caesar Cipher",
+      description: "Encrypt and decrypt messages using the classic Caesar cipher algorithm.",
+      language: "Python",
+      difficulty: "Intermediate",
+      category: "Security & Tools"
+    },
+    {
+      id: "calculator",
+      name: "Calculator",
+      description: "Basic calculator with addition, subtraction, multiplication, and division operations.",
+      language: "Python",
+      difficulty: "Beginner",
+      category: "Logic & Math"
+    },
+    {
+      id: "circle",
+      name: "Circle Calculator",
+      description: "Calculate area and circumference of a circle given its radius.",
+      language: "Python",
+      difficulty: "Beginner",
+      category: "Logic & Math"
+    },
+    {
+      id: "coffee-machine-OOP",
+      name: "Coffee Machine (OOP)",
+      description: "Object-oriented coffee machine simulator with ingredients and money management.",
+      language: "Python",
+      difficulty: "Advanced",
+      category: "Simulation"
+    },
+    {
+      id: "coffee-machine",
+      name: "Coffee Machine",
+      description: "Procedural coffee machine simulator with drink selection and payment system.",
+      language: "Python",
+      difficulty: "Intermediate",
+      category: "Simulation"
+    },
+    {
+      id: "coin-flip",
+      name: "Coin Flip",
+      description: "Simulate coin flips with heads or tails outcomes.",
+      language: "Python",
+      difficulty: "Beginner",
+      category: "Games"
+    },
+    {
+      id: "days-in-month",
+      name: "Days in Month",
+      description: "Calculate the number of days in a given month and year, accounting for leap years.",
+      language: "Python",
+      difficulty: "Beginner",
+      category: "Logic & Math"
+    },
+    {
+      id: "higher-lower",
+      name: "Higher Lower Game",
+      description: "Guess which celebrity has more Instagram followers in this addictive guessing game.",
+      language: "Python",
+      difficulty: "Intermediate",
+      category: "Games"
+    },
+    {
+      id: "largest-of-3",
+      name: "Largest of 3 Numbers",
+      description: "Find the largest number among three given numbers.",
+      language: "Python",
+      difficulty: "Beginner",
+      category: "Logic & Math"
+    },
+    {
+      id: "leap-year",
+      name: "Leap Year Checker",
+      description: "Check if a given year is a leap year using the leap year algorithm.",
+      language: "Python",
+      difficulty: "Beginner",
+      category: "Logic & Math"
+    },
+    {
+      id: "love-calc",
+      name: "Love Calculator",
+      description: "Calculate love compatibility between two names using a fun algorithm.",
+      language: "Python",
+      difficulty: "Beginner",
+      category: "Fun & Creative"
+    },
+    {
+      id: "mr-mine-sci-calc",
+      name: "Mr. Mine Scientific Calculator",
+      description: "Advanced scientific calculator with complex mathematical operations.",
+      language: "Python",
+      difficulty: "Advanced",
+      category: "Logic & Math"
+    },
+    {
+      id: "number-guesser",
+      name: "Number Guessing Game",
+      description: "Guess the random number within a range with hints and attempt tracking.",
+      language: "Python",
+      difficulty: "Beginner",
+      category: "Games"
+    },
+    {
+      id: "pizza-order",
+      name: "Pizza Order System",
+      description: "Calculate pizza order costs with different sizes and toppings.",
+      language: "Python",
+      difficulty: "Beginner",
+      category: "Business Logic"
+    },
+    {
+      id: "polygon-area",
+      name: "Polygon Area Calculator",
+      description: "Calculate the area of various polygons using mathematical formulas.",
+      language: "Python",
+      difficulty: "Intermediate",
+      category: "Logic & Math"
+    },
+    {
+      id: "prime-number",
+      name: "Prime Number Checker",
+      description: "Check if a number is prime and find prime numbers within a range.",
+      language: "Python",
+      difficulty: "Intermediate",
+      category: "Logic & Math"
+    },
+    {
+      id: "quiz",
+      name: "Quiz Game",
+      description: "Interactive quiz game with multiple choice questions and scoring system.",
+      language: "Python",
+      difficulty: "Intermediate",
+      category: "Educational"
+    },
+    {
+      id: "secret-auction",
+      name: "Secret Auction",
+      description: "Blind auction system where bidders can't see other bids until the end.",
+      language: "Python",
+      difficulty: "Intermediate",
+      category: "Business Logic"
+    },
+    {
+      id: "temperature",
+      name: "Temperature Converter",
+      description: "Convert temperatures between Celsius, Fahrenheit, and Kelvin.",
+      language: "Python",
+      difficulty: "Beginner",
+      category: "Conversion Tools"
+    },
+    {
+      id: "tip-calc",
+      name: "Tip Calculator",
+      description: "Calculate tips and split bills among multiple people.",
+      language: "Python",
+      difficulty: "Beginner",
+      category: "Financial Tools"
+    },
+    {
+      id: "treasure-island",
+      name: "Treasure Island Adventure",
+      description: "Text-based adventure game with multiple paths and choices.",
+      language: "Python",
+      difficulty: "Intermediate",
+      category: "Games"
+    },
+    {
+      id: "treasure-map",
+      name: "Treasure Map",
+      description: "Navigate through a grid-based treasure map to find hidden treasure.",
+      language: "Python",
+      difficulty: "Intermediate",
+      category: "Games"
     }
   ]
 };
