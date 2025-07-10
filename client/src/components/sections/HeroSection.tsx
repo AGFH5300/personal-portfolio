@@ -6,9 +6,9 @@ export default function HeroSection() {
   return (
     <section
       id="about"
-      className="relative bg-gradient-to-r from-primary to-secondary text-foreground py-20 md:py-32"
+      className="relative bg-gradient-to-r from-primary to-secondary text-foreground py-20 md:py-32 z-0"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-30 container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center">
           <motion.div
             className="md:w-1/2 mb-10 md:mb-0"
@@ -21,10 +21,10 @@ export default function HeroSection() {
               alt={`${personalData.name} Profile Picture`}
               className="rounded-full w-64 h-64 object-cover border-4 border-white shadow-xl mx-auto md:mx-0"
             /> */}
-            <div className="relative">
+            <div className="relative z-40">
               <div
                 aria-label="Profile initials placeholder"
-                className="relative z-20 flex items-center justify-center rounded-full w-40 h-40 sm:w-64 sm:h-64 mx-auto mb-8 border-4 border-white
+                className="relative z-50 flex items-center justify-center rounded-full w-40 h-40 sm:w-64 sm:h-64 mx-auto mb-8 border-4 border-white
                            shadow-xl bg-blue-600 text-white text-5xl sm:text-7xl font-extrabold select-none"
               >
                 AG
@@ -32,18 +32,18 @@ export default function HeroSection() {
             </div>
           </motion.div>
           <motion.div
-            className="md:w-1/2 text-center md:text-left"
+            className="md:w-1/2 text-center md:text-left relative z-40"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground drop-shadow-md">
+            <h1 className="relative z-50 text-4xl md:text-5xl font-bold mb-4 text-foreground drop-shadow-md">
               {personalData.name}
             </h1>
-            <p className="text-xl mb-6 font-semibold text-white drop-shadow-md">
+            <p className="relative z-50 text-xl mb-6 font-semibold text-white drop-shadow-md">
               {personalData.title}
             </p>
-            <div className="relative z-[15] bg-black/40 backdrop-blur-sm p-5 rounded-lg shadow-md w-full max-w-lg">
+            <div className="relative z-50 bg-black/40 backdrop-blur-sm p-5 rounded-lg shadow-md w-full max-w-lg">
               <p className="text-lg text-white">{personalData.shortBio}</p>
             </div>
           </motion.div>

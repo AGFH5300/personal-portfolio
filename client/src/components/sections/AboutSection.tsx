@@ -29,8 +29,8 @@ export default function AboutSection() {
   };
 
   return (
-    <section className="py-16 bg-light">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative z-20 py-16 bg-light">
+      <div className="relative z-30 container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}

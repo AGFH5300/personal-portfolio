@@ -17,10 +17,14 @@ export default function Home() {
     const savedScrollPosition = sessionStorage.getItem('homeScrollPosition');
     if (savedScrollPosition) {
       const scrollY = parseInt(savedScrollPosition, 10);
-      // Use setTimeout to ensure the page is fully rendered
-      setTimeout(() => {
-        window.scrollTo(0, scrollY);
-      }, 100);
+      
+      // Use requestAnimationFrame to ensure smooth scroll restoration
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          window.scrollTo(0, scrollY);
+        });
+      });
+      
       sessionStorage.removeItem('homeScrollPosition');
     }
   }, []);
