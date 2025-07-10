@@ -9,6 +9,7 @@ export default function ExperienceSection() {
   const [selectedImage, setSelectedImage] = useState<{
     image: string;
     name: string;
+    downloadUrl?: string;
   } | null>(null);
 
   const competitionIcons = {
@@ -78,7 +79,7 @@ export default function ExperienceSection() {
                         <div className="ml-4 flex-shrink-0">
                           <div 
                             className="w-16 h-16 rounded-lg overflow-hidden border border-gray-200 shadow-sm cursor-pointer relative group"
-                            onClick={() => setSelectedImage({ image: competition.image, name: competition.name })}
+                            onClick={() => setSelectedImage({ image: competition.image, name: competition.name, downloadUrl: competition.downloadUrl })}
                           >
                             <img
                               src={competition.image}
@@ -121,6 +122,7 @@ export default function ExperienceSection() {
         onClose={() => setSelectedImage(null)}
         imageUrl={selectedImage?.image || ""}
         title={selectedImage?.name || ""}
+        downloadUrl={selectedImage?.downloadUrl || ""}
       />
     </section>
   );

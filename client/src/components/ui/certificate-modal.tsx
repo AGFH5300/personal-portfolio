@@ -1,7 +1,7 @@
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { X, Download, ExternalLink } from "lucide-react";
+import { X, Download, ZoomIn } from "lucide-react";
 import { useEffect } from "react";
 
 interface CertificateModalProps {
@@ -11,11 +11,13 @@ interface CertificateModalProps {
   image?: string;
   title?: string;
   name?: string;
+  downloadUrl?: string;
 }
 
-export function CertificateModal({ isOpen, onClose, imageUrl, image, title, name }: CertificateModalProps) {
+export function CertificateModal({ isOpen, onClose, imageUrl, image, title, name, downloadUrl }: CertificateModalProps) {
   const displayImage = imageUrl || image;
   const displayTitle = title || name;
+  const [isZoomed, setIsZoomed] = useState(false);
 
   useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
@@ -42,9 +44,10 @@ export function CertificateModal({ isOpen, onClose, imageUrl, image, title, name
   }, [isOpen, onClose]);
 
   const handleDownload = () => {
-    if (displayImage) {
+    const downloadLink = downloadUrl || displayImage;
+    if (downloadLink) {
       const link = document.createElement('a');
-      link.href = displayImage;
+      link.href = downloadLink;
       link.download = `${displayTitle || 'certificate'}.jpg`;
       document.body.appendChild(link);
       link.click();
@@ -52,10 +55,8 @@ export function CertificateModal({ isOpen, onClose, imageUrl, image, title, name
     }
   };
 
-  const handleOpenInNewTab = () => {
-    if (displayImage) {
-      window.open(displayImage, '_blank');
-    }
+  const handleZoom = () => {
+    setIsZoomed(!isZoomed);
   };
 
   return (
@@ -79,11 +80,11 @@ export function CertificateModal({ isOpen, onClose, imageUrl, image, title, name
               <Button
                 variant="outline"
                 size="sm"
-                onClick={handleOpenInNewTab}
+                onClick={handleZoom}
                 className="flex items-center gap-2"
               >
-                <ExternalLink className="h-4 w-4" />
-                Open
+                <ZoomIn className="h-4 w-4" />
+                {isZoomed ? 'Zoom Out' : 'Zoom In'}
               </Button>
               <Button
                 variant="ghost"
@@ -102,8 +103,11 @@ export function CertificateModal({ isOpen, onClose, imageUrl, image, title, name
               <img
                 src={displayImage}
                 alt={displayTitle || "Certificate"}
-                className="w-full h-auto max-h-[70vh] object-contain"
+                className={`w-full h-auto max-h-[70vh] object-contain transition-transform duration-300 cursor-pointer ${
+                  isZoomed ? 'scale-150' : 'scale-100'
+                }`}
                 onContextMenu={(e) => e.preventDefault()}
+                onClick={handleZoom}
               />
             </div>
           )}

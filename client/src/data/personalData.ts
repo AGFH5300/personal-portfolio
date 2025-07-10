@@ -52,6 +52,7 @@ export const personalData = {
         "Silver Medal - 22nd Place Challenge - History",
       ],
       image: "https://i.postimg.cc/43Lkzkmy/wsc.png",
+      downloadUrl: "",
     },
     {
       name: "AUS School Computing Competition (ASCC-2025)",
@@ -61,6 +62,7 @@ export const personalData = {
         "Created a python script to sort, grab and graph data from a dataset with team members Avyukta Ankam.",
       achievements: ["Python Data Analysis Project"],
       image: "",
+      downloadUrl: "",
     },
     {
       name: "DIAMathletes January 2025 Competition",
@@ -70,6 +72,7 @@ export const personalData = {
         "Won 1st place solving multiple math problems as a team with Vihaan Deshpande, Lavitra Dhoot and Avyukta Ankam.",
       achievements: ["1st Place Winner"],
       image: "https://i.postimg.cc/CKK4Xd4h/mathletes.jpg",
+      downloadUrl: "",
     },
     {
       name: "DIA Game Jam Competition",
@@ -78,6 +81,7 @@ export const personalData = {
       description: "Created an idle clicker game which won the competition.",
       achievements: ["1st Place Winner"],
       image: "",
+      downloadUrl: "",
     },
     {
       name: "Business Minds Case Study Competition",
@@ -87,6 +91,7 @@ export const personalData = {
         "Won 2nd place with peers Alman Bazaz and Avyukta Ankam in business case study analysis.",
       achievements: ["2nd Place Winner"],
       image: "https://i.postimg.cc/DfpxTrM9/business-minds.jpg",
+      downloadUrl: "",
     },
     {
       name: "DIAMWEF 2025",
@@ -95,6 +100,7 @@ export const personalData = {
       description: "Participating as a delegate in DIAMWEF 2025.",
       achievements: ["Active Delegate"],
       image: "",
+      downloadUrl: "",
     },
     {
       name: "EISJMUN 2025",
@@ -103,6 +109,7 @@ export const personalData = {
       description: "Participated in EISJMUN 2025 and got a verbal mention as the Delegate of Guatemala in the UNODC committee.",
       achievements: ["Model UN Delegate", "Verbal Mention"],
       image: "",
+      downloadUrl: "",
     },
     {
       name: "DIAMEC 2025",
@@ -112,6 +119,7 @@ export const personalData = {
         "Won Best Collaborator in the competition with peers Alman Bazaz and Avyukta Ankam.",
       achievements: ["Best Collaborator Award", "1st Place Team Award"],
       image: "https://i.postimg.cc/MKhtcWxt/diamec-best-collab.jpg",
+      downloadUrl: "",
     },
     {
       name: "DIATECH 2025",
@@ -120,7 +128,8 @@ export const personalData = {
       description:
         "Won best team in Year 10 Digital Design as a team, me Avyukta Ankam, Vihaan Deshpande, Lavitra Dhoot and Sanat Marwah",
       achievements: ["Best Product", "1st Place Team Award"],
-      image: "https://i.postimg.cc/8CnbSDyh/diatech.jpg"
+      image: "https://i.postimg.cc/8CnbSDyh/diatech.jpg",
+      downloadUrl: "",
     },
   ],
 
@@ -194,30 +203,35 @@ export const personalData = {
       issuer: "Harvard University",
       issueDate: "Jun 2025",
       image: "",
+      downloadUrl: "",
     },
     {
       name: "Udemy 100 Days of Code: The Complete Python Pro Bootcamp",
       issuer: "Udemy",
       issueDate: "2025",
       image: "",
+      downloadUrl: "",
     },
     {
       name: "HSK Level 1",
       issuer: "Chinese Proficiency Test",
       issueDate: "Score: 195/200 - Jan 2020",
       image: "",
+      downloadUrl: "",
     },
     {
       name: "HSK Level 2",
       issuer: "Chinese Proficiency Test",
       issueDate: "Score: 195/200",
       image: "",
+      downloadUrl: "",
     },
     {
       name: "HSK Level 3",
       issuer: "Chinese Proficiency Test",
       issueDate: "Score: 280/300 - Sep 2024",
       image: "",
+      downloadUrl: "",
     },
   ],
 

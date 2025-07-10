@@ -11,6 +11,7 @@ export default function SkillsSection() {
   const [selectedCertificate, setSelectedCertificate] = useState<{
     image: string;
     name: string;
+    downloadUrl?: string;
   } | null>(null);
 
   useEffect(() => {
@@ -151,7 +152,7 @@ export default function SkillsSection() {
                   <div
                     className="relative overflow-hidden cursor-pointer"
                     style={{ height: "200px" }}
-                    onClick={() => setSelectedCertificate({ image: cert.image, name: cert.name })}
+                    onClick={() => setSelectedCertificate({ image: cert.image, name: cert.name, downloadUrl: cert.downloadUrl })}
                   >
                     <div className="absolute inset-0 bg-black/5 hover:bg-black/20 transition-colors flex items-center justify-center">
                       <span className="bg-white/90 text-primary text-xs px-2 py-1 rounded">
@@ -177,6 +178,7 @@ export default function SkillsSection() {
         onClose={() => setSelectedCertificate(null)}
         imageUrl={selectedCertificate?.image || ""}
         title={selectedCertificate?.name || ""}
+        downloadUrl={selectedCertificate?.downloadUrl || ""}
       />
     </section>
   );
