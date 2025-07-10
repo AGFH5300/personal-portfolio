@@ -511,20 +511,20 @@ export default function AllProjects() {
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Button
+                  {/* <Button
                     size="sm"
                     variant="ghost"
                     onClick={() => clearSessionHistory(activeTerminal)}
-                    className="text-gray-400 hover:text-yellow-400"
+                    className="text-gray-400 hover:text-black"
                     title="Clear History"
                   >
                     Clear
-                  </Button>
+                  </Button> */}
                   <Button
                     size="sm"
                     variant="ghost"
                     onClick={() => closeTerminal(activeTerminal)}
-                    className="text-gray-400 hover:text-white"
+                    className="text-gray-400 hover:text-black"
                   >
                     <X className="h-4 w-4" />
                   </Button>
@@ -625,16 +625,6 @@ export default function AllProjects() {
                             Run Project
                           </>
                         )}
-                      </Button>
-
-                      <Button
-                        onClick={() => openTerminalWithHistory(project.id)}
-                        variant="outline"
-                        size="sm"
-                        className="px-3"
-                        title="Open Terminal"
-                      >
-                        <Terminal className="h-4 w-4" />
                       </Button>
                     </div>
                   </CardContent>

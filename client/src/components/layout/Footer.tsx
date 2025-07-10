@@ -29,6 +29,18 @@ export default function Footer() {
               About
             </a>
             <a
+              href="#competition"
+              className="text-gray-400 hover:text-primary mx-2 transition-colors duration-300"
+              onClick={(e) => {
+                e.preventDefault();
+                document
+                  .getElementById("competition")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              Experience
+            </a>
+            <a
               href="#projects"
               className="text-gray-400 hover:text-primary mx-2 transition-colors duration-300"
               onClick={(e) => {
@@ -39,18 +51,6 @@ export default function Footer() {
               }}
             >
               Projects
-            </a>
-            <a
-              href="#contact"
-              className="text-gray-400 hover:text-primary mx-2 transition-colors duration-300"
-              onClick={(e) => {
-                e.preventDefault();
-                document
-                  .getElementById("contact")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
-            >
-              Contact
             </a>
           </div>
         </div>
