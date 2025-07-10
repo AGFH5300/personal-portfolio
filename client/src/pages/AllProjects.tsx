@@ -577,12 +577,12 @@ export default function AllProjects() {
             <div className="flex justify-center gap-2 mt-4">
               <span className="text-sm text-gray-500">Active filters:</span>
               {selectedDifficulty && (
-                <Badge className={`text-xs cursor-pointer ${getDifficultyColor(selectedDifficulty)}`}>
+                <Badge className={`text-xs cursor-pointer ${getDifficultyColor(selectedDifficulty)}`} variant="outline">
                   {selectedDifficulty}
                 </Badge>
               )}
               {selectedCategory && (
-                <Badge className={`text-xs cursor-pointer ${getCategoryColor(selectedCategory)}`}>
+                <Badge className={`text-xs cursor-pointer ${getCategoryColor(selectedCategory)}`} variant="outline">
                   {selectedCategory}
                 </Badge>
               )}
@@ -699,14 +699,16 @@ export default function AllProjects() {
                     <div className="flex items-center gap-2 mb-4">
                       <Badge variant="outline" className="text-xs">{project.language}</Badge>
                       <Badge 
-                        className={`text-xs cursor-pointer transition-all duration-200 ${getDifficultyColor(project.difficulty)}`}
+                        className={`text-xs cursor-pointer transition-all duration-200 hover:scale-105 ${getDifficultyColor(project.difficulty)}`}
                         onClick={() => handleDifficultyFilter(project.difficulty)}
+                        variant="outline"
                       >
                         {project.difficulty}
                       </Badge>
                       <Badge 
-                        className={`text-xs cursor-pointer transition-all duration-200 ${getCategoryColor(project.category)}`}
+                        className={`text-xs cursor-pointer transition-all duration-200 hover:scale-105 ${getCategoryColor(project.category)}`}
                         onClick={() => handleCategoryFilter(project.category)}
+                        variant="outline"
                       >
                         {project.category}
                       </Badge>
