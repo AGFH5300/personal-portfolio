@@ -432,7 +432,7 @@ export default function AllProjects() {
       <div className="bg-white shadow-sm">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center gap-4">
-            <Link href="/" className="flex items-center gap-2 text-accent hover:text-accent/80">
+            <Link href="/" className="flex items-center gap-2 hover:text-primary cursor-click">
               <ArrowLeft className="h-5 w-5" />
               Back to Portfolio
             </Link>
@@ -546,7 +546,7 @@ export default function AllProjects() {
                 <Card className="h-full flex flex-col">
                   <CardHeader className="pb-3">
                     <div className="flex items-center gap-2 mb-2">
-                      <Code2 className="h-5 w-5 text-accent" />
+                      <Code2 className="h-5 w-5" />
                       <CardTitle className="text-lg">{project.name}</CardTitle>
                     </div>
                     <p className="text-sm text-gray-600">{project.description}</p>
