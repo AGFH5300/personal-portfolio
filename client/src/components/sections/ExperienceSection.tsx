@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { personalData } from "@/data/personalData";
 import { Card, CardContent } from "@/components/ui/card";
-import { Award, Medal, Trophy } from "lucide-react";
+import { Award, Medal, Trophy, ImageIcon } from "lucide-react";
 
 export default function ExperienceSection() {
   const competitionIcons = {
@@ -55,15 +55,30 @@ export default function ExperienceSection() {
                     {getCompetitionIcon(competition.position)}
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-medium mb-2">
-                      {competition.name}
-                    </h3>
-                    <p className="text-sm text-primary font-medium mb-1">
-                      {competition.position}
-                    </p>
-                    <p className="text-xs text-gray-500 mb-2">
-                      {competition.date}
-                    </p>
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex-1">
+                        <h3 className="text-lg font-medium mb-2">
+                          {competition.name}
+                        </h3>
+                        <p className="text-sm text-primary font-medium mb-1">
+                          {competition.position}
+                        </p>
+                        <p className="text-xs text-gray-500 mb-2">
+                          {competition.date}
+                        </p>
+                      </div>
+                      {competition.image && (
+                        <div className="ml-4 flex-shrink-0">
+                          <div className="w-16 h-16 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+                            <img
+                              src={competition.image}
+                              alt={`${competition.name} award`}
+                              className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
                     <p className="text-sm text-gray-600 mb-3">
                       {competition.description}
                     </p>
