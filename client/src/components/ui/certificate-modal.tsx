@@ -2,7 +2,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, Download, ZoomIn } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface CertificateModalProps {
   isOpen: boolean;
