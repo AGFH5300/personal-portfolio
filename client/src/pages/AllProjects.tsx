@@ -502,7 +502,7 @@ export default function AllProjects() {
           <h2 className="text-3xl font-bold text-dark mb-4">Interactive Coding Projects</h2>
           <div className="w-20 h-1 bg-accent mx-auto"></div>
           <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
-            Run and interact with my coding projects directly in your browser. Click any project to execute it.
+            Run and interact with my coding projects directly in your browser. Run any of the projects and interact with them.
           </p>
         </motion.div>
 
