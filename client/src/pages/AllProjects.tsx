@@ -28,6 +28,8 @@ export default function AllProjects() {
   const terminalRefs = useRef<Record<string, HTMLDivElement>>({});
   const [searchTerm, setSearchTerm] = useState("");
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const scrollPositionRef = useRef<number>(0); // Ref to store scroll position
 
   console.log(`🌐 [DEBUG] Current location: ${location}`);
@@ -57,14 +59,19 @@ export default function AllProjects() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Filter projects based on search term
-  const filteredProjects = personalData.codingProjects.filter(project =>
-    project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    project.language.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    project.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    project.difficulty.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filter projects based on search term and selected filters
+  const filteredProjects = personalData.codingProjects.filter(project => {
+    const matchesSearch = project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.language.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.difficulty.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesDifficulty = !selectedDifficulty || project.difficulty === selectedDifficulty;
+    const matchesCategory = !selectedCategory || project.category === selectedCategory;
+    
+    return matchesSearch && matchesDifficulty && matchesCategory;
+  });
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -433,33 +440,81 @@ export default function AllProjects() {
   };
 
   const getDifficultyColor = (difficulty: string) => {
+    const isSelected = selectedDifficulty === difficulty;
     switch (difficulty.toLowerCase()) {
       case 'beginner':
-        return 'bg-green-100 text-green-800 border-green-200';
+        return isSelected 
+          ? 'bg-green-200 text-green-900 border-green-300 ring-2 ring-green-400' 
+          : 'bg-green-100 text-green-800 border-green-200 hover:bg-green-200 hover:border-green-300';
       case 'intermediate':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+        return isSelected 
+          ? 'bg-yellow-200 text-yellow-900 border-yellow-300 ring-2 ring-yellow-400' 
+          : 'bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-200 hover:border-yellow-300';
       case 'advanced':
-        return 'bg-red-100 text-red-800 border-red-200';
+        return isSelected 
+          ? 'bg-red-200 text-red-900 border-red-300 ring-2 ring-red-400' 
+          : 'bg-red-100 text-red-800 border-red-200 hover:bg-red-200 hover:border-red-300';
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
+        return isSelected 
+          ? 'bg-gray-200 text-gray-900 border-gray-300 ring-2 ring-gray-400' 
+          : 'bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-200 hover:border-gray-300';
     }
   };
 
   const getCategoryColor = (category: string) => {
+    const isSelected = selectedCategory === category;
     const colors = {
-      'Games': 'bg-purple-100 text-purple-800',
-      'Health & Fitness': 'bg-blue-100 text-blue-800',
-      'Logic & Math': 'bg-orange-100 text-orange-800',
-      'Security & Tools': 'bg-red-100 text-red-800',
-      'Life & Planning': 'bg-green-100 text-green-800'
+      'Games': {
+        normal: 'bg-purple-100 text-purple-800 border-purple-200 hover:bg-purple-200 hover:border-purple-300',
+        selected: 'bg-purple-200 text-purple-900 border-purple-300 ring-2 ring-purple-400'
+      },
+      'Health & Fitness': {
+        normal: 'bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200 hover:border-blue-300',
+        selected: 'bg-blue-200 text-blue-900 border-blue-300 ring-2 ring-blue-400'
+      },
+      'Logic & Math': {
+        normal: 'bg-orange-100 text-orange-800 border-orange-200 hover:bg-orange-200 hover:border-orange-300',
+        selected: 'bg-orange-200 text-orange-900 border-orange-300 ring-2 ring-orange-400'
+      },
+      'Security & Tools': {
+        normal: 'bg-red-100 text-red-800 border-red-200 hover:bg-red-200 hover:border-red-300',
+        selected: 'bg-red-200 text-red-900 border-red-300 ring-2 ring-red-400'
+      },
+      'Life & Planning': {
+        normal: 'bg-green-100 text-green-800 border-green-200 hover:bg-green-200 hover:border-green-300',
+        selected: 'bg-green-200 text-green-900 border-green-300 ring-2 ring-green-400'
+      }
     };
-    return colors[category as keyof typeof colors] || 'bg-gray-100 text-gray-800';
+    
+    const categoryColors = colors[category as keyof typeof colors];
+    if (!categoryColors) {
+      return isSelected 
+        ? 'bg-gray-200 text-gray-900 border-gray-300 ring-2 ring-gray-400' 
+        : 'bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-200 hover:border-gray-300';
+    }
+    
+    return isSelected ? categoryColors.selected : categoryColors.normal;
   };
 
   // Function to handle navigation and preserve scroll position
   const navigateWithScroll = (path: string) => {
     scrollPositionRef.current = window.scrollY; // Save current scroll position
     setLocation(path);
+  };
+
+  // Filter handlers
+  const handleDifficultyFilter = (difficulty: string) => {
+    setSelectedDifficulty(selectedDifficulty === difficulty ? null : difficulty);
+  };
+
+  const handleCategoryFilter = (category: string) => {
+    setSelectedCategory(selectedCategory === category ? null : category);
+  };
+
+  const clearFilters = () => {
+    setSelectedDifficulty(null);
+    setSelectedCategory(null);
+    setSearchTerm("");
   };
 
   return (
@@ -477,16 +532,28 @@ export default function AllProjects() {
               <h1 className="text-2xl font-bold text-dark">All Projects</h1>
             </div>
 
-            {/* Search Bar */}
-            <div className="relative max-w-md w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                type="text"
-                placeholder="Search projects..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 w-full"
-              />
+            {/* Search Bar and Filters */}
+            <div className="flex items-center gap-4">
+              <div className="relative max-w-md w-full">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  type="text"
+                  placeholder="Search projects..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 pr-4 py-2 w-full"
+                />
+              </div>
+              {(selectedDifficulty || selectedCategory || searchTerm) && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={clearFilters}
+                  className="whitespace-nowrap"
+                >
+                  Clear Filters
+                </Button>
+              )}
             </div>
           </div>
         </div>
@@ -502,8 +569,25 @@ export default function AllProjects() {
           <h2 className="text-3xl font-bold text-dark mb-4">Interactive Coding Projects</h2>
           <div className="w-20 h-1 bg-accent mx-auto"></div>
           <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
-            Run and interact with my coding projects directly in your browser. Run any of the projects and interact with them.
+            Run and interact with my coding projects directly in your browser. Click on difficulty or category badges to filter projects.
           </p>
+          
+          {/* Active Filters */}
+          {(selectedDifficulty || selectedCategory) && (
+            <div className="flex justify-center gap-2 mt-4">
+              <span className="text-sm text-gray-500">Active filters:</span>
+              {selectedDifficulty && (
+                <Badge className={`text-xs cursor-pointer ${getDifficultyColor(selectedDifficulty)}`}>
+                  {selectedDifficulty}
+                </Badge>
+              )}
+              {selectedCategory && (
+                <Badge className={`text-xs cursor-pointer ${getCategoryColor(selectedCategory)}`}>
+                  {selectedCategory}
+                </Badge>
+              )}
+            </div>
+          )}
         </motion.div>
 
         {/* Terminal Overlay */}
@@ -614,8 +698,18 @@ export default function AllProjects() {
                   <CardContent className="flex-1 flex flex-col">
                     <div className="flex items-center gap-2 mb-4">
                       <Badge variant="outline" className="text-xs">{project.language}</Badge>
-                      <Badge className={`text-xs ${getDifficultyColor(project.difficulty)}`}>{project.difficulty}</Badge>
-                      <Badge className={`text-xs ${getCategoryColor(project.category)}`}>{project.category}</Badge>
+                      <Badge 
+                        className={`text-xs cursor-pointer transition-all duration-200 ${getDifficultyColor(project.difficulty)}`}
+                        onClick={() => handleDifficultyFilter(project.difficulty)}
+                      >
+                        {project.difficulty}
+                      </Badge>
+                      <Badge 
+                        className={`text-xs cursor-pointer transition-all duration-200 ${getCategoryColor(project.category)}`}
+                        onClick={() => handleCategoryFilter(project.category)}
+                      >
+                        {project.category}
+                      </Badge>
                     </div>
 
                     <div className="flex gap-2 mt-auto">
