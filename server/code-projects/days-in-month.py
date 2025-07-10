@@ -24,3 +24,7 @@ year = int(input("Enter a year: "))
 month = int(input("Enter a month: "))
 days = days_in_month(year, month)
 print(days)
+
+check_again = input("Would you like to check another month? (y/n): ").lower().strip()
+if check_again not in ['y']:
+    print("Goodbye!")

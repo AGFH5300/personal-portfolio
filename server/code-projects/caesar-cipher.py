@@ -1,4 +1,3 @@
-
 def get_direction():
     """Get encode/decode direction with validation."""
     while True:
@@ -30,11 +29,11 @@ def caesar_cipher(text, shift_amount, cipher_direction):
     """Perform Caesar cipher encryption/decryption."""
     alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
                 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-    
+
     cipher_text = ""
     if cipher_direction == "decode":
         shift_amount *= -1
-    
+
     for character in text:
         if character in alphabet:
             position = alphabet.index(character)
@@ -42,7 +41,7 @@ def caesar_cipher(text, shift_amount, cipher_direction):
             cipher_text += new_letter
         else:
             cipher_text += character
-    
+
     return cipher_text
 
 def display_result(direction, original_text, result_text, shift):
@@ -75,24 +74,24 @@ a8"     "" 88 88P'    "8a 88P'    "8a a8P_____88 88P'   "Y8
               88                                             
               88           
 """
-    
+
     print("=== Caesar Cipher ===")
     print("Encode and decode secret messages using the Caesar cipher!")
     print()
     print(logo)
-    
+
     while True:
         direction = get_direction()
         text = get_text()
         shift = get_shift()
-        
+
         result = caesar_cipher(text, shift, direction)
         display_result(direction, text, result, shift)
-        
+
         # Ask if user wants to continue
         print()
         continue_choice = input("Do you want to continue? (y/n): ").lower().strip()
-        if continue_choice not in ['y', 'yes']:
+        if continue_choice not in ['y']:
             print("Thank you for using the Caesar Cipher!")
             break
         print()

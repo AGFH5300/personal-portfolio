@@ -46,7 +46,7 @@ def main():
         # Ask if user wants to generate another
         print()
         continue_choice = input("Would you like to generate another band name? (y/n): ").lower().strip()
-        if continue_choice not in ['y', 'yes']:
+        if continue_choice not in ['y']:
             print("🎸 Rock on with your new band name! 🎸")
             break
         print()

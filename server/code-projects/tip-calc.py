@@ -14,3 +14,7 @@ bill_per_person = bill_with_tip / people
 final_amount = round(bill_per_person, 2)
 final_amount = "{:.2f}".format(final_amount)
 print(f"Each person should pay: ${final_amount}")
+
+calculate_again = input("Would you like to calculate another tip? (y/n): ").lower().strip()
+if calculate_again not in ['y']:
+    print("Thank you!")

@@ -120,17 +120,17 @@ def area():
         calculate_polygon_area(sides)
         break
 
-    should_continue = input("Want to do another calculation (type 'yes' or 'no')? ").lower()
-    if should_continue == 'yes':
-        clear_choice = input("Want to clear screen? (type 'yes' or 'no')? ").lower()
-        if clear_choice == 'yes':
+    should_continue = input("Want to do another calculation (type 'y' or 'n')? ").lower()
+    if should_continue == 'y':
+        clear_choice = input("Want to clear screen? (type 'y' or 'n')? ").lower()
+        if clear_choice == 'y':
             clear_screen()
-        elif clear_choice != 'no':
+        elif clear_choice != 'n':
             print("Invalid Input!")
             return
         print('')
         area()
-    elif should_continue != 'no':
+    elif should_continue != 'n':
         print("Invalid Input!")
 
 area()

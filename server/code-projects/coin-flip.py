@@ -1,4 +1,3 @@
-
 import random
 
 print("=== Coin Flip Simulator ===")
@@ -37,7 +36,7 @@ def main():
     while True:
         print("🪙 Coin Flip Simulator 🪙")
         print()
-        
+
         # Get seed
         seed = get_seed()
         if seed is not None:
@@ -45,35 +44,35 @@ def main():
             print(f"Using seed: {seed}")
         else:
             print("Using random flips")
-        
+
         # Get number of flips
         flip_count = get_flip_count()
-        
+
         print(f"\nFlipping coin {flip_count} time(s)...")
         print("=" * 30)
-        
+
         # Perform flips
         results = []
         heads_count = 0
         tails_count = 0
-        
+
         for i in range(flip_count):
             result = flip_coin()
             results.append(result)
-            
+
             if result == "Heads":
                 heads_count += 1
                 print(f"Flip {i+1}: 🟡 {result}")
             else:
                 tails_count += 1
                 print(f"Flip {i+1}: ⚪ {result}")
-        
+
         # Show summary
         print("=" * 30)
         print(f"📊 Summary:")
         print(f"   Heads: {heads_count} ({heads_count/flip_count*100:.1f}%)")
         print(f"   Tails: {tails_count} ({tails_count/flip_count*100:.1f}%)")
-        
+
         if flip_count > 1:
             if heads_count > tails_count:
                 print(f"   🟡 Heads won by {heads_count - tails_count}!")
@@ -81,11 +80,11 @@ def main():
                 print(f"   ⚪ Tails won by {tails_count - heads_count}!")
             else:
                 print(f"   🤝 It's a tie!")
-        
+
         # Ask if user wants to flip again
         print()
         flip_again = input("Would you like to flip again? (y/n): ").lower().strip()
-        if flip_again not in ['y', 'yes']:
+        if flip_again not in ['y']:
             print("Thanks for using the Coin Flip Simulator! 🪙")
             break
         print()

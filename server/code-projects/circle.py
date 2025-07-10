@@ -83,7 +83,7 @@ def main():
         # Ask if user wants to continue
         print()
         continue_choice = input("Would you like to calculate another circle? (y/n): ").lower().strip()
-        if continue_choice not in ['y', 'yes']:
+        if continue_choice not in ['y']:
             print("Thank you for using the Circle Calculator!")
             break
         print()

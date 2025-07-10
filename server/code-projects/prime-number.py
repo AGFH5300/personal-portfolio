@@ -164,7 +164,7 @@ def main():
         # Ask if user wants to check more numbers
         print()
         check_again = input("Would you like to check more numbers? (y/n): ").lower().strip()
-        if check_again not in ['y', 'yes']:
+        if check_again not in ['y']:
             print("Thanks for using the Prime Number Checker! 🔢")
             break
         print()

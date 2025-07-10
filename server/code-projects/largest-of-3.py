@@ -91,7 +91,7 @@ def main():
         # Ask if user wants to compare more numbers
         print()
         compare_again = input("Would you like to compare more numbers? (y/n): ").lower().strip()
-        if compare_again not in ['y', 'yes']:
+        if compare_again not in ['y']:
             print("Thanks for using the Largest Number Finder! 🔢")
             break
         print()

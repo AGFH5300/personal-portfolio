@@ -199,8 +199,8 @@ def main():
 
         # Ask if user wants to play again
         print()
-        play_again = input("Would you like to play another game? (y/n): ").lower().strip()
-        if play_again not in ['y', 'yes']:
+        play_again = input("Would you like to play again? (y/n): ").lower().strip()
+        if play_again not in ['y']:
             print("Thanks for playing Hangman!")
             display_stats(games_played, games_won)
             break

@@ -124,7 +124,7 @@ def main():
         # Ask if user wants to check more years
         print()
         check_again = input("Would you like to check more years? (y/n): ").lower().strip()
-        if check_again not in ['y', 'yes']:
+        if check_again not in ['y']:
             print("Thanks for using the Leap Year Checker!")
             break
         print()

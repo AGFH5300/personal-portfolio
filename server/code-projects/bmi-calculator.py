@@ -1,4 +1,3 @@
-
 def get_height():
     """Get height from user with validation."""
     while True:
@@ -43,7 +42,7 @@ def get_bmi_category(bmi):
         category = "Obese"
         recommendation = "Consider consulting a healthcare provider for personalized advice and support."
         risk = "Higher risk of serious health conditions including heart disease, diabetes, and stroke."
-    
+
     return category, recommendation, risk
 
 def calculate_ideal_weight_range(height):
@@ -65,12 +64,12 @@ def display_results(height, weight, bmi, category, recommendation, risk):
     print("-"*60)
     print(f"Health Risk: {risk}")
     print(f"Recommendation: {recommendation}")
-    
+
     # Show ideal weight range
     min_weight, max_weight = calculate_ideal_weight_range(height)
     print("-"*60)
     print(f"Ideal weight range for your height: {min_weight:.1f} - {max_weight:.1f} kg")
-    
+
     # Show weight difference if not in normal range
     if bmi < 18.5:
         weight_to_gain = min_weight - weight
@@ -78,7 +77,7 @@ def display_results(height, weight, bmi, category, recommendation, risk):
     elif bmi >= 25:
         weight_to_lose = weight - max_weight
         print(f"Weight to lose to reach normal BMI: {weight_to_lose:.1f} kg")
-    
+
     print("="*60)
 
 def show_bmi_info():
@@ -98,36 +97,36 @@ def main():
     print("=== BMI Calculator ===")
     print("Calculate your Body Mass Index and get health recommendations!")
     print()
-    
+
     while True:
         print("Choose an option:")
         print("1. Calculate BMI")
         print("2. Learn about BMI categories")
-        
+
         choice = input("Enter your choice (1-2): ").strip()
-        
+
         if choice == '1':
             print("\nBMI Calculation")
             print("-" * 20)
-            
+
             height = get_height()
             weight = get_weight()
-            
+
             bmi = calculate_bmi(weight, height)
             category, recommendation, risk = get_bmi_category(bmi)
-            
+
             display_results(height, weight, bmi, category, recommendation, risk)
-            
+
         elif choice == '2':
             show_bmi_info()
-            
+
         else:
             print("Please enter 1 or 2.")
             continue
-        
+
         print()
         calculate_again = input("Would you like to use the BMI calculator again? (y/n): ").lower().strip()
-        if calculate_again not in ['y', 'yes']:
+        if calculate_again not in ['y']:
             print("Thank you for using the BMI Calculator!")
             print("Remember: Always consult healthcare professionals for medical advice.")
             break

@@ -36,7 +36,7 @@ while more_bids:
     bid = int(input("How much are you bidding in dolllars: $"))
     bid_list[name] = bid
 
-    should_continue = input("Is there anyone else who wants to bid? 'yes' or 'no'").lower()
-    if should_continue == "no":
+    should_continue = input("Is there anyone else who wants to bid? 'y' or 'n'").lower()
+    if should_continue == "n":
         more_bids = False
         find_highest_bidder(bid_list)

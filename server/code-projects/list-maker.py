@@ -138,7 +138,7 @@ def main():
         # Ask if user wants to create another list
         print()
         create_another = input("Would you like to create another list? (y/n): ").lower().strip()
-        if create_another not in ['y', 'yes']:
+        if create_another not in ['y']:
             print("Thanks for using the Advanced List Maker! 📋")
             break
         print()

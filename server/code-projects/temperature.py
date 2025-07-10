@@ -126,7 +126,7 @@ def main():
         # Ask if user wants to convert again
         print()
         convert_again = input("Would you like to convert another temperature? (y/n): ").lower().strip()
-        if convert_again not in ['y', 'yes']:
+        if convert_again not in ['y']:
             print("Thanks for using the Temperature Converter! 🌡️")
             break
         print()

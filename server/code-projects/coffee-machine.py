@@ -88,3 +88,6 @@ while True:
           payment = process_coins()
           if is_transaction_successful(payment, drink['cost']):
               make_coffee(choice, drink['ingredients'])
+              continue_choice = input("Would you like to order another drink? (y/n): ").lower().strip()
+              if continue_choice not in ['y']:
+                  is_on = False

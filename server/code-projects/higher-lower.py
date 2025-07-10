@@ -163,7 +163,7 @@ def main():
         
         print()
         play_again = input("Would you like to play again? (y/n): ").lower().strip()
-        if play_again not in ['y', 'yes']:
+        if play_again not in ['y']:
             print("Thanks for playing Higher Lower!")
             break
         print()
