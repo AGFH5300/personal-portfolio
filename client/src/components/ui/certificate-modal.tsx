@@ -1,7 +1,7 @@
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Download, ZoomIn } from "lucide-react";
+import { Download, ZoomIn, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 interface CertificateModalProps {
@@ -61,12 +61,12 @@ export function CertificateModal({ isOpen, onClose, imageUrl, image, title, name
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] p-0 overflow-hidden">
-        <DialogHeader className="p-6 pb-0">
+      <DialogContent className="max-w-4xl max-h-[90vh] p-0 overflow-hidden [&>button]:hidden">
+        <div className="p-6 pb-0">
           <div className="flex items-center justify-between">
-            <DialogTitle className="text-xl font-semibold">
+            <h2 className="text-xl font-semibold">
               {displayTitle || "Certificate"}
-            </DialogTitle>
+            </h2>
             <div className="flex gap-2">
               <Button
                 variant="outline"
@@ -88,9 +88,18 @@ export function CertificateModal({ isOpen, onClose, imageUrl, image, title, name
                 <ZoomIn className="h-4 w-4" />
                 {isZoomed ? 'Zoom Out' : 'Zoom In'}
               </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onClose}
+                className="flex items-center gap-2 focus:outline-none focus:ring-0"
+                tabIndex={-1}
+              >
+                <X className="h-4 w-4" />
+              </Button>
             </div>
           </div>
-        </DialogHeader>
+        </div>
         <div className="px-6 pb-6">
           {displayImage && (
             <div className="relative bg-gray-50 rounded-lg overflow-hidden">
