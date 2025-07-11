@@ -205,4 +205,5 @@ def main():
             display_stats(games_played, games_won)
             break
 
-main()
+if __name__ == "__main__":
+    main()

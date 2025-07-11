@@ -20,11 +20,21 @@ def days_in_month(year, month):
     return month_days[month - 1]
 
 
-year = int(input("Enter a year: "))
-month = int(input("Enter a month: (1-12)"))
-days = days_in_month(year, month)
-print(days)
+def main():
+    while True:
+        try:
+            year = int(input("Enter a year: "))
+            month = int(input("Enter a month: (1-12) "))
+            days = days_in_month(year, month)
+            print(days)
+        except ValueError:
+            print("Please enter valid numbers.")
+            continue
+        
+        check_again = input("Would you like to check another month? (y/n): ").lower().strip()
+        if check_again not in ['y']:
+            print("Goodbye!")
+            break
+        print()
 
-check_again = input("Would you like to check another month? (y/n): ").lower().strip()
-if check_again not in ['y']:
-    print("Goodbye!")
+main()

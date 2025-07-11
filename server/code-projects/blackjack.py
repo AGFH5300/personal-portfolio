@@ -49,6 +49,18 @@ def compare(u_score, c_score):
 
 
 
+def show_rules():
+    print("\n=== BLACKJACK RULES ===")
+    print("1. Get as close to 21 as possible without going over")
+    print("2. Face cards (J, Q, K) are worth 10 points")
+    print("3. Aces are worth 11 or 1 (whichever is better)")
+    print("4. You'll be dealt 2 cards to start")
+    print("5. Choose 'y' to hit (get another card) or 'n' to stand")
+    print("6. If you go over 21, you bust and lose")
+    print("7. Dealer must hit on 16 and stand on 17")
+    print("8. Blackjack (21 with 2 cards) beats regular 21")
+    print("========================\n")
+
 def play_game():
     user_cards = []
     computer_cards = []
@@ -82,6 +94,15 @@ def play_game():
     print(compare(user_score, computer_score))
 
 
-while input("Do you want to play a game of Blackjack? Type 'y' or 'n':") == "y":
-    print(logo)
-    play_game()
+while True:
+    choice = input("Do you want to play Blackjack? Type 'y' for yes, 'r' for rules, 'n' for no: ").lower()
+    if choice == "y":
+        print(logo)
+        play_game()
+    elif choice == "r":
+        show_rules()
+    elif choice == "n":
+        print("Thanks for playing!")
+        break
+    else:
+        print("Please enter 'y', 'r', or 'n'.")

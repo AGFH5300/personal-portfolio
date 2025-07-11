@@ -73,7 +73,7 @@ def make_coffee(drink_name, order_ingredients):
 
 profit = 0
 is_on = True
-while True:
+while is_on:
   choice = input("What do you like? Espresso, Latte or Cappuccino:").lower()
   if choice == "off":
       is_on = False
@@ -83,11 +83,16 @@ while True:
       print(f"Coffee: {resources['coffee']}g ")
       print(f"Money: ${profit} ")
   else:
-      drink = MENU[choice]
-      if is_resource_sufficient(drink["ingredients"]):
-          payment = process_coins()
-          if is_transaction_successful(payment, drink['cost']):
-              make_coffee(choice, drink['ingredients'])
-              continue_choice = input("Would you like to order another drink? (y/n): ").lower().strip()
-              if continue_choice not in ['y']:
-                  is_on = False
+      if choice in MENU:
+          drink = MENU[choice]
+          if is_resource_sufficient(drink["ingredients"]):
+              payment = process_coins()
+              if is_transaction_successful(payment, drink['cost']):
+                  make_coffee(choice, drink['ingredients'])
+                  continue_choice = input("Would you like to order another drink? (y/n): ").lower().strip()
+                  if continue_choice not in ['y']:
+                      is_on = False
+      else:
+          print("Invalid choice. Please choose Espresso, Latte, or Cappuccino.")
+
+print("Thanks for using the Coffee Machine!")
