@@ -199,6 +199,26 @@ const saveContactFormData = (formData: ContactFormData): Promise<void> => {
 };
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Ensure code-projects directory exists
+  const codeProjectsDir = path.join(__dirname, 'code-projects');
+  if (!fs.existsSync(codeProjectsDir)) {
+    console.log('📁 Creating code-projects directory...');
+    fs.mkdirSync(codeProjectsDir, { recursive: true });
+    
+    // Copy project files from source if they exist
+    const sourceDir = path.join(process.cwd(), 'server', 'code-projects');
+    if (fs.existsSync(sourceDir)) {
+      console.log('📁 Copying code projects from source...');
+      const files = fs.readdirSync(sourceDir);
+      files.forEach(file => {
+        if (file.endsWith('.py')) {
+          fs.copyFileSync(path.join(sourceDir, file), path.join(codeProjectsDir, file));
+          console.log(`📁 Copied ${file}`);
+        }
+      });
+    }
+  }
+
   // Initialize nodemailer on startup
   const nodemailerReady = await initializeNodemailer();
 
@@ -221,6 +241,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/run-code/:projectId", (req, res) => {
     const { projectId } = req.params;
     
+    // In production, __dirname points to dist/, so code-projects is in dist/code-projects
+    // In development, __dirname points to server/, so code-projects is in server/code-projects
     const projectPath = path.join(__dirname, 'code-projects', `${projectId}.py`);
     
     // Check if project file exists
@@ -284,6 +306,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const { projectId } = req.params;
     // console.log(`🐍 [DEBUG] Starting execution for project: ${projectId}`);
 
+    // In production, __dirname points to dist/, so code-projects is in dist/code-projects
+    // In development, __dirname points to server/, so code-projects is in server/code-projects
     const projectPath = path.join(__dirname, 'code-projects', `${projectId}.py`);
     // console.log(`🐍 [DEBUG] Project path: ${projectPath}`);
     // console.log(`🐍 [DEBUG] __dirname: ${__dirname}`);
