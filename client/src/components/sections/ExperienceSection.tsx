@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { personalData } from "@/data/personalData";
 import { Card, CardContent } from "@/components/ui/card";
-import { Award, Medal, Trophy, ImageIcon } from "lucide-react";
+import { Award, Medal, Trophy, ImageIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import { CertificateModal } from "@/components/ui/certificate-modal";
 import { useState } from "react";
 
@@ -11,6 +11,7 @@ export default function ExperienceSection() {
     name: string;
     downloadUrl?: string;
   } | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState<{ [key: number]: number }>({});
 
   const competitionIcons = {
     "Python Developer": <Award className="text-blue-500" />,
@@ -75,22 +76,66 @@ export default function ExperienceSection() {
                           {competition.date}
                         </p>
                       </div>
-                      {competition.image && (
+                      {competition.images && competition.images.length > 0 && (
                         <div className="ml-4 flex-shrink-0">
-                          <div 
-                            className="w-16 h-16 rounded-lg overflow-hidden border border-gray-200 shadow-sm cursor-pointer relative group"
-                            onClick={() => setSelectedImage({ image: competition.image, name: competition.name, downloadUrl: competition.downloadUrl })}
-                          >
-                            <img
-                              src={competition.image}
-                              alt={`${competition.name} award`}
-                              className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
-                            />
-                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                              <span className="bg-white/0 group-hover:bg-white/90 text-primary text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                                View
-                              </span>
+                          <div className="relative">
+                            {/* Current Image Display */}
+                            <div 
+                              className="w-16 h-16 rounded-lg overflow-hidden border border-gray-200 shadow-sm cursor-pointer relative group"
+                              onClick={() => {
+                                const currentIndex = currentImageIndex[index] || 0;
+                                const currentImage = competition.images[currentIndex];
+                                setSelectedImage({ 
+                                  image: currentImage.url, 
+                                  name: `${competition.name} - ${currentImage.caption || 'Image'}`, 
+                                  downloadUrl: currentImage.downloadUrl 
+                                });
+                              }}
+                            >
+                              <img
+                                src={competition.images[currentImageIndex[index] || 0]?.url}
+                                alt={`${competition.name} award`}
+                                className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
+                              />
+                              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                                <span className="bg-white/0 group-hover:bg-white/90 text-primary text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                                  View
+                                </span>
+                              </div>
                             </div>
+                            
+                            {/* Navigation arrows for multiple images */}
+                            {competition.images.length > 1 && (
+                              <>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    const current = currentImageIndex[index] || 0;
+                                    const newIndex = current > 0 ? current - 1 : competition.images.length - 1;
+                                    setCurrentImageIndex(prev => ({ ...prev, [index]: newIndex }));
+                                  }}
+                                  className="absolute -left-2 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-1 shadow-md hover:bg-gray-50 z-10"
+                                >
+                                  <ChevronLeft className="h-3 w-3 text-gray-600" />
+                                </button>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    const current = currentImageIndex[index] || 0;
+                                    const newIndex = current < competition.images.length - 1 ? current + 1 : 0;
+                                    setCurrentImageIndex(prev => ({ ...prev, [index]: newIndex }));
+                                  }}
+                                  className="absolute -right-2 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-1 shadow-md hover:bg-gray-50 z-10"
+                                >
+                                  <ChevronRight className="h-3 w-3 text-gray-600" />
+                                </button>
+                                
+                                {/* Image counter */}
+                                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-black/70 text-white text-xs px-1 rounded">
+                                  {(currentImageIndex[index] || 0) + 1}/{competition.images.length}
+                                </div>
+                              </>
+                            )}
                           </div>
                         </div>
                       )}

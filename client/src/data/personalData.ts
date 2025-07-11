@@ -51,8 +51,13 @@ export const personalData = {
         "4th Place Scholars Bowl Team",
         "Silver Medal - 22nd Place Challenge - History",
       ],
-      image: "https://i.postimg.cc/43Lkzkmy/wsc.png",
-      downloadUrl: "https://i.postimg.cc/nHZFfnx4/wsc.png?dl=1",
+      images: [
+        {
+          url: "https://i.postimg.cc/43Lkzkmy/wsc.png",
+          downloadUrl: "https://i.postimg.cc/nHZFfnx4/wsc.png?dl=1",
+          caption: "World Scholars Cup Awards"
+        }
+      ],
     },
     {
       name: "AUS School Computing Competition (ASCC-2025)",
@@ -61,8 +66,7 @@ export const personalData = {
       description:
         "Created a python script to sort, grab and graph data from a dataset with team members Avyukta Ankam.",
       achievements: ["Python Data Analysis Project"],
-      image: "",
-      downloadUrl: "",
+      images: [],
     },
     {
       name: "DIAMathletes January 2025 Competition",
@@ -71,8 +75,13 @@ export const personalData = {
       description:
         "Won 1st place solving multiple math problems as a team with Vihaan Deshpande, Lavitra Dhoot and Avyukta Ankam.",
       achievements: ["1st Place Winner"],
-      image: "https://i.postimg.cc/CKK4Xd4h/mathletes.jpg",
-      downloadUrl: "https://i.postimg.cc/XnfDZCGC/mathletes.jpg?dl=1",
+      images: [
+        {
+          url: "https://i.postimg.cc/CKK4Xd4h/mathletes.jpg",
+          downloadUrl: "https://i.postimg.cc/XnfDZCGC/mathletes.jpg?dl=1",
+          caption: "DIAMathletes Competition Winners"
+        }
+      ],
     },
     {
       name: "DIA Game Jam Competition",
@@ -80,8 +89,7 @@ export const personalData = {
       date: "Mar-Apr 2025",
       description: "Created an idle clicker game which won the competition.",
       achievements: ["1st Place Winner"],
-      image: "",
-      downloadUrl: "",
+      images: [],
     },
     {
       name: "Business Minds Case Study Competition",
@@ -90,8 +98,13 @@ export const personalData = {
       description:
         "Won 2nd place with peers Alman Bazaz and Avyukta Ankam in business case study analysis.",
       achievements: ["2nd Place Winner"],
-      image: "https://i.postimg.cc/DfpxTrM9/business-minds.jpg",
-      downloadUrl: "https://i.postimg.cc/KFxwtQr8/business-minds.jpg?dl=1",
+      images: [
+        {
+          url: "https://i.postimg.cc/DfpxTrM9/business-minds.jpg",
+          downloadUrl: "https://i.postimg.cc/KFxwtQr8/business-minds.jpg?dl=1",
+          caption: "Business Minds Competition Award"
+        }
+      ],
     },
     {
       name: "DIAMWEF 2025",
@@ -99,8 +112,7 @@ export const personalData = {
       date: "May 2025 - Present",
       description: "Participating as a delegate in DIAMWEF 2025.",
       achievements: ["Active Delegate"],
-      image: "",
-      downloadUrl: "",
+      images: [],
     },
     {
       name: "EISJMUN 2025",
@@ -108,8 +120,7 @@ export const personalData = {
       date: "Jun 2025",
       description: "Participated in EISJMUN 2025 and got a verbal mention as the Delegate of Guatemala in the UNODC committee.",
       achievements: ["Model UN Delegate", "Verbal Mention"],
-      image: "",
-      downloadUrl: "",
+      images: [],
     },
     {
       name: "DIAMEC 2025",
@@ -118,8 +129,13 @@ export const personalData = {
       description:
         "Won Best Collaborator in the competition with peers Alman Bazaz and Avyukta Ankam.",
       achievements: ["Best Collaborator Award", "1st Place Team Award"],
-      image: "https://i.postimg.cc/MKhtcWxt/diamec-best-collab.jpg",
-      downloadUrl: "https://i.postimg.cc/R40YDFYr/diamec-best-collab.jpg?dl=1",
+      images: [
+        {
+          url: "https://i.postimg.cc/MKhtcWxt/diamec-best-collab.jpg",
+          downloadUrl: "https://i.postimg.cc/R40YDFYr/diamec-best-collab.jpg?dl=1",
+          caption: "DIAMEC Best Collaborator Award"
+        }
+      ],
     },
     {
       name: "DIATECH 2025",
@@ -128,8 +144,13 @@ export const personalData = {
       description:
         "Won best team in Year 10 Digital Design as a team, me Avyukta Ankam, Vihaan Deshpande, Lavitra Dhoot and Sanat Marwah",
       achievements: ["Best Product", "1st Place Team Award"],
-      image: "https://i.postimg.cc/8CnbSDyh/diatech.jpg",
-      downloadUrl: "https://i.postimg.cc/69BbCpn1/diatech.jpg?dl=1",
+      images: [
+        {
+          url: "https://i.postimg.cc/8CnbSDyh/diatech.jpg",
+          downloadUrl: "https://i.postimg.cc/69BbCpn1/diatech.jpg?dl=1",
+          caption: "DIATECH Competition Winners"
+        }
+      ],
     },
   ],
 
