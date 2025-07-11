@@ -1,7 +1,7 @@
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { X, Download, ZoomIn } from "lucide-react";
+import { Download, ZoomIn } from "lucide-react";
 import { useEffect, useState } from "react";
 
 interface CertificateModalProps {
@@ -85,14 +85,6 @@ export function CertificateModal({ isOpen, onClose, imageUrl, image, title, name
               >
                 <ZoomIn className="h-4 w-4" />
                 {isZoomed ? 'Zoom Out' : 'Zoom In'}
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onClose}
-                className="h-8 w-8 p-0"
-              >
-                <X className="h-4 w-4" />
               </Button>
             </div>
           </div>
