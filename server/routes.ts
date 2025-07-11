@@ -217,7 +217,69 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  // Code project execution endpoint  
+  // Code project execution endpoint (GET route for direct access)
+  app.get("/api/run-code/:projectId", (req, res) => {
+    const { projectId } = req.params;
+    
+    const projectPath = path.join(__dirname, 'code-projects', `${projectId}.py`);
+    
+    // Check if project file exists
+    if (!fs.existsSync(projectPath)) {
+      return res.status(404).json({ error: 'Project not found' });
+    }
+
+    // Set up streaming response
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+
+    // Spawn Python process
+    const pythonProcess = spawn('python3', [projectPath], {
+      stdio: ['pipe', 'pipe', 'pipe']
+    });
+
+    // Store process for input handling
+    runningProcesses.set(projectId, pythonProcess);
+
+    // Mark session as running
+    const session = getOrCreateSession(projectId);
+    session.isRunning = true;
+
+    // Handle stdout
+    pythonProcess.stdout.on('data', (data) => {
+      const output = data.toString();
+      addToSession(projectId, 'output', output);
+      const response = JSON.stringify({ type: 'output', content: output });
+      res.write(response + '\n');
+    });
+
+    // Handle stderr
+    pythonProcess.stderr.on('data', (data) => {
+      const error = data.toString();
+      addToSession(projectId, 'error', error);
+      const response = JSON.stringify({ type: 'error', content: error });
+      res.write(response + '\n');
+    });
+
+    // Handle process completion
+    pythonProcess.on('close', (code) => {
+      addToSession(projectId, 'complete', `Process completed with exit code: ${code}`);
+      const session = getOrCreateSession(projectId);
+      session.isRunning = false;
+      const response = JSON.stringify({ type: 'complete', code });
+      res.write(response + '\n');
+    });
+
+    // Handle process errors
+    pythonProcess.on('error', (error) => {
+      const response = JSON.stringify({ type: 'error', content: error.message });
+      res.write(response + '\n');
+      res.end();
+      runningProcesses.delete(projectId);
+    });
+  });
+
+  // Code project execution endpoint (POST route for programmatic access)  
   app.post("/api/run-code/:projectId", (req, res) => {
     const { projectId } = req.params;
     // console.log(`🐍 [DEBUG] Starting execution for project: ${projectId}`);
