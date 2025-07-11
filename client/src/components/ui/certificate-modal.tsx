@@ -89,7 +89,7 @@ export function CertificateModal({ isOpen, onClose, imageUrl, image, title, name
                 {isZoomed ? 'Zoom Out' : 'Zoom In'}
               </Button>
               <Button
-                variant="outline"
+                variant="ghost"
                 size="sm"
                 onClick={onClose}
                 className="flex items-center gap-2 focus:outline-none focus:ring-0"
