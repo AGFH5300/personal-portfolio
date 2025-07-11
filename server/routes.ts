@@ -260,10 +260,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     pythonProcess.stdout.on('data', (data) => {
       const output = data.toString();
       // console.log(`🐍 [STDOUT] ${projectId}: ${output.replace(/\n/g, '\\n')}`);
-      
+
       // Save to session
       addToSession(projectId, 'output', output);
-      
+
       const response = JSON.stringify({ type: 'output', content: output });
       // console.log(`🐍 [RESPONSE] Sending: ${response}`);
       res.write(response + '\n');
@@ -273,10 +273,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     pythonProcess.stderr.on('data', (data) => {
       const error = data.toString();
       // console.log(`🐍 [STDERR] ${projectId}: ${error.replace(/\n/g, '\\n')}`);
-      
+
       // Save to session
       addToSession(projectId, 'error', error);
-      
+
       const response = JSON.stringify({ type: 'error', content: error });
       // console.log(`🐍 [RESPONSE] Sending error: ${response}`);
       res.write(response + '\n');
@@ -285,12 +285,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     // Handle process completion
     pythonProcess.on('close', (code) => {
       // console.log(`🐍 [DEBUG] Process ${projectId} closed with code: ${code}`);
-      
+
       // Save to session and mark as not running
       addToSession(projectId, 'complete', `Process completed with exit code: ${code}`);
       const session = getOrCreateSession(projectId);
       session.isRunning = false;
-      
+
       const response = JSON.stringify({ type: 'complete', code });
       // console.log(`🐍 [RESPONSE] Sending complete: ${response}`);
       res.write(response + '\n');
@@ -330,12 +330,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       process.kill('SIGTERM');
       runningProcesses.delete(projectId);
-      
+
       // Mark session as not running but keep the history
       const session = getOrCreateSession(projectId);
       session.isRunning = false;
       addToSession(projectId, 'complete', 'Process manually stopped by user');
-      
+
       // console.log(`🐍 [DEBUG] Successfully stopped process for ${projectId}`);
       res.json({ success: true });
     } catch (error) {
@@ -395,7 +395,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       // Save input to session
       addToSession(projectId, 'input', `> ${input}`);
-      
+
       process.stdin.write(input + '\n');
       // console.log(`🐍 [INPUT] Successfully sent input to ${projectId}`);
       res.json({ success: true });
