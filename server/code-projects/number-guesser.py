@@ -1,6 +1,3 @@
-` tags. I will ensure that all necessary parts of the original code are included, the changes from the edited snippet are applied correctly, the indentation and formatting are preserved, and no forbidden words or placeholders are used.
-
-```python
 import random
 
 print("=== Number Guessing Game ===")
