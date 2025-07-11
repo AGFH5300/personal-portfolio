@@ -72,7 +72,8 @@ export function CertificateModal({ isOpen, onClose, imageUrl, image, title, name
                 variant="outline"
                 size="sm"
                 onClick={handleDownload}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 focus:outline-none focus:ring-0"
+                tabIndex={-1}
               >
                 <Download className="h-4 w-4" />
                 Download
@@ -81,7 +82,8 @@ export function CertificateModal({ isOpen, onClose, imageUrl, image, title, name
                 variant="outline"
                 size="sm"
                 onClick={handleZoom}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 focus:outline-none focus:ring-0"
+                tabIndex={-1}
               >
                 <ZoomIn className="h-4 w-4" />
                 {isZoomed ? 'Zoom Out' : 'Zoom In'}
