@@ -52,6 +52,6 @@ ____/______/______/______/______/_____"=.o|o_.--""___/______/______/______/____
 
 while True:
     play_game()
-    play_again = input("Do you want to play again? (yes/no): ").lower()
-    if play_again != "yes":
+    play_again = input("Do you want to play again? (y/n): ").lower()
+    if play_again != "y":
         break

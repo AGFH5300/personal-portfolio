@@ -483,9 +483,9 @@ export const personalData = {
       category: "Games"
     },
     {
-      id: "largest-of-3",
-      name: "Largest of 3 Numbers",
-      description: "Find the largest number among three given numbers.",
+      id: "largest-of-numbers",
+      name: "Largest of Multiple Numbers",
+      description: "Find the largest number among multiple given numbers.",
       language: "Python",
       difficulty: "Beginner",
       category: "Logic & Math"
