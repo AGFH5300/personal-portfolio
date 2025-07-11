@@ -10,8 +10,14 @@ export default function ExperienceSection() {
     image: string;
     name: string;
     downloadUrl?: string;
+    images?: Array<{
+      url: string;
+      downloadUrl?: string;
+      caption?: string;
+    }>;
   } | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<{ [key: number]: number }>({});
+  const [modalImageIndex, setModalImageIndex] = useState(0);
 
   const competitionIcons = {
     "Python Developer": <Award className="text-blue-500" />,
@@ -85,10 +91,12 @@ export default function ExperienceSection() {
                               onClick={() => {
                                 const currentIndex = currentImageIndex[index] || 0;
                                 const currentImage = competition.images[currentIndex];
+                                setModalImageIndex(currentIndex);
                                 setSelectedImage({ 
                                   image: currentImage.url, 
-                                  name: `${competition.name} - ${currentImage.caption || 'Image'}`, 
-                                  downloadUrl: currentImage.downloadUrl 
+                                  name: competition.name, 
+                                  downloadUrl: currentImage.downloadUrl,
+                                  images: competition.images
                                 });
                               }}
                             >
@@ -168,6 +176,9 @@ export default function ExperienceSection() {
         imageUrl={selectedImage?.image || ""}
         title={selectedImage?.name || ""}
         downloadUrl={selectedImage?.downloadUrl || ""}
+        images={selectedImage?.images}
+        currentImageIndex={modalImageIndex}
+        onImageChange={setModalImageIndex}
       />
     </section>
   );
