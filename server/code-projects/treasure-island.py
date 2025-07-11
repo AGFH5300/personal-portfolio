@@ -1,11 +1,11 @@
-# Indentation is VERY IMPORTANT
-# Use three single apostrophe (''') to print multiple lines
+# Added play again functionality
 
-print("=== Treasure Island Adventure ===")
-print("Choose your path wisely to find the treasure!")
-print()
+def play_game():
+    print("=== Treasure Island Adventure ===")
+    print("Choose your path wisely to find the treasure!")
+    print()
 
-print('''
+    print('''
 *******************************************************************************
           |                   |                  |                     |
  _________|________________.=""_;=.______________|_____________________|_______
@@ -28,24 +28,31 @@ ____/______/______/______/______/_____"=.o|o_.--""___/______/______/______/____
 *******************************************************************************
 ''')
 
-print("Welcome To Treasure Island.")
-print("Your mission is to find the treasure")
+    print("Welcome To Treasure Island.")
+    print("Your mission is to find the treasure")
 
-choice1 = input('You\'re at the crossroad. Where do you want to go? Type "left" or "right"').lower()
+    choice1 = input('You\'re at the crossroad. Where do you want to go? Type "left" or "right"').lower()
 
-if choice1 == 'left':
-    choice2 = input('You\'ve come to a lake. There is an island in the middle of the lake. Type "wait" to wait for a boat or type "swim" to swim across').lower()
-    if choice2 == 'wait':
-        choice3 = input('You arrive at the island unharmed. There is a house with 3 doors. One red, one yellow and one blue. Which color do you choose?').lower()
-        if choice3 == 'red':
-            print("It is a room of fire. You burn to death. Game Over")
-        elif choice3 == 'yellow':
-            print("You found the treasure! You Win!")
-        elif choice3 == 'blue':
-            print("There was a monster there. He ate")
+    if choice1 == 'left':
+        choice2 = input('You\'ve come to a lake. There is an island in the middle of the lake. Type "wait" to wait for a boat or type "swim" to swim across').lower()
+        if choice2 == 'wait':
+            choice3 = input('You arrive at the island unharmed. There is a house with 3 doors. One red, one yellow and one blue. Which color do you choose?').lower()
+            if choice3 == 'red':
+                print("It is a room of fire. You burn to death. Game Over")
+            elif choice3 == 'yellow':
+                print("You found the treasure! You Win!")
+            elif choice3 == 'blue':
+                print("There was a monster there. He ate you. Game Over")
+            else:
+                print("You fell out of the world. Game Over")
         else:
-            print("You fell out of the world. Game Over")
+            print("You got attacked by a shark. Game Over")
     else:
-        print("You got attacked by a shark. Game Over")
-else:
-    print("Y0u have fallen into a hole. Game Over")
+        print("You have fallen into a hole. Game Over")
+
+while True:
+    play_game()
+    play_again = input("Do you want to play again? (yes/no): ").lower()
+    if play_again != "yes":
+        break
+`

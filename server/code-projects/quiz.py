@@ -1,4 +1,10 @@
-import requests
+try:
+    import requests
+    REQUESTS_AVAILABLE = True
+except ImportError:
+    REQUESTS_AVAILABLE = False
+    print("Requests module not available. Using fallback questions.")
+
 import html
 
 class Question:
@@ -120,7 +126,26 @@ def get_difficulty():
     else:
         return ""
 
+def get_fallback_questions():
+    """Return a set of fallback questions when API is not available."""
+    return [
+        {"question": "The Great Wall of China is visible from space.", "correct_answer": "False"},
+        {"question": "Python is a programming language.", "correct_answer": "True"},
+        {"question": "The sun rises in the west.", "correct_answer": "False"},
+        {"question": "Water boils at 100 degrees Celsius at sea level.", "correct_answer": "True"},
+        {"question": "Sharks are mammals.", "correct_answer": "False"},
+        {"question": "The human brain uses about 20% of the body's energy.", "correct_answer": "True"},
+        {"question": "Lightning never strikes the same place twice.", "correct_answer": "False"},
+        {"question": "Mount Everest is the tallest mountain on Earth.", "correct_answer": "True"},
+        {"question": "Goldfish have a 3-second memory.", "correct_answer": "False"},
+        {"question": "The Earth is round.", "correct_answer": "True"}
+    ]
+
 def fetch_questions(amount, category, difficulty):
+    if not REQUESTS_AVAILABLE:
+        fallback = get_fallback_questions()
+        return fallback[:min(amount, len(fallback))]
+    
     url = "https://opentdb.com/api.php"
 
     params = {
@@ -143,10 +168,11 @@ def fetch_questions(amount, category, difficulty):
             return data["results"]
         else:
             print("Error fetching questions from API")
-            return None
-    except requests.RequestException as e:
+            return get_fallback_questions()[:min(amount, 10)]
+    except Exception as e:
         print(f"Error connecting to API: {e}")
-        return None
+        print("Using fallback questions...")
+        return get_fallback_questions()[:min(amount, 10)]
 
 def main():
     print("=== OpenTDB Quiz Game ===")
