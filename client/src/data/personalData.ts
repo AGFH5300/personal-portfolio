@@ -87,9 +87,15 @@ export const personalData = {
       name: "DIA Game Jam Competition",
       position: "Game Developer",
       date: "Mar-Apr 2025",
-      description: "Created an idle clicker game which won the competition.",
+      description: "Won 1st place by creating an idle clicker game with the theme of polar opposites called Idle Realms with my teammates Armaghan Siddiqui, Lavitra Dhoot and Avyukta Ankam. Can be seen in the projects tab.",
       achievements: ["1st Place Winner"],
-      images: [],
+      images: [
+        {
+        url: "https://i.postimg.cc/4y5XB44k/game-jam.jpg",
+        downloadUrl: "https://i.postimg.cc/CMydMdW1/game-jam.jpg?dl=1",
+        caption: "DIA Game Jam Competition Winners",
+        }  
+      ],
     },
     {
       name: "Business Minds Case Study Competition",
@@ -110,8 +116,8 @@ export const personalData = {
       name: "DIAMWEF 2025",
       position: "Delegate",
       date: "May 2025 - Present",
-      description: "Participating as a delegate in DIAMWEF 2025.",
-      achievements: ["Active Delegate"],
+      description: "Participated as the Delegate Of India (Jal Shakti) in DIAMWEF 2025.",
+      achievements: ["Delegate"],
       images: [],
     },
     {
@@ -134,6 +140,11 @@ export const personalData = {
           url: "https://i.postimg.cc/MKhtcWxt/diamec-best-collab.jpg",
           downloadUrl: "https://i.postimg.cc/R40YDFYr/diamec-best-collab.jpg?dl=1",
           caption: "DIAMEC Best Collaborator Award"
+        },
+        {
+          url: "https://i.postimg.cc/x14gcWD9/DIAMEC.png",
+          downloadUrl: "https://i.postimg.cc/t9XcmjBn/DIAMEC.png?dl=1",
+          caption: "DIAMEC Competition Winners"
         }
       ],
     },
