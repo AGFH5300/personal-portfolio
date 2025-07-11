@@ -2,7 +2,7 @@ export const personalData = {
   name: "Ansh Gupta",
   title: "Web Developer & Student",
   shortBio:
-    "Passionate about creating web applications and learning new technologies. I specialize in front-end development with experience in HTML, CSS, JavaScript, PHP, and React.",
+    "Passionate about creating web applications and learning new technologies. I do front and back-end development with experience in HTML, CSS, JavaScript, PHP, and React.",
   fullBio: [
     "I'm a 15-year-old developer with a growing portfolio of web projects. It began with creating websites using HTML, CSS, and JavaScript, and has expanded to include more complex applications using React, TypeScript and backend like PHP.",
     "I am also a language enthusiast with HSK certifications in Chinese, having achieved excellent scores across all levels I've done.",
@@ -133,7 +133,7 @@ export const personalData = {
       position: "Delegate",
       date: "Mar 2025",
       description:
-        "Won 1st place as the best team in the senior category of DIAMEC with peers Alman Bazaz and Avyukta Ankam and I won Best Collaborator as well.",
+        "Won 1st place as the best team in DIAMEC with peers Alman Bazaz and Avyukta Ankam and I won Best Collaborator as well.",
       achievements: ["Best Collaborator Award", "1st Place Team Award"],
       images: [
         {
@@ -310,7 +310,7 @@ export const personalData = {
       role: "Volunteer",
       period: "Aug 01, 2023",
       description:
-        "Donated food and snacks to the patients and staff of Tata Cancer Hospital in India. The goal was to provide support and uplift the spirits of those battling cancer by contributing to their well-being during treatment.",
+        "Donated food and snacks to the patients and staff of a Tata Cancer Hospital in Mumbai. The goal was to provide support and uplift the spirits of those battling cancer by contributing to their well-being during treatment.",
     },
     {
       organization: "Tata Cancer Hospital",
@@ -324,8 +324,15 @@ export const personalData = {
       role: "Volunteer",
       period: "Aug 01, 2024",
       description:
-        "Donated stationery items, such as pens, pencils, pencil cases, bags and food like chocolate bars to children with hearing and speech impairments at a school in India. The goal was to help support their educational needs by providing essential supplies and brighten their day with a small treat.",
+        "Donated stationery items, such as pens, pencils, pencil cases, bags and food like chocolate bars to children with hearing and speech impairments at a school in Mumbai. The goal was to help support their educational needs by providing essential supplies and brighten their day with a small treat.",
     },
+    {
+      organization: "DIA",
+      role: "Volunteer",
+      period: "Jun 22, 2025",
+      description:
+        "Me and some friends explained to the staff and security of our school about the importance of cyber security and the capabilities of AI tools like ChatGPT."
+    }
   ],
 
   projects: [
