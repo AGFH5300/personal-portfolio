@@ -109,8 +109,6 @@ export default function AllProjects() {
       'enter',
       'type',
       'input',
-      ':',
-      '?',
       'choose',
       'Choose',
       'select',
@@ -132,7 +130,10 @@ export default function AllProjects() {
       'continue',
       'yes or no',
       'y or n',
-      'Y or N'
+      'Y or N',
+      'city did you grow up',
+      'name of a pet',
+      'grew up in'
     ];
 
     // Check if the content ends with common input prompts
@@ -140,8 +141,7 @@ export default function AllProjects() {
     const endsWithPrompt = trimmed.endsWith(':') || 
                           trimmed.endsWith('?') || 
                           trimmed.endsWith(': ') ||
-                          trimmed.endsWith('? ') ||
-                          trimmed.includes('\n') === false; // Single line output often indicates input needed
+                          trimmed.endsWith('? ');
 
     // Check for specific input indicators
     const hasInputIndicator = inputIndicators.some(indicator => 
@@ -255,7 +255,12 @@ export default function AllProjects() {
 
       // console.log(`🌐 [DEBUG] Starting to read streaming response...`);
 
-// Start reading the stream
+      // Initialize reader and decoder
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      // Start reading the stream
       const readStream = async () => {
         // console.log(`🌐 [DEBUG] Starting to read stream for ${projectId}`);
         let isReading = true;
@@ -297,9 +302,12 @@ export default function AllProjects() {
                     // Keep terminal open and mark as not running so user can restart if needed
                     updateProjectState(projectId, { isRunning: false });
                     isReading = false;
-                  } else if (data.type === 'output' && isWaitingForInput(data.content)) {
-                    // console.log(`🌐 [DEBUG] Waiting for input detected for ${projectId}`);
-                    updateProjectState(projectId, { waitingForInput: true });
+                  } else if (data.type === 'output') {
+                    // Check if waiting for input after adding the output
+                    if (isWaitingForInput(data.content)) {
+                      // console.log(`🌐 [DEBUG] Waiting for input detected for ${projectId}`);
+                      updateProjectState(projectId, { waitingForInput: true });
+                    }
                   }
                 } catch (e) {
                   // console.log(`🌐 [ERROR] Failed to parse JSON line: "${line}"`, e);
