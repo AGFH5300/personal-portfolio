@@ -1,3 +1,6 @@
+
+import sys
+
 def is_leap(year):
     if year % 4 == 0:
         if year % 100 == 0:
@@ -10,7 +13,6 @@ def is_leap(year):
     else:
         return False
 
-
 def days_in_month(year, month):
     if month > 12 or month < 1:
         return "This is an Invalid Month"
@@ -19,22 +21,49 @@ def days_in_month(year, month):
         return 29
     return month_days[month - 1]
 
-
 def main():
+    print("=== Days in Month Calculator ===")
+    print("Find out how many days are in any month of any year!")
+    print()
+    
     while True:
         try:
             year = int(input("Enter a year: "))
-            month = int(input("Enter a month: (1-12) "))
+            month = int(input("Enter a month (1-12): "))
+            
             days = days_in_month(year, month)
-            print(days)
+            if isinstance(days, str):
+                print(days)
+            else:
+                print(f"There are {days} days in month {month} of year {year}.")
+                
         except ValueError:
-            print("Please enter valid numbers.")
+            print("Please enter valid numbers for both year and month.")
+            continue
+        except KeyboardInterrupt:
+            print("\nGoodbye!")
+            sys.exit(0)
+        except EOFError:
+            print("\nGoodbye!")
+            sys.exit(0)
+        except Exception as e:
+            print(f"An error occurred: {e}")
             continue
         
-        check_again = input("Would you like to check another month? (y/n): ").lower().strip()
-        if check_again not in ['y']:
-            print("Goodbye!")
+        print()
+        try:
+            check_again = input("Would you like to check another month? (y/n): ").lower().strip()
+            if check_again not in ['y', 'yes']:
+                print("Thanks for using the Days in Month Calculator!")
+                break
+        except (KeyboardInterrupt, EOFError):
+            print("\nGoodbye!")
+            sys.exit(0)
+        except Exception:
+            print("Thanks for using the Days in Month Calculator!")
             break
+        
         print()
 
-main()
+if __name__ == "__main__":
+    main()
