@@ -33,8 +33,8 @@ export default function AllProjects() {
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
   const scrollPositionRef = useRef<number>(0); // Ref to store scroll position
 
-  console.log(`🌐 [DEBUG] Current location: ${location}`);
-  console.log(`🌐 [DEBUG] Active terminal: ${activeTerminal}`);
+  // console.log(`🌐 [DEBUG] Current location: ${location}`);
+  // console.log(`🌐 [DEBUG] Active terminal: ${activeTerminal}`);
 
   useEffect(() => {
     // Auto-scroll terminals when output changes
@@ -79,11 +79,11 @@ export default function AllProjects() {
       project.language.toLowerCase().includes(searchTerm.toLowerCase()) ||
       project.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
       project.difficulty.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
     const matchesDifficulty = !selectedDifficulty || project.difficulty === selectedDifficulty;
     const matchesCategory = !selectedCategory || project.category === selectedCategory;
     const matchesLanguage = !selectedLanguage || project.language === selectedLanguage;
-    
+
     return matchesSearch && matchesDifficulty && matchesCategory && matchesLanguage;
   });
 
@@ -165,7 +165,7 @@ export default function AllProjects() {
         ? updates(currentState)
         : { ...currentState, ...updates };
 
-      console.log(`🌐 [STATE] Updating ${projectId}:`, newState);
+      // console.log(`🌐 [STATE] Updating ${projectId}:`, newState);
 
       return {
         ...prev,
@@ -176,11 +176,11 @@ export default function AllProjects() {
 
   const loadSessionHistory = async (projectId: string) => {
     try {
-      console.log(`🌐 [SESSION] Loading history for ${projectId}`);
+      // console.log(`🌐 [SESSION] Loading history for ${projectId}`);
       const response = await fetch(`/api/session/${projectId}`);
       if (response.ok) {
         const sessionData = await response.json();
-        console.log(`🌐 [SESSION] Loaded ${sessionData.output.length} items for ${projectId}`);
+        // console.log(`🌐 [SESSION] Loaded ${sessionData.output.length} items for ${projectId}`);
 
         // Convert session data to our format
         const output = sessionData.output.map((item: any) => ({
@@ -197,13 +197,13 @@ export default function AllProjects() {
         return sessionData.output.length > 0;
       }
     } catch (error) {
-      console.log(`🌐 [SESSION] Error loading history for ${projectId}:`, error);
+      // console.log(`🌐 [SESSION] Error loading history for ${projectId}:`, error);
     }
     return false;
   };
 
   const runProject = async (projectId: string) => {
-    console.log(`🌐 [DEBUG] Starting project: ${projectId}`);
+    // console.log(`🌐 [DEBUG] Starting project: ${projectId}`);
 
     // Show terminal immediately
     setActiveTerminal(projectId);
@@ -228,10 +228,10 @@ export default function AllProjects() {
       });
     }
 
-    console.log(`🌐 [DEBUG] Terminal activated for: ${projectId}`);
+    // console.log(`🌐 [DEBUG] Terminal activated for: ${projectId}`);
 
     try {
-      console.log(`🌐 [DEBUG] Making fetch request to /api/run-code/${projectId}`);
+      // console.log(`🌐 [DEBUG] Making fetch request to /api/run-code/${projectId}`);
 
       const response = await fetch(`/api/run-code/${projectId}`, {
         method: 'POST',
@@ -240,45 +240,39 @@ export default function AllProjects() {
           'Connection': 'keep-alive'
         }
       });
-      console.log(`🌐 [DEBUG] Response status: ${response.status}`);
+      // console.log(`🌐 [DEBUG] Response status: ${response.status}`);
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.log(`🌐 [ERROR] Response not OK: ${response.status} - ${errorText}`);
+        // console.log(`🌐 [ERROR] Response not OK: ${response.status} - ${errorText}`);
         throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
       }
 
       if (!response.body) {
-        console.log(`🌐 [ERROR] No response body available`);
+        // console.log(`🌐 [ERROR] No response body available`);
         throw new Error('No response body');
       }
 
-      console.log(`🌐 [DEBUG] Starting to read streaming response...`);
+      // console.log(`🌐 [DEBUG] Starting to read streaming response...`);
 
-      // Read the response as text chunks with proper connection handling
-      const reader = response.body?.getReader();
-      if (!reader) {
-        throw new Error('No reader available');
-      }
-
-      const decoder = new TextDecoder();
-      let buffer = '';
-      let isReading = true;
-
+// Start reading the stream
       const readStream = async () => {
+        // console.log(`🌐 [DEBUG] Starting to read stream for ${projectId}`);
+        let isReading = true;
+
         try {
           while (isReading) {
             const { done, value } = await reader.read();
 
             if (done) {
-              console.log(`🌐 [DEBUG] Stream complete`);
+              // console.log(`🌐 [DEBUG] Stream complete`);
               break;
             }
 
             // Decode the chunk and add to buffer
             const chunk = decoder.decode(value, { stream: true });
             buffer += chunk;
-            console.log(`🌐 [DEBUG] Received chunk: "${chunk}"`);
+            // console.log(`🌐 [DEBUG] Received chunk: "${chunk}"`);
 
             // Process complete lines
             const lines = buffer.split('\n');
@@ -286,40 +280,41 @@ export default function AllProjects() {
 
             for (const line of lines) {
               if (line.trim()) {
-                console.log(`🌐 [DEBUG] Processing line: "${line}"`);
+                // console.log(`🌐 [DEBUG] Processing line: "${line}"`);
                 try {
                   const data = JSON.parse(line);
-                  console.log(`🌐 [DEBUG] Parsed JSON:`, data);
+                  // console.log(`🌐 [DEBUG] Parsed JSON:`, data);
 
-                  // Use callback to ensure state is properly updated
-                  updateProjectState(projectId, (prevState) => ({
-                    ...prevState,
-                    output: [...prevState.output, data]
+// console.log(`🌐 [DEBUG] Received data chunk for ${projectId}:`, data);
+
+                  updateProjectState(projectId, prev => ({
+                    ...prev,
+                    output: [...prev.output, data]
                   }));
 
                   if (data.type === 'complete') {
-                    console.log(`🌐 [DEBUG] Process complete for ${projectId}`);
+                    // console.log(`🌐 [DEBUG] Process complete for ${projectId}`);
                     // Keep terminal open and mark as not running so user can restart if needed
                     updateProjectState(projectId, { isRunning: false });
                     isReading = false;
                   } else if (data.type === 'output' && isWaitingForInput(data.content)) {
-                    console.log(`🌐 [DEBUG] Waiting for input detected for ${projectId}`);
+                    // console.log(`🌐 [DEBUG] Waiting for input detected for ${projectId}`);
                     updateProjectState(projectId, { waitingForInput: true });
                   }
                 } catch (e) {
-                  console.log(`🌐 [ERROR] Failed to parse JSON line: "${line}"`, e);
+                  // console.log(`🌐 [ERROR] Failed to parse JSON line: "${line}"`, e);
                 }
               }
             }
           }
         } catch (error) {
-          console.log(`🌐 [ERROR] Error reading stream:`, error);
+          // console.log(`🌐 [ERROR] Error reading stream:`, error);
           isReading = false;
         } finally {
           try {
             reader.releaseLock();
           } catch (e) {
-            console.log(`🌐 [DEBUG] Reader already released`);
+            // console.log(`🌐 [DEBUG] Reader already released`);
           }
         }
       };
@@ -327,7 +322,7 @@ export default function AllProjects() {
       // Start reading the stream
       readStream();
     } catch (error) {
-      console.log(`🌐 [ERROR] Project execution failed for ${projectId}:`, error);
+      // console.log(`🌐 [ERROR] Project execution failed for ${projectId}:`, error);
       updateProjectState(projectId, {
         output: [...getProjectState(projectId).output, { 
           type: 'error', 
@@ -340,10 +335,10 @@ export default function AllProjects() {
 
   const sendInput = async (projectId: string) => {
     const state = getProjectState(projectId);
-    console.log(`🌐 [INPUT] Sending input for ${projectId}: "${state.currentInput}"`);
+    // console.log(`🌐 [INPUT] Sending input for ${projectId}: "${state.currentInput}"`);
 
     if (!state.currentInput.trim()) {
-      console.log(`🌐 [INPUT] No input provided for ${projectId}`);
+      // console.log(`🌐 [INPUT] No input provided for ${projectId}`);
       return;
     }
 
@@ -355,7 +350,7 @@ export default function AllProjects() {
     });
 
     try {
-      console.log(`🌐 [INPUT] Making fetch request to /api/code-input/${projectId}`);
+      // console.log(`🌐 [INPUT] Making fetch request to /api/code-input/${projectId}`);
 
       const response = await fetch(`/api/code-input/${projectId}`, {
         method: 'POST',
@@ -363,19 +358,19 @@ export default function AllProjects() {
         body: JSON.stringify({ input: inputValue })
       });
 
-      console.log(`🌐 [INPUT] Input response status: ${response.status}`);
+      // console.log(`🌐 [INPUT] Input response status: ${response.status}`);
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.log(`🌐 [INPUT] Input response error: ${errorText}`);
+        // console.log(`🌐 [INPUT] Input response error: ${errorText}`);
         throw new Error(`Input failed: ${response.status} - ${errorText}`);
       }
 
       const result = await response.json();
-      console.log(`🌐 [INPUT] Input response result:`, result);
+      // console.log(`🌐 [INPUT] Input response result:`, result);
 
     } catch (error) {
-      console.log(`🌐 [INPUT] Input error for ${projectId}:`, error);
+      // console.log(`🌐 [INPUT] Input error for ${projectId}:`, error);
       updateProjectState(projectId, {
         output: [...getProjectState(projectId).output, { 
           type: 'error', 
@@ -392,18 +387,18 @@ export default function AllProjects() {
       });
 
       if (response.ok) {
-        console.log(`🌐 [SESSION] Cleared history for ${projectId}`);
+        // console.log(`🌐 [SESSION] Cleared history for ${projectId}`);
         updateProjectState(projectId, {
           output: [{ type: 'output', content: `Session history cleared for ${projectId}\n---\n` }]
         });
       }
     } catch (error) {
-      console.log(`🌐 [SESSION] Error clearing history for ${projectId}:`, error);
+      // console.log(`🌐 [SESSION] Error clearing history for ${projectId}:`, error);
     }
   };
 
   const openTerminalWithHistory = async (projectId: string) => {
-    console.log(`🌐 [DEBUG] Opening terminal with history for: ${projectId}`);
+    // console.log(`🌐 [DEBUG] Opening terminal with history for: ${projectId}`);
     setActiveTerminal(projectId);
     setLocation(`/all#${projectId}`);
 
@@ -421,7 +416,7 @@ export default function AllProjects() {
   };
 
   const closeTerminal = async (projectId: string) => {
-    console.log(`🌐 [DEBUG] Closing terminal for: ${projectId}`);
+    // console.log(`🌐 [DEBUG] Closing terminal for: ${projectId}`);
 
     // Stop the running process
     try {
@@ -430,12 +425,12 @@ export default function AllProjects() {
       });
 
       if (response.ok) {
-        console.log(`🌐 [DEBUG] Process stopped successfully for ${projectId}`);
+        // console.log(`🌐 [DEBUG] Process stopped successfully for ${projectId}`);
       } else {
-        console.log(`🌐 [DEBUG] Process may have already stopped for ${projectId}`);
+        // console.log(`🌐 [DEBUG] Process may have already stopped for ${projectId}`);
       }
     } catch (error) {
-      console.log(`🌐 [DEBUG] Error stopping process for ${projectId}:`, error);
+      // console.log(`🌐 [DEBUG] Error stopping process for ${projectId}:`, error);
     }
 
     // Clear session history
@@ -499,14 +494,14 @@ export default function AllProjects() {
         selected: 'bg-green-200 text-green-900 border-green-300 ring-2 ring-green-400'
       }
     };
-    
+
     const categoryColors = colors[category as keyof typeof colors];
     if (!categoryColors) {
       return isSelected 
         ? 'bg-gray-200 text-gray-900 border-gray-300 ring-2 ring-gray-400' 
         : 'bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-200 hover:border-gray-300';
     }
-    
+
     return isSelected ? categoryColors.selected : categoryColors.normal;
   };
 
@@ -612,7 +607,7 @@ export default function AllProjects() {
           <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
             Run and interact with my coding projects directly in your browser. Click on difficulty or category badges to filter projects.
           </p>
-          
+
           {/* Active Filters */}
           {(selectedDifficulty || selectedCategory || selectedLanguage) && (
             <div className="flex justify-center gap-2 mt-4">
