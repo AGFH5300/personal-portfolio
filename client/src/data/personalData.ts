@@ -133,7 +133,7 @@ export const personalData = {
       position: "Delegate",
       date: "Mar 2025",
       description:
-        "Won Best Collaborator in the competition with peers Alman Bazaz and Avyukta Ankam.",
+        "Won 1st place as the best team in the senior category of DIAMEC with peers Alman Bazaz and Avyukta Ankam and I won Best Collaborator as well.",
       achievements: ["Best Collaborator Award", "1st Place Team Award"],
       images: [
         {
@@ -153,7 +153,7 @@ export const personalData = {
       position: "Competitor",
       date: "Jun 2025",
       description:
-        "Won best team in Year 10 Digital Design as a team, me Avyukta Ankam, Vihaan Deshpande, Lavitra Dhoot and Sanat Marwah",
+        "Won best team in Year 10 Digital Design as a team, me Avyukta Ankam, Vihaan Deshpande, Lavitra Dhoot and Sanat Marwah.",
       achievements: ["Best Product", "1st Place Team Award"],
       images: [
         {
