@@ -129,6 +129,9 @@ interface ContactFormData {
 // Store running Python processes
 const runningProcesses = new Map<string, any>();
 
+// Store process keep-alive timers
+const processTimeouts = new Map<string, NodeJS.Timeout>();
+
 const saveContactFormData = (formData: ContactFormData): Promise<void> => {
   const contactsFilePath = path.join(process.cwd(), 'contact-submissions.json');
 
@@ -267,13 +270,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     // Clean up on client disconnect - but only after a much longer delay to prevent immediate killing
     req.on('close', () => {
       console.log(`🐍 [DEBUG] Client disconnected for ${projectId}`);
-      setTimeout(() => {
+    
+      // Clear any existing timeout first
+      if (processTimeouts.has(projectId)) {
+        clearTimeout(processTimeouts.get(projectId));
+      }
+    
+      // NEW: Start a 10-minute timer to kill the process if no one reconnects
+      const timeout = setTimeout(() => {
         if (runningProcesses.has(projectId)) {
-          console.log(`🐍 [DEBUG] Killing process for ${projectId} after delay`);
+          console.log(`🐍 [DEBUG] Killing process for ${projectId} after 10 minutes of inactivity`);
           pythonProcess.kill();
           runningProcesses.delete(projectId);
+          processTimeouts.delete(projectId);
         }
-      }, 60000); // 60 second delay to allow for proper interaction
+      }, 10 * 60 * 1000); // 10 minutes
+    
+      processTimeouts.set(projectId, timeout);
     });
   });
 
@@ -294,6 +307,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     console.log(`🐍 [DEBUG] Found process for ${projectId}, writing input...`);
 
     try {
+      // Reset inactivity timeout when input is received
+      if (processTimeouts.has(projectId)) {
+        clearTimeout(processTimeouts.get(projectId));
+        processTimeouts.delete(projectId);
+      }
       process.stdin.write(input + '\n');
       console.log(`🐍 [INPUT] Successfully sent input to ${projectId}`);
       res.json({ success: true });
