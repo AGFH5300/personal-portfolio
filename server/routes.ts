@@ -169,6 +169,52 @@ const saveContactFormData = (formData: ContactFormData): Promise<void> => {
 };
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Add request tracking middleware - only for page navigation
+  app.use((req, res, next) => {
+    const startTime = Date.now();
+    const clientIP = req.ip || req.connection.remoteAddress || req.headers['x-forwarded-for'] || 'unknown';
+    const userAgent = req.headers['user-agent'] || '';
+
+    // Only track actual page navigation, not assets
+    const isPageNavigation = req.method === 'GET' && (
+      req.path === '/' || 
+      req.path === '/all' || 
+      req.path.startsWith('/api/') ||
+      req.headers.referer?.includes('#') // Track section navigation
+    );
+
+    if (isPageNavigation) {
+      // Detect device type (Mobile/Desktop) and OS
+      let deviceType = 'Desktop';
+      let os = 'Unknown';
+
+      if (userAgent.includes('Mobile') || userAgent.includes('Android') || userAgent.includes('iPhone')) {
+        deviceType = 'Mobile';
+      }
+
+      if (userAgent.includes('Windows')) {
+        os = 'Windows';
+      } else if (userAgent.includes('Macintosh') || userAgent.includes('Mac OS')) {
+        os = 'Mac';
+      } else if (userAgent.includes('Linux')) {
+        os = 'Linux';
+      } else if (userAgent.includes('Android')) {
+        os = 'Android';
+      } else if (userAgent.includes('iPhone') || userAgent.includes('iPad')) {
+        os = 'iOS';
+      }
+
+      console.log(`🔍 [NAVIGATION] ${req.method} ${req.path} - IP: ${clientIP} - ${deviceType}/${os}`);
+
+      res.on('finish', () => {
+        const duration = Date.now() - startTime;
+        console.log(`🔍 [NAVIGATION END] ${req.method} ${req.path} - ${res.statusCode} - ${duration}ms - IP: ${clientIP}`);
+      });
+    }
+
+    next();
+  });
+
   // Initialize nodemailer on startup
   const nodemailerReady = await initializeNodemailer();
 
@@ -187,14 +233,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
+  // Track section navigation
+  app.post("/api/track-section", (req, res) => {
+    const { section } = req.body;
+    const clientIP = req.ip || req.connection.remoteAddress || req.headers['x-forwarded-for'] || 'unknown';
+    const userAgent = req.headers['user-agent'] || '';
+
+    // Detect device type and OS
+    let deviceType = 'Desktop';
+    let os = 'Unknown';
+
+    if (userAgent.includes('Mobile') || userAgent.includes('Android') || userAgent.includes('iPhone')) {
+      deviceType = 'Mobile';
+    }
+
+    if (userAgent.includes('Windows')) {
+      os = 'Windows';
+    } else if (userAgent.includes('Macintosh') || userAgent.includes('Mac OS')) {
+      os = 'Mac';
+    } else if (userAgent.includes('Linux')) {
+      os = 'Linux';
+    } else if (userAgent.includes('Android')) {
+      os = 'Android';
+    } else if (userAgent.includes('iPhone') || userAgent.includes('iPad')) {
+      os = 'iOS';
+    }
+
+    console.log(`🔍 [SECTION] Viewing ${section} - IP: ${clientIP} - ${deviceType}/${os}`);
+    
+    // Send response without Express logging
+    res.status(200).json({ success: true });
+  });
+
   // Code project execution endpoint  
   app.post("/api/run-code/:projectId", (req, res) => {
     const { projectId } = req.params;
-    console.log(`🐍 [DEBUG] Starting execution for project: ${projectId}`);
+    const clientIP = req.ip || req.connection.remoteAddress || req.headers['x-forwarded-for'] || 'unknown';
+    // console.log(`🐍 [DEBUG] Starting execution for project: ${projectId} - IP: ${clientIP}`);
+    // console.log(`🐍 [DEBUG] Starting execution for project: ${projectId}`);
 
     const projectPath = path.join(__dirname, 'code-projects', `${projectId}.py`);
-    console.log(`🐍 [DEBUG] Project path: ${projectPath}`);
-    console.log(`🐍 [DEBUG] __dirname: ${__dirname}`);
+    // console.log(`🐍 [DEBUG] Project path: ${projectPath}`);
+    // console.log(`🐍 [DEBUG] __dirname: ${__dirname}`);
 
     // Check if project file exists
     if (!fs.existsSync(projectPath)) {
@@ -202,32 +282,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(404).json({ error: 'Project not found' });
     }
 
-    console.log(`🐍 [DEBUG] Project file exists, setting up streaming...`);
+    // console.log(`🐍 [DEBUG] Project file exists, setting up streaming...`);
 
     // Set up streaming response
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
 
-    console.log(`🐍 [DEBUG] Spawning Python process with: python3 ${projectPath}`);
+    // console.log(`🐍 [DEBUG] Spawning Python process with: python3 ${projectPath}`);
 
     // Spawn Python process
     const pythonProcess = spawn('python3', [projectPath], {
       stdio: ['pipe', 'pipe', 'pipe']
     });
 
-    console.log(`🐍 [DEBUG] Python process spawned with PID: ${pythonProcess.pid}`);
+    // console.log(`🐍 [DEBUG] Python process spawned with PID: ${pythonProcess.pid}`);
 
     // Store process for input handling
     runningProcesses.set(projectId, pythonProcess);
-    console.log(`🐍 [DEBUG] Process stored in runningProcesses for project: ${projectId}`);
+    // console.log(`🐍 [DEBUG] Process stored in runningProcesses for project: ${projectId}`);
 
     // Handle stdout
     pythonProcess.stdout.on('data', (data) => {
       const output = data.toString();
       console.log(`🐍 [STDOUT] ${projectId}: ${output.replace(/\n/g, '\\n')}`);
       const response = JSON.stringify({ type: 'output', content: output });
-      console.log(`🐍 [RESPONSE] Sending: ${response}`);
+      // console.log(`🐍 [RESPONSE] Sending: ${response}`);
       res.write(response + '\n');
     });
 
@@ -236,7 +316,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const error = data.toString();
       console.log(`🐍 [STDERR] ${projectId}: ${error.replace(/\n/g, '\\n')}`);
       const response = JSON.stringify({ type: 'error', content: error });
-      console.log(`🐍 [RESPONSE] Sending error: ${response}`);
+      // console.log(`🐍 [RESPONSE] Sending error: ${response}`);
       res.write(response + '\n');
     });
 
@@ -244,7 +324,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     pythonProcess.on('close', (code) => {
       console.log(`🐍 [DEBUG] Process ${projectId} closed with code: ${code}`);
       const response = JSON.stringify({ type: 'complete', code });
-      console.log(`🐍 [RESPONSE] Sending complete: ${response}`);
+      // console.log(`🐍 [RESPONSE] Sending complete: ${response}`);
       res.write(response + '\n');
 
       // Don't end the response immediately - keep connection alive for potential input
@@ -254,7 +334,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
         runningProcesses.delete(projectId);
         console.log(`🐍 [DEBUG] Process ${projectId} removed from runningProcesses after delay`);
-      }, 30000); // Increased to 30 seconds
+      }, 150000); // Increased to 2.5 minutes
     });
 
     // Handle process errors
@@ -269,13 +349,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
     // Clean up on client disconnect - but only after a much longer delay to prevent immediate killing
     req.on('close', () => {
+      const clientIP = req.ip || req.connection.remoteAddress || req.headers['x-forwarded-for'] || 'unknown';
+      console.log(`🐍 [DEBUG] Client disconnected for ${projectId} - IP: ${clientIP}`);
       console.log(`🐍 [DEBUG] Client disconnected for ${projectId}`);
-    
+
       // Clear any existing timeout first
       if (processTimeouts.has(projectId)) {
         clearTimeout(processTimeouts.get(projectId));
       }
-    
+
       // NEW: Start a 10-minute timer to kill the process if no one reconnects
       const timeout = setTimeout(() => {
         if (runningProcesses.has(projectId)) {
@@ -285,7 +367,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           processTimeouts.delete(projectId);
         }
       }, 10 * 60 * 1000); // 10 minutes
-    
+
       processTimeouts.set(projectId, timeout);
     });
   });
@@ -304,7 +386,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(404).json({ error: 'No running process found' });
     }
 
-    console.log(`🐍 [DEBUG] Found process for ${projectId}, writing input...`);
+    // console.log(`🐍 [DEBUG] Found process for ${projectId}, writing input...`);
 
     try {
       // Reset inactivity timeout when input is received
@@ -313,7 +395,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         processTimeouts.delete(projectId);
       }
       process.stdin.write(input + '\n');
-      console.log(`🐍 [INPUT] Successfully sent input to ${projectId}`);
+      // console.log(`🐍 [INPUT] Successfully sent input to ${projectId}`);
       res.json({ success: true });
     } catch (error) {
       console.log(`🐍 [ERROR] Failed to send input to ${projectId}:`, error);
