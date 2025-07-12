@@ -251,7 +251,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
         runningProcesses.delete(projectId);
         console.log(`🐍 [DEBUG] Process ${projectId} removed from runningProcesses after delay`);
-      }, 5000);
+      }, 30000); // Increased to 30 seconds
     });
 
     // Handle process errors
@@ -264,7 +264,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       runningProcesses.delete(projectId);
     });
 
-    // Clean up on client disconnect - but only after a longer delay to prevent immediate killing
+    // Clean up on client disconnect - but only after a much longer delay to prevent immediate killing
     req.on('close', () => {
       console.log(`🐍 [DEBUG] Client disconnected for ${projectId}`);
       setTimeout(() => {
@@ -273,7 +273,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           pythonProcess.kill();
           runningProcesses.delete(projectId);
         }
-      }, 10000); // 10 second delay to allow for proper interaction
+      }, 60000); // 60 second delay to allow for proper interaction
     });
   });
 
