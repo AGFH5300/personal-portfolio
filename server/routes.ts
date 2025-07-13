@@ -7,10 +7,28 @@ import path from "path";
 import { fileURLToPath } from "url";
 import nodemailer from "nodemailer";
 import { spawn } from "child_process";
+import geoip from "geoip-lite";
 
 // Get __dirname equivalent in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Helper functions for user agent parsing
+const detectDeviceType = (userAgent: string): string => {
+  if (userAgent.includes('Mobile') || userAgent.includes('Android') || userAgent.includes('iPhone')) {
+    return 'Mobile';
+  }
+  return 'Desktop';
+};
+
+const detectOS = (userAgent: string): string => {
+  if (userAgent.includes('Windows')) return 'Windows';
+  if (userAgent.includes('Macintosh') || userAgent.includes('Mac OS')) return 'Mac';
+  if (userAgent.includes('Linux')) return 'Linux';
+  if (userAgent.includes('Android')) return 'Android';
+  if (userAgent.includes('iPhone') || userAgent.includes('iPad')) return 'iOS';
+  return 'Unknown';
+};
 
 const contactSchema = z.object({
   name: z.string().min(2),
@@ -169,10 +187,14 @@ const saveContactFormData = (formData: ContactFormData): Promise<void> => {
 };
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Add request tracking middleware - only for page navigation
+  // Enable trust proxy to get real client IP from X-Forwarded-For
+  app.set('trust proxy', true);
+
+  // Enhanced request tracking middleware - only for page navigation
   app.use((req, res, next) => {
     const startTime = Date.now();
-    const clientIP = req.ip || req.connection.remoteAddress || req.headers['x-forwarded-for'] || 'unknown';
+    const clientIP = req.ip; // Now properly gets real IP due to trust proxy
+    const xForwardedFor = req.headers['x-forwarded-for'] as string || 'none';
     const userAgent = req.headers['user-agent'] || '';
 
     // Only track actual page navigation, not assets
@@ -184,31 +206,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     );
 
     if (isPageNavigation) {
-      // Detect device type (Mobile/Desktop) and OS
-      let deviceType = 'Desktop';
-      let os = 'Unknown';
+      // Get country from IP using geoip-lite
+      const geo = geoip.lookup(clientIP);
+      const country = geo?.country || 'Unknown';
 
-      if (userAgent.includes('Mobile') || userAgent.includes('Android') || userAgent.includes('iPhone')) {
-        deviceType = 'Mobile';
-      }
+      // Detect device type and OS
+      const deviceType = detectDeviceType(userAgent);
+      const os = detectOS(userAgent);
 
-      if (userAgent.includes('Windows')) {
-        os = 'Windows';
-      } else if (userAgent.includes('Macintosh') || userAgent.includes('Mac OS')) {
-        os = 'Mac';
-      } else if (userAgent.includes('Linux')) {
-        os = 'Linux';
-      } else if (userAgent.includes('Android')) {
-        os = 'Android';
-      } else if (userAgent.includes('iPhone') || userAgent.includes('iPad')) {
-        os = 'iOS';
-      }
-
-      console.log(`🔍 [NAVIGATION] ${req.method} ${req.path} - IP: ${clientIP} - ${deviceType}/${os}`);
+      console.log(`🔍 [PAGE] ${req.path} | IP: ${clientIP} (${country}) | ${deviceType}/${os}`);
 
       res.on('finish', () => {
         const duration = Date.now() - startTime;
-        console.log(`🔍 [NAVIGATION END] ${req.method} ${req.path} - ${res.statusCode} - ${duration}ms - IP: ${clientIP}`);
+        console.log(`🔍 [INFO] ${req.path} | User-Agent: ${userAgent.substring(0, 80)}${userAgent.length > 80 ? '...' : ''}`);
       });
     }
 
@@ -236,41 +246,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Track section navigation
   app.post("/api/track-section", (req, res) => {
     const { section } = req.body;
-    const clientIP = req.ip || req.connection.remoteAddress || req.headers['x-forwarded-for'] || 'unknown';
+    const clientIP = req.ip;
     const userAgent = req.headers['user-agent'] || '';
+    
+    // Get country from IP
+    const geo = geoip.lookup(clientIP);
+    const country = geo?.country || 'Unknown';
 
     // Detect device type and OS
-    let deviceType = 'Desktop';
-    let os = 'Unknown';
+    const deviceType = detectDeviceType(userAgent);
+    const os = detectOS(userAgent);
 
-    if (userAgent.includes('Mobile') || userAgent.includes('Android') || userAgent.includes('iPhone')) {
-      deviceType = 'Mobile';
-    }
-
-    if (userAgent.includes('Windows')) {
-      os = 'Windows';
-    } else if (userAgent.includes('Macintosh') || userAgent.includes('Mac OS')) {
-      os = 'Mac';
-    } else if (userAgent.includes('Linux')) {
-      os = 'Linux';
-    } else if (userAgent.includes('Android')) {
-      os = 'Android';
-    } else if (userAgent.includes('iPhone') || userAgent.includes('iPad')) {
-      os = 'iOS';
-    }
-
-    console.log(`🔍 [SECTION] Viewing ${section} - IP: ${clientIP} - ${deviceType}/${os}`);
+    console.log(`📍 [SECTION] Viewing ${section} | IP: ${clientIP} (${country}) | ${deviceType}/${os}`);
     
-    // Send response without Express logging
     res.status(200).json({ success: true });
   });
 
   // Code project execution endpoint  
   app.post("/api/run-code/:projectId", (req, res) => {
     const { projectId } = req.params;
-    const clientIP = req.ip || req.connection.remoteAddress || req.headers['x-forwarded-for'] || 'unknown';
-    // console.log(`🐍 [DEBUG] Starting execution for project: ${projectId} - IP: ${clientIP}`);
-    // console.log(`🐍 [DEBUG] Starting execution for project: ${projectId}`);
+    const clientIP = req.ip;
+    
+    // Get country from IP
+    const geo = geoip.lookup(clientIP);
+    const country = geo?.country || 'Unknown';
+    
+    console.log(`🐍 [CODE] Starting ${projectId} | IP: ${clientIP} (${country})`);
 
     const projectPath = path.join(__dirname, 'code-projects', `${projectId}.py`);
     // console.log(`🐍 [DEBUG] Project path: ${projectPath}`);
@@ -349,9 +350,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
     // Clean up on client disconnect - but only after a much longer delay to prevent immediate killing
     req.on('close', () => {
-      const clientIP = req.ip || req.connection.remoteAddress || req.headers['x-forwarded-for'] || 'unknown';
-      console.log(`🐍 [DEBUG] Client disconnected for ${projectId} - IP: ${clientIP}`);
-      console.log(`🐍 [DEBUG] Client disconnected for ${projectId}`);
+      const clientIP = req.ip;
+      console.log(`🐍 [DISCONNECT] Client disconnected for ${projectId} | IP: ${clientIP}`);
 
       // Clear any existing timeout first
       if (processTimeouts.has(projectId)) {
