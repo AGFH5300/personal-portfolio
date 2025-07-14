@@ -66,7 +66,6 @@ const initializeNodemailer = async () => {
   } catch (error) {
     console.error('❌ Nodemailer connection failed:', error);
     console.error('💡 Please check your EMAIL and EMAIL_PSWD environment variables');
-    console.log(process.env.EMAIL_PSWD)
     return false;
   }
 };
@@ -80,8 +79,8 @@ const sendContactEmail = async (formData: ContactFormData): Promise<boolean> => 
 
   try {
     const mailOptions = {
-      from: 'diatech.ecotechsolutions@gmail.com',
-      to: 'diatech.ecotechsolutions@gmail.com', // Send to your own email
+      from: process.env.EMAIL,
+      tto: process.env.EMAIL, // Send to your own email
       subject: `Portfolio Contact: ${formData.subject}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
