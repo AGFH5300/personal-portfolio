@@ -288,6 +288,16 @@ export const personalData = {
         "Create promotional materials for events",
       ],
     },
+    {
+      name: "DIAMUN",
+      role: "Deputy Head of Technology",
+      period: "Jul 2025 - Current",
+      responsibilities: [
+        "Maintain and update the DIAMUN website with new content and features",
+        "Assist in the technical planning and execution of the annual DIAMUN conference",
+        "Ensure all technical systems function smoothly during the event, including live support and troubleshooting"
+      ],
+    },
   ],
 
   volunteerWork: [
