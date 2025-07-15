@@ -293,8 +293,8 @@ export const personalData = {
       role: "Deputy Head of Technology",
       period: "Jul 2025 - Current",
       responsibilities: [
-        "Maintain and update the DIAMUN website with new content and features",
-        "Assist in the technical planning and execution of the annual DIAMUN conference",
+        "Maintain and update DIAMUN site with new content & features",
+        "Help in the technical planning of the DIAMUN conference",
         "Ensure all tech functions smoothly during the event"
       ],
     },
