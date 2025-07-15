@@ -295,7 +295,7 @@ export const personalData = {
       responsibilities: [
         "Maintain and update the DIAMUN website with new content and features",
         "Assist in the technical planning and execution of the annual DIAMUN conference",
-        "Ensure all technical systems function smoothly during the event, including live support and troubleshooting"
+        "Ensure all tech functions smoothly during the event"
       ],
     },
   ],
