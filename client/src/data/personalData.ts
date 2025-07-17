@@ -11,8 +11,8 @@ export const personalData = {
   nationality: "Indian",
   email: "dxb.avg@gmail.com",
   phone: "+971 585 082 674",
-  profileImage: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
-  cvUrl: "https://i.postimg.cc/qvrVQZZ1/lotus-theory-1.jpg",
+  profileImage: "https://i.postimg.cc/DZ2bSMLP/ansh.jpg",
+  cvUrl: "https://drive.google.com/uc?export=download&id=1-wF2e6ZWHwvQfFtEm-yRt5THF-PreaFP",
 
   social: {
     linkedin: "https://www.linkedin.com/in/anshvg/",
@@ -70,7 +70,7 @@ export const personalData = {
     },
     {
       name: "DIAMathletes January 2025 Competition",
-      position: "Competitor",
+      position: "Cocmpetitor",
       date: "Jan 2025",
       description:
         "Won 1st place solving multiple math problems as a team with Vihaan Deshpande, Lavitra Dhoot and Avyukta Ankam.",
@@ -286,16 +286,6 @@ export const personalData = {
         "Create entrepreneurial events for the school students",
         "Manage leadership roles across the school in events",
         "Create promotional materials for events",
-      ],
-    },
-    {
-      name: "DIAMUN",
-      role: "Deputy Head of Technology",
-      period: "Jul 2025 - Current",
-      responsibilities: [
-        "Maintain and update DIAMUN site with new content & features",
-        "Help in the technical planning of the DIAMUN conference",
-        "Ensure all tech functions smoothly during the event"
       ],
     },
   ],
