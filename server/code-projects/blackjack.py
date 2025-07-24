@@ -4,7 +4,7 @@ print("=== Blackjack Game ===")
 print("Try to get as close to 21 as possible without going over!")
 print()
 
-logo = """
+logo = r"""
 .------.            _     _            _    _            _    
 |A_  _ |.          | |   | |          | |  (_)          | |   
 |( \/ ).-----.     | |__ | | __ _  ___| | ___  __ _  ___| | __
