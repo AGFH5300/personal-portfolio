@@ -414,29 +414,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
         date: new Date().toISOString()
       };
 
-      // Try to send email first
-      const emailSent = await sendContactEmail(formData);
+      // Check if email service is configured and working
+      if (transporter) {
+        // Try to send email first
+        const emailSent = await sendContactEmail(formData);
 
-      if (emailSent) {
-        // Also save to JSON file as backup
-        try {
-          await saveContactFormData(formData);
-          console.log('📁 Contact form data also saved to JSON backup');
-        } catch (backupError) {
-          console.warn('⚠️ Failed to save backup, but email was sent successfully');
+        if (emailSent) {
+          // Also save to JSON file as backup
+          try {
+            await saveContactFormData(formData);
+            console.log('📁 Contact form data also saved to JSON backup');
+          } catch (backupError) {
+            console.warn('⚠️ Failed to save backup, but email was sent successfully');
+          }
+
+          // Return success response
+          res.status(200).json({ 
+            success: true, 
+            message: "Message sent successfully! I'll get back to you soon." 
+          });
+        } else {
+          // Email service is configured but failed to send
+          console.error('❌ Email service failed despite being configured');
+          res.status(500).json({ 
+            success: false, 
+            message: "Failed to send message. Please try again later." 
+          });
         }
-
-        // Return success response
-        res.status(200).json({ 
-          success: true, 
-          message: "Message sent successfully! I'll get back to you soon." 
-        });
       } else {
-        // Fallback to JSON storage if email fails
-        await saveContactFormData(formData);
-        res.status(200).json({ 
-          success: true, 
-          message: "Message received and saved. I'll check it soon!" 
+        // Email service not configured - this is an error state
+        console.error('❌ Email service not configured');
+        res.status(500).json({ 
+          success: false, 
+          message: "Email service unavailable. Please try again later." 
         });
       }
     } catch (error) {
