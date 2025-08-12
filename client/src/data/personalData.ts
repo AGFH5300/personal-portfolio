@@ -1,3 +1,5 @@
+import { url } from "inspector";
+
 export const personalData = {
   name: "Ansh Gupta",
   title: "Web Developer & Student",
@@ -127,6 +129,19 @@ export const personalData = {
       description: "Participated in EISJMUN 2025 and got a verbal mention as the Delegate of Guatemala in the UNODC committee.",
       achievements: ["Model UN Delegate", "Verbal Mention"],
       images: [],
+    },
+    {
+      name: "InnovAIte 2025",
+      position: "Developer",
+      date: "Mar 2025",
+      description: "Created a personal life tracker and AI-powered schedule creator based on requirements with teammates Aqeel Satish, Amna Hamnad, Keshav Anand, and Aryan Shah.",
+      achievements: ["AI-Powered Schedule Creator", "Personal Life Tracker"],
+      images: [
+        {
+        url: "https://i.postimg.cc/QxMLYYwd/Ansh-Gupta-HACKATHON.png",
+        downloadUrl: "https://i.postimg.cc/CYGF1W4k/Ansh-Gupta-HACKATHON.png?dl=1",
+      }
+      ],
     },
     {
       name: "DIAMEC 2025",
@@ -276,6 +291,16 @@ export const personalData = {
         "Manage club's media presence and content creation",
         "Create promotional materials for club events",
         "Collaborate with other team members on club initiatives",
+      ],
+    },
+    {
+      name: "DIAMUN",
+      role: "Deputy Head of Technology",
+      period: "June 2025 - Current",
+      responsibilities: [
+        "Revamp and maintain the conference website",
+        "Manage technical aspects on the day of the conference",
+        "Oversee all technical operations and troubleshooting",
       ],
     },
     {
