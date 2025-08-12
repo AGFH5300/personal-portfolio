@@ -1,10 +1,9 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { personalData } from "@/data/personalData";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -12,7 +11,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,12 +19,33 @@ import {
 import {
   RectangleEllipsis,
   Phone,
-  MapPin,
   Linkedin,
   Github,
   MessageCircleMore,
   Mail,
+  CheckCircle,
+  Send,
 } from "lucide-react";
+
+// Custom Paper Airplane Icon Component
+const PaperAirplaneIcon = ({ className }: { className?: string }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M3 3l18 9-18 9 3-9z" />
+    <path d="M6 12h12" />
+  </svg>
+);
+
+// Paths to your custom .lottie animation files
+const successAnimationPath = "/success.lottie";
+const errorAnimationPath = "/error.lottie";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -43,7 +62,9 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
+  const [showAnimation, setShowAnimation] = useState(false);
+  const [animationPath, setAnimationPath] = useState<string>("");
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -56,21 +77,22 @@ export default function ContactSection() {
   });
 
   const onSubmit = async (data: FormValues) => {
+    if (showAnimation) return;
+
     setIsSubmitting(true);
+
     try {
       await apiRequest("POST", "/api/contact", data);
-      toast({
-        title: "Message sent!",
-        description: "Thank you for your message. I'll get back to you soon.",
-      });
+      // Success - show success animation and keep it visible
+      setAnimationPath(successAnimationPath);
+      setShowAnimation(true);
       form.reset();
+      // Animation stays until user leaves or refreshes page
     } catch (error) {
-      toast({
-        title: "Error",
-        description:
-          "There was a problem sending your message. Please try again.",
-        variant: "destructive",
-      });
+      // Error - show error animation and keep it visible
+      setAnimationPath(errorAnimationPath);
+      setShowAnimation(true);
+      // Animation stays until user leaves or refreshes page
     } finally {
       setIsSubmitting(false);
     }
@@ -93,26 +115,15 @@ export default function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="py-16 bg-primary text-white">
+    <section id="contact" className="min-h-screen py-16 bg-primary text-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
+        <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">Get In Touch</h2>
           <div className="w-20 h-1 bg-white mx-auto"></div>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
+          <div>
             <h3 className="text-xl font-semibold mb-6">Contact Information</h3>
             <div className="space-y-4">
               <div className="flex items-start">
@@ -150,19 +161,35 @@ export default function ContactSection() {
                 </a>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <h3 className="text-xl font-semibold mb-6">Send Me a Message</h3>
+          <div className="relative">
+            {/* Lottie Animation */}
+            {showAnimation && (
+              <div className="absolute inset-0 z-50 pointer-events-none">
+                <DotLottieReact
+                  src={animationPath}
+                  style={{ 
+                    width: 550, 
+                    height: 550,
+                    position: 'absolute',
+                    bottom: '10px',
+                    right: '50%',
+                    transform: 'translateX(50%)'
+                  }}
+                  loop={false}
+                  autoplay={true}
+                />
+              </div>
+            )}
+
+            {!showAnimation && (
+              <h3 className="text-xl font-semibold mb-6">Send Me a Message</h3>
+            )}
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-4"
+                className={`space-y-4 transition-opacity duration-300 ${showAnimation ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
               >
                 <FormField
                   control={form.control}
@@ -173,7 +200,7 @@ export default function ContactSection() {
                       <FormControl>
                         <Input
                           placeholder="Your name"
-                          className="px-4 py-2 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/50"
+                          className="px-4 py-3 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200"
                           {...field}
                         />
                       </FormControl>
@@ -192,7 +219,7 @@ export default function ContactSection() {
                         <Input
                           type="email"
                           placeholder="Your email"
-                          className="px-4 py-2 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/50"
+                          className="px-4 py-3 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200"
                           {...field}
                         />
                       </FormControl>
@@ -210,7 +237,7 @@ export default function ContactSection() {
                       <FormControl>
                         <Input
                           placeholder="Subject"
-                          className="px-4 py-2 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/50"
+                          className="px-4 py-3 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200"
                           {...field}
                         />
                       </FormControl>
@@ -229,7 +256,7 @@ export default function ContactSection() {
                         <Textarea
                           rows={5}
                           placeholder="Your message"
-                          className="px-4 py-2 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/50"
+                          className="px-4 py-3 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 resize-none transition-all duration-200"
                           {...field}
                         />
                       </FormControl>
@@ -239,15 +266,23 @@ export default function ContactSection() {
                 />
 
                 <Button
+                  ref={buttonRef}
                   type="submit"
-                  disabled={isSubmitting}
-                  className="px-6 py-3 bg-white text-primary font-medium rounded-md transition transform hover:scale-105"
+                  disabled={isSubmitting || showAnimation}
+                  className="w-full px-6 py-3 bg-white text-primary font-medium rounded-md transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  {isSubmitting ? "Sending..." : "Send Message"}
+                  {isSubmitting ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      <PaperAirplaneIcon className="w-5 h-5" />
+                      Send Message
+                    </>
+                  )}
                 </Button>
               </form>
             </Form>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
