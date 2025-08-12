@@ -87,10 +87,20 @@ export default function ContactSection() {
       setAnimationPath(successAnimationPath);
       setShowAnimation(true);
       form.reset();
+      
+      // Hide animation after 4 seconds
+      setTimeout(() => {
+        setShowAnimation(false);
+      }, 4000);
     } catch (error) {
       // Error - show error animation
       setAnimationPath(errorAnimationPath);
       setShowAnimation(true);
+      
+      // Hide animation after 4 seconds
+      setTimeout(() => {
+        setShowAnimation(false);
+      }, 4000);
     } finally {
       setIsSubmitting(false);
     }
