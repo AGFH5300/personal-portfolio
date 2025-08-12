@@ -88,19 +88,15 @@ export default function ContactSection() {
       setShowAnimation(true);
       form.reset();
       
-      // Hide animation after 4 seconds
+      // Hide success animation after 4 seconds
       setTimeout(() => {
         setShowAnimation(false);
       }, 4000);
     } catch (error) {
-      // Error - show error animation
+      // Error - show error animation and keep it visible
       setAnimationPath(errorAnimationPath);
       setShowAnimation(true);
-      
-      // Hide animation after 4 seconds
-      setTimeout(() => {
-        setShowAnimation(false);
-      }, 4000);
+      // Don't hide error animation - let user see the error until they leave/refresh
     } finally {
       setIsSubmitting(false);
     }
