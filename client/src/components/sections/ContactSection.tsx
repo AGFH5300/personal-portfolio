@@ -83,20 +83,16 @@ export default function ContactSection() {
 
     try {
       await apiRequest("POST", "/api/contact", data);
-      // Success - show success animation
+      // Success - show success animation and keep it visible
       setAnimationPath(successAnimationPath);
       setShowAnimation(true);
       form.reset();
-      
-      // Hide success animation after 4 seconds
-      setTimeout(() => {
-        setShowAnimation(false);
-      }, 4000);
+      // Animation stays until user leaves or refreshes page
     } catch (error) {
       // Error - show error animation and keep it visible
       setAnimationPath(errorAnimationPath);
       setShowAnimation(true);
-      // Don't hide error animation - let user see the error until they leave/refresh
+      // Animation stays until user leaves or refreshes page
     } finally {
       setIsSubmitting(false);
     }
