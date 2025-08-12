@@ -80,7 +80,7 @@ const sendContactEmail = async (formData: ContactFormData): Promise<boolean> => 
   try {
     const mailOptions = {
       from: process.env.EMAIL,
-      tto: process.env.EMAIL, // Send to your own email
+      to: process.env.EMAIL, // Send to your own email
       subject: `Portfolio Contact: ${formData.subject}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -206,7 +206,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
     if (isPageNavigation) {
       // Get country from IP using geoip-lite
-      const geo = geoip.lookup(clientIP);
+      const geo = geoip.lookup(clientIP as string);
       const country = geo?.country || 'Unknown';
 
       // Detect device type and OS
@@ -249,7 +249,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const userAgent = req.headers['user-agent'] || '';
     
     // Get country from IP
-    const geo = geoip.lookup(clientIP);
+    const geo = geoip.lookup(clientIP as string);
     const country = geo?.country || 'Unknown';
 
     // Detect device type and OS
@@ -267,7 +267,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const clientIP = req.ip;
     
     // Get country from IP
-    const geo = geoip.lookup(clientIP);
+    const geo = geoip.lookup(clientIP as string);
     const country = geo?.country || 'Unknown';
     
     console.log(`🐍 [CODE] Starting ${projectId} | IP: ${clientIP} (${country})`);
@@ -414,29 +414,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
         date: new Date().toISOString()
       };
 
-      // Try to send email first
-      const emailSent = await sendContactEmail(formData);
+      // Check if email service is configured and working
+      if (transporter) {
+        // Try to send email first
+        const emailSent = await sendContactEmail(formData);
 
-      if (emailSent) {
-        // Also save to JSON file as backup
-        try {
-          await saveContactFormData(formData);
-          console.log('📁 Contact form data also saved to JSON backup');
-        } catch (backupError) {
-          console.warn('⚠️ Failed to save backup, but email was sent successfully');
+        if (emailSent) {
+          // Also save to JSON file as backup
+          try {
+            await saveContactFormData(formData);
+            console.log('📁 Contact form data also saved to JSON backup');
+          } catch (backupError) {
+            console.warn('⚠️ Failed to save backup, but email was sent successfully');
+          }
+
+          // Return success response
+          res.status(200).json({ 
+            success: true, 
+            message: "Message sent successfully! I'll get back to you soon." 
+          });
+        } else {
+          // Email service is configured but failed to send
+          console.error('❌ Email service failed despite being configured');
+          res.status(500).json({ 
+            success: false, 
+            message: "Failed to send message. Please try again later." 
+          });
         }
-
-        // Return success response
-        res.status(200).json({ 
-          success: true, 
-          message: "Message sent successfully! I'll get back to you soon." 
-        });
       } else {
-        // Fallback to JSON storage if email fails
-        await saveContactFormData(formData);
-        res.status(200).json({ 
-          success: true, 
-          message: "Message received and saved. I'll check it soon!" 
+        // Email service not configured - this is an error state
+        console.error('❌ Email service not configured');
+        res.status(500).json({ 
+          success: false, 
+          message: "Email service unavailable. Please try again later." 
         });
       }
     } catch (error) {
