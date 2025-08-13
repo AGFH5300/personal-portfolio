@@ -131,7 +131,7 @@ export const personalData = {
       images: [],
     },
     {
-      name: "InnovAIte 2025",
+      name: "InnovAIte Hackathon 2025",
       position: "Developer",
       date: "Mar 2025",
       description: "Created a personal life tracker and AI-powered schedule creator based on requirements with teammates Aqeel Satish, Amna Hamnad, Keshav Anand, and Aryan Shah.",
