@@ -1,5 +1,6 @@
 print("=== Love Calculator ===")
 print("Find out your love compatibility score!")
+print("Enter full names for most accurate results.")
 print()
 
 def calculate_love_score():
