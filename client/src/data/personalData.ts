@@ -313,6 +313,16 @@ export const personalData = {
         "Create promotional materials for events",
       ],
     },
+    {
+      name: "SyntaxEngine",
+      role: "Co-President",
+      period: "Aug 2025 - Current",
+      responsibilities: [
+        "Lead & coordinate club activities and projects.",
+        "Support members in learning coding and completing projects.",
+        "Organize events and collaborations with other clubs.",
+      ],
+    },
   ],
 
   volunteerWork: [
