@@ -53,6 +53,7 @@ export const personalData = {
         "4th Place Scholars Bowl Team",
         "Silver Medal - 22nd Place Challenge - History",
       ],
+      logo: "https://i.postimg.cc/rsVJsvzx/wsc-logo.png",
       images: [
         {
           url: "https://i.postimg.cc/43Lkzkmy/wsc.png",
@@ -68,15 +69,17 @@ export const personalData = {
       description:
         "Created a python script to sort, grab and graph data from a dataset with team members Avyukta Ankam.",
       achievements: ["Python Data Analysis Project"],
+      logo: "https://i.postimg.cc/Hs3NwtgT/aus-logo.png",
       images: [],
     },
     {
       name: "DIAMathletes January 2025 Competition",
-      position: "Cocmpetitor",
+      position: "Competitor",
       date: "Jan 2025",
       description:
         "Won 1st place solving multiple math problems as a team with Vihaan Deshpande, Lavitra Dhoot and Avyukta Ankam.",
       achievements: ["1st Place Winner"],
+      logo: "https://i.postimg.cc/fRB9CJ24/mathletes-logo.png",
       images: [
         {
           url: "https://i.postimg.cc/CKK4Xd4h/mathletes.jpg",
@@ -91,6 +94,7 @@ export const personalData = {
       date: "Mar-Apr 2025",
       description: "Won 1st place by creating an idle clicker game with the theme of polar opposites called Idle Realms with my teammates Armaghan Siddiqui, Lavitra Dhoot and Avyukta Ankam. Can be seen in the projects tab.",
       achievements: ["1st Place Winner"],
+      logo: "https://i.postimg.cc/DZjhYKVw/gamedev-logo.png",
       images: [
         {
         url: "https://i.postimg.cc/4y5XB44k/game-jam.jpg",
@@ -106,11 +110,17 @@ export const personalData = {
       description:
         "Won 2nd place with peers Alman Bazaz and Avyukta Ankam in business case study analysis.",
       achievements: ["2nd Place Winner"],
+      logo: "https://i.postimg.cc/L8xMspXB/bm-logo.png",
       images: [
         {
           url: "https://i.postimg.cc/DfpxTrM9/business-minds.jpg",
           downloadUrl: "https://i.postimg.cc/KFxwtQr8/business-minds.jpg?dl=1",
           caption: "Business Minds Competition Award"
+        },
+        {
+          url: "https://i.postimg.cc/qqR49NR9/b-minds.jpg",
+          downloadUrl: "https://i.postimg.cc/rVGsRWLF/b-minds.jpg?dl=1",
+          caption: "Business Minds Competition 2nd Place Winners"
         }
       ],
     },
@@ -120,6 +130,7 @@ export const personalData = {
       date: "May 2025 - Present",
       description: "Participated as the Delegate Of India (Jal Shakti) in DIAMWEF 2025.",
       achievements: ["Delegate"],
+      logo: "https://i.postimg.cc/Bb0zgYbn/diamwef-logo.png",
       images: [],
     },
     {
@@ -128,6 +139,7 @@ export const personalData = {
       date: "Jun 2025",
       description: "Participated in EISJMUN 2025 and got a verbal mention as the Delegate of Guatemala in the UNODC committee.",
       achievements: ["Model UN Delegate", "Verbal Mention"],
+      logo: "https://i.postimg.cc/4xkY1pbF/eisj-logo.png",
       images: [],
     },
     {
@@ -136,6 +148,7 @@ export const personalData = {
       date: "Mar 2025",
       description: "Created a personal life tracker and AI-powered schedule creator based on requirements with teammates Aqeel Satish, Amna Hamnad, Keshav Anand, and Aryan Shah.",
       achievements: ["AI-Powered Schedule Creator", "Personal Life Tracker"],
+      logo: "https://i.postimg.cc/KYkLyYK3/innovaite-logo.png",
       images: [
         {
         url: "https://i.postimg.cc/QxMLYYwd/Ansh-Gupta-HACKATHON.png",
@@ -150,6 +163,7 @@ export const personalData = {
       description:
         "Won 1st place as the best team in DIAMEC with peers Alman Bazaz and Avyukta Ankam and I won Best Collaborator as well.",
       achievements: ["Best Collaborator Award", "1st Place Team Award"],
+      logo: "",
       images: [
         {
           url: "https://i.postimg.cc/MKhtcWxt/diamec-best-collab.jpg",
@@ -170,6 +184,7 @@ export const personalData = {
       description:
         "Won best team in Year 10 Digital Design as a team, me Avyukta Ankam, Vihaan Deshpande, Lavitra Dhoot and Sanat Marwah.",
       achievements: ["Best Product", "1st Place Team Award"],
+      logo: "https://i.postimg.cc/FHD5Qrtv/diatech-logo.png",
       images: [
         {
           url: "https://i.postimg.cc/8CnbSDyh/diatech.jpg",
@@ -221,26 +236,32 @@ export const personalData = {
     {
       name: "English",
       proficiency: "Native or bilingual proficiency",
+      logo: "https://i.postimg.cc/pV6Zhy8r/uk-flag.png",
     },
     {
       name: "Hindi",
       proficiency: "Native or bilingual proficiency",
+      logo: "https://i.postimg.cc/brcxzVsh/india-flag.png",
     },
     {
       name: "Chinese",
       proficiency: "Professional working proficiency",
+      logo: "https://i.postimg.cc/7Ycxfvq0/china-flag.png",
     },
     {
       name: "Arabic",
       proficiency: "Limited working proficiency",
+      logo: "https://i.postimg.cc/sXSVYMxz/uae-flag.png",
     },
     {
       name: "French",
       proficiency: "Limited working proficiency",
+      logo: "https://i.postimg.cc/g0xtj5kX/france-flag.png",
     },
     {
       name: "German",
       proficiency: "Elementary proficiency",
+      logo: "https://i.postimg.cc/Qt6DDcFj/german-flag.png",
     },
   ],
 
@@ -251,6 +272,7 @@ export const personalData = {
       issueDate: "Jun 2025",
       image: "",
       downloadUrl: "",
+      logo: "https://i.postimg.cc/hPFzxcqW/harvard-logo.png",
     },
     {
       name: "Udemy 100 Days of Code: The Complete Python Pro Bootcamp",
@@ -258,6 +280,7 @@ export const personalData = {
       issueDate: "2025",
       image: "",
       downloadUrl: "",
+      logo: "https://i.postimg.cc/44QGyyYK/udemy-logo.png",
     },
     {
       name: "HSK Level 1",
@@ -265,6 +288,7 @@ export const personalData = {
       issueDate: "Score: 195/200 - Jan 2020",
       image: "",
       downloadUrl: "",
+      logo: "https://i.postimg.cc/Qtb7x7v8/hanban-logo.png",
     },
     {
       name: "HSK Level 2",
@@ -272,6 +296,7 @@ export const personalData = {
       issueDate: "Score: 195/200",
       image: "",
       downloadUrl: "",
+      logo: "https://i.postimg.cc/Qtb7x7v8/hanban-logo.png",
     },
     {
       name: "HSK Level 3",
@@ -279,6 +304,7 @@ export const personalData = {
       issueDate: "Score: 280/300 - Sep 2024",
       image: "",
       downloadUrl: "",
+      logo: "https://i.postimg.cc/Qtb7x7v8/hanban-logo.png",
     },
   ],
 
@@ -292,6 +318,7 @@ export const personalData = {
         "Create promotional materials for club events",
         "Collaborate with other team members on club initiatives",
       ],
+      logo: "https://i.postimg.cc/D0pnFLYq/diaconomic-logo.png",
     },
     {
       name: "DIAMUN",
@@ -302,6 +329,7 @@ export const personalData = {
         "Manage technical aspects on the day of the conference",
         "Oversee all technical operations and troubleshooting",
       ],
+      logo: "https://i.postimg.cc/0jbhY3cw/diamun-logo.png",
     },
     {
       name: "Enterprise and Entrepreneurship",
@@ -312,6 +340,7 @@ export const personalData = {
         "Manage leadership roles across the school in events",
         "Create promotional materials for events",
       ],
+      logo: "https://i.postimg.cc/wj2XcBPS/winchester-logo.png",
     },
     {
       name: "SyntaxEngine",
@@ -322,6 +351,7 @@ export const personalData = {
         "Support members in learning coding and completing projects.",
         "Organize events and collaborations with other clubs.",
       ],
+      logo: "https://i.postimg.cc/L60LQWvs/syntaxengine-logo.jpg",
     },
   ],
 
