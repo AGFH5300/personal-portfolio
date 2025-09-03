@@ -5,7 +5,14 @@ import { BarChart2, Image, Megaphone, PenTool, Users } from "lucide-react";
 
 export default function ClubsSection() {
   const clubIcons = {
-    "DIAconomics Club": <BarChart2 className="text-primary" />
+    "DIAconomics Club": <BarChart2 className="text-primary" />,
+    "DIAMUN": <Users className="text-primary" />,
+    "Enterprise and Entrepreneurship": <PenTool className="text-primary" />,
+    "SyntaxEngine": <Users className="text-primary" />
+  };
+
+  const getClubIcon = (clubName: string) => {
+    return clubIcons[clubName as keyof typeof clubIcons] || <Users className="text-primary" />;
   };
 
   return (
@@ -34,8 +41,18 @@ export default function ClubsSection() {
               <Card className="shadow-md transition-shadow hover:shadow-lg">
                 <CardContent className="p-6">
                   <div className="flex items-start">
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
-                      {clubIcons[club.name as keyof typeof clubIcons] || <Users className="text-primary" />}
+                    <div className="w-12 h-12 flex items-center justify-center mr-4">
+                      {club.logo ? (
+                        <img 
+                          src={club.logo} 
+                          alt={`${club.name} logo`}
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                          {getClubIcon(club.name)}
+                        </div>
+                      )}
                     </div>
                     <div>
                       <h3 className="text-lg font-medium mb-2">{club.name}</h3>
