@@ -163,7 +163,7 @@ export const personalData = {
       description:
         "Won 1st place as the best team in DIAMEC with peers Alman Bazaz and Avyukta Ankam and I won Best Collaborator as well.",
       achievements: ["Best Collaborator Award", "1st Place Team Award"],
-      logo: "",
+      logo: "https://i.postimg.cc/YCHTwM8t/econminds-logo.png",
       images: [
         {
           url: "https://i.postimg.cc/MKhtcWxt/diamec-best-collab.jpg",
