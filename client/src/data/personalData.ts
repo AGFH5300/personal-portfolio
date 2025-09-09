@@ -353,6 +353,17 @@ export const personalData = {
       ],
       logo: "https://i.postimg.cc/L60LQWvs/syntaxengine-logo.jpg",
     },
+    {
+      name: "EconMinds xChange",
+      role: "Head of Technology",
+      period: "Sep 2025 - Current",
+      responsibilities: [
+        "Create and maintain the main website.",
+        "Oversee all technical aspects on the day of the competition.",
+        "Create the website for the day of the competiton.",
+      ],
+      logo: "https://i.postimg.cc/YCHTwM8t/econminds-logo.png",
+    },
   ],
 
   volunteerWork: [
