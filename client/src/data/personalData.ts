@@ -189,7 +189,17 @@ export const personalData = {
         {
           url: "https://i.postimg.cc/8CnbSDyh/diatech.jpg",
           downloadUrl: "https://i.postimg.cc/69BbCpn1/diatech.jpg?dl=1",
-          caption: "DIATECH Competition Winners"
+          caption: "DIATECH Winner Certificate"
+        }
+        {
+          url: "https://i.postimg.cc/j5BGj9R8/diatech-robot.jpg",
+          downloadUrl: "https://i.postimg.cc/4f3ZWkqT/diatech-robot.jpg?dl=1",
+          caption: "DIATECH Winners Photo"
+        }
+        {
+          url: "https://i.postimg.cc/s26kkxqC/diatech-norobot.png",
+          downloadUrl: "https://i.postimg.cc/x0n9bbP8/diatech-norobot.png?dl=1",
+          caption: "DIATECH Winners Photo"
         }
       ],
     },
@@ -330,6 +340,17 @@ export const personalData = {
         "Oversee all technical operations and troubleshooting",
       ],
       logo: "https://i.postimg.cc/0jbhY3cw/diamun-logo.png",
+    },
+    {
+      name: "VOFMUN",
+      role: "Head of Technology",
+      period: "Sep 2025 - Current",
+      responsibilities: [
+        "Revamp and maintain the conference website",
+        "Manage technical aspects on the day of the conference",
+        "Create and maintain a functioning webapp",
+      ],
+      logo: "https://i.postimg.cc/fWXPK8zN/vofmun-logo.png",
     },
     {
       name: "Enterprise and Entrepreneurship",
