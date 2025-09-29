@@ -385,6 +385,51 @@ export const personalData = {
       ],
       logo: "https://i.postimg.cc/YCHTwM8t/econminds-logo.png",
     },
+    {
+      name: "TEDxYouth@DIA",
+      role: "Deputy Head of Technology",
+      period: "Sep 2025 - Current",
+      responsibilities: [
+        "Create and maintain the main website.",
+        "Oversee all technical aspects on the day of the event.",
+        "Create the website for the day of the event.",
+      ],
+      logo: "https://i.postimg.cc/Kjc8SYYC/tedx-logo.png",
+    },
+    // {
+    //   name: "Events@DIA",
+    //   role: "Head of Technology",
+    //   period: "Oct 2025 - Current",
+    //   responsibilities: [
+    //     "Create and maintain the main website.",
+    //     "Oversee all technical aspects on the day of the event.",
+    //     "Create the website for the day of the event.",
+    //   ],
+    //   logo: "https://i.postimg.cc/Kjc8SYYC/tedx-logo.png",
+    // },
+    // {
+    //   name: "Aviation@DIA",
+    //   role: "Head of Technology",
+    //   period: "Sep 2025 - Current",
+    //   responsibilities: [
+    //     "Create and maintain the main website.",
+    //     "Oversee all technical aspects on the day of the competition.",
+    //     "Create the website for the day of the competiton.",
+    //   ],
+    //   logo: "https://i.postimg.cc/YCHTwM8t/econminds-logo.png",
+    // },
+    // {
+    //   name: "Legal Horizons",
+    //   role: "Deputy Head of Technology",
+    //   period: "Sep 2025 - Current",
+    //   responsibilities: [
+    //     "Create and maintain the main website.",
+    //     "Oversee all technical aspects on the day of the event.",
+    //     "Create the website for the day of the event.",
+    //   ],
+    //   logo: "https://i.postimg.cc/Kjc8SYYC/tedx-logo.png",
+    // },
+    
   ],
 
   volunteerWork: [
