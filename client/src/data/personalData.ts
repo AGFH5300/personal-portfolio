@@ -396,6 +396,17 @@ export const personalData = {
       ],
       logo: "https://i.postimg.cc/Kjc8SYYC/tedx-logo.png",
     },
+    {
+      name: "Aviation@DIA",
+      role: "Head of Technology",
+      period: "Sep 2025 - Current",
+      responsibilities: [
+        "Create and maintain the main website.",
+        "Oversee all technical aspects on the day of the competition.",
+        "Create the website for the day of the competiton.",
+      ],
+      logo: "https://i.postimg.cc/7LyGDPzt/aviation-logo.png",
+    },
     // {
     //   name: "Events@DIA",
     //   role: "Head of Technology",
@@ -405,12 +416,12 @@ export const personalData = {
     //     "Oversee all technical aspects on the day of the event.",
     //     "Create the website for the day of the event.",
     //   ],
-    //   logo: "https://i.postimg.cc/Kjc8SYYC/tedx-logo.png",
+    //   logo: "https://i.postimg.cc/3NYxQQ7v/events-logo.png",
     // },
     // {
-    //   name: "Aviation@DIA",
+    //   name: "Cubing@DIA",
     //   role: "Head of Technology",
-    //   period: "Sep 2025 - Current",
+    //   period: "Oct 2025 - Current",
     //   responsibilities: [
     //     "Create and maintain the main website.",
     //     "Oversee all technical aspects on the day of the competition.",
@@ -421,7 +432,7 @@ export const personalData = {
     // {
     //   name: "Legal Horizons",
     //   role: "Deputy Head of Technology",
-    //   period: "Sep 2025 - Current",
+    //   period: "Oct 2025 - Current",
     //   responsibilities: [
     //     "Create and maintain the main website.",
     //     "Oversee all technical aspects on the day of the event.",
