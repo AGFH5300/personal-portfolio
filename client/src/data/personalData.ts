@@ -14,7 +14,7 @@ export const personalData = {
   email: "dxb.avg@gmail.com",
   phone: "+971 585 082 674",
   profileImage: "https://i.postimg.cc/DZ2bSMLP/ansh.jpg",
-  cvUrl: "https://drive.google.com/uc?export=download&id=1cHYnfwScVynieQcm620reQiX25cpcO_s",
+  cvUrl: "https://drive.google.com/uc?export=download&id=1W1MljoDSw-XtPAZ4IF68DdA6Mr2yw88j",
 
   social: {
     linkedin: "https://www.linkedin.com/in/anshvg/",
@@ -416,7 +416,7 @@ export const personalData = {
         "Oversee all technical aspects on the day of the event.",
         "Create the website for the day of the event.",
       ],
-      logo: "",
+      logo: "https://i.postimg.cc/Vs4d9HV5/legal-logo.png",
     },
     // {
     //   name: "Events@DIA",
