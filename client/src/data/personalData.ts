@@ -407,6 +407,17 @@ export const personalData = {
       ],
       logo: "https://i.postimg.cc/7LyGDPzt/aviation-logo.png",
     },
+    {
+      name: "Legal Horizons",
+      role: "Head of Technology",
+      period: "Oct 2025 - Current",
+      responsibilities: [
+        "Create and maintain the main website.",
+        "Oversee all technical aspects on the day of the event.",
+        "Create the website for the day of the event.",
+      ],
+      logo: "",
+    },
     // {
     //   name: "Events@DIA",
     //   role: "Head of Technology",
@@ -428,17 +439,6 @@ export const personalData = {
     //     "Create the website for the day of the competiton.",
     //   ],
     //   logo: "https://i.postimg.cc/YCHTwM8t/econminds-logo.png",
-    // },
-    // {
-    //   name: "Legal Horizons",
-    //   role: "Deputy Head of Technology",
-    //   period: "Oct 2025 - Current",
-    //   responsibilities: [
-    //     "Create and maintain the main website.",
-    //     "Oversee all technical aspects on the day of the event.",
-    //     "Create the website for the day of the event.",
-    //   ],
-    //   logo: "https://i.postimg.cc/Kjc8SYYC/tedx-logo.png",
     // },
     
   ],
