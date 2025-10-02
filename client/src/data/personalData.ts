@@ -14,7 +14,7 @@ export const personalData = {
   email: "dxb.avg@gmail.com",
   phone: "+971 585 082 674",
   profileImage: "https://i.postimg.cc/DZ2bSMLP/ansh.jpg",
-  cvUrl: "https://drive.google.com/uc?export=download&id=1oetG17BZxNjFSdBnud4RL1DqiU504HEo",
+  cvUrl: "https://drive.google.com/uc?export=download&id=1cHYnfwScVynieQcm620reQiX25cpcO_s",
 
   social: {
     linkedin: "https://www.linkedin.com/in/anshvg/",
