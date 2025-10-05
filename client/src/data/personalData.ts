@@ -127,7 +127,7 @@ export const personalData = {
     {
       name: "DIAMWEF 2025",
       position: "Delegate",
-      date: "May 2025 - Present",
+      date: "May 2025",
       description: "Participated as the Delegate Of India (Jal Shakti) in DIAMWEF 2025.",
       achievements: ["Delegate"],
       logo: "https://i.postimg.cc/Bb0zgYbn/diamwef-logo.png",
@@ -153,7 +153,7 @@ export const personalData = {
         {
         url: "https://i.postimg.cc/QxMLYYwd/Ansh-Gupta-HACKATHON.png",
         downloadUrl: "https://i.postimg.cc/CYGF1W4k/Ansh-Gupta-HACKATHON.png?dl=1",
-      }
+        }
       ],
     },
     {
@@ -169,6 +169,11 @@ export const personalData = {
           url: "https://i.postimg.cc/MKhtcWxt/diamec-best-collab.jpg",
           downloadUrl: "https://i.postimg.cc/R40YDFYr/diamec-best-collab.jpg?dl=1",
           caption: "DIAMEC Best Collaborator Award"
+        },
+        {
+          url: "https://i.postimg.cc/wTt0TtK7/diamec.jpg",
+          downloadUrl: "https://i.postimg.cc/sym8mSw-9/diamec.jpg?dl=1",
+          caption: "DIAMEC Patricipation Award"
         },
         {
           url: "https://i.postimg.cc/x14gcWD9/DIAMEC.png",
@@ -202,6 +207,38 @@ export const personalData = {
           caption: "DIATECH Winners Photo"
         },
       ],
+    },
+    {
+      name: "Chinese Bridge Chinese Proficiency Competition 2023",
+      position: "Excellence Award (优秀奖)",
+      date: "2023",
+      description:
+        "Awarded for outstanding performance in the 2023 Chinese Bridge Chinese Proficiency Competition for Foreign Secondary School Students UAE Preliminary Rounds.",
+      achievements: ["Excellence Award (优秀奖)", "UAE Preliminary Rounds Winner"],
+      logo: "https://i.postimg.cc/sgB4MPvP/cfel-logo.png",
+      images: [
+        {
+          url: "https://i.postimg.cc/hjz14wwN/chinese-excellence.jpg",
+          downloadUrl: "https://i.postimg.cc/hjz14wwN/chinese-excellence.jpg?dl=1",
+          caption: "Certificate of Excellence - Chinese Bridge 2023"
+        }
+      ]
+    },
+    {
+      name: "John Locke Essay Competition 2025",
+      position: "Candidate",
+      date: "Jun 2025",
+      description:
+        "Shortlisted in the History category of the JLI Global Essay Prize among 63,328 studets,",
+      achievements: ["Shortlisted Candidate (History)", "Among 63,328 students"],
+      logo: "https://i.postimg.cc/SsJ6bTSy/jli-logo.png",
+      images: [
+        {
+          url: "https://i.postimg.cc/nhrck60x/johnlocke-cert.png",
+          downloadUrl: "https://i.postimg.cc/NB79gtXK/johnlocke-cert.png?dl=1",
+          caption: "JLI Certificate"
+        },
+      ]
     },
   ],
 
@@ -280,8 +317,8 @@ export const personalData = {
       name: "CS50 Harvard Course",
       issuer: "Harvard University",
       issueDate: "Jun 2025",
-      image: "",
-      downloadUrl: "",
+      image: "https://i.postimg.cc/XNm5dYsb/CS50x.png",
+      downloadUrl: "https://i.postimg.cc/tyCz01PY/CS50x.png?dl=1",
       logo: "https://i.postimg.cc/hPFzxcqW/harvard-logo.png",
     },
     {
@@ -296,8 +333,8 @@ export const personalData = {
       name: "HSK Level 1",
       issuer: "Chinese Proficiency Test",
       issueDate: "Score: 195/200 - Jan 2020",
-      image: "",
-      downloadUrl: "",
+      image: "https://i.postimg.cc/T38g93qz/hsk-1.jpg",
+      downloadUrl: "https://i.postimg.cc/SkRdmXXx/hsk-1.jpg?dl=1",
       logo: "https://i.postimg.cc/Qtb7x7v8/hanban-logo.png",
     },
     {
@@ -418,6 +455,29 @@ export const personalData = {
       ],
       logo: "https://i.postimg.cc/Vs4d9HV5/legal-logo.png",
     },
+    {
+      name: "Debate Society",
+      role: "Head of Technology",
+      period: "Oct 2025 - Current",
+      responsibilities: [
+        "Create and maintain the main website.",
+        "Oversee all technical aspects on the day of the event.",
+        "Create the website for the day of the event.",
+      ],
+      logo: "https://i.postimg.cc/brJZbKtQ/debsoc-logo.png",
+    },
+    {
+      name: "DIACubing",
+      role: "Head of Technology",
+      period: "Oct 2025 - Current",
+      responsibilities: [
+        "Create and maintain the main website.",
+        "Oversee all technical aspects on the day of the event.",
+        "Create the website for the day of the event.",
+      ],
+      logo: "",
+    },
+   
     // {
     //   name: "Events@DIA",
     //   role: "Head of Technology",
@@ -428,17 +488,6 @@ export const personalData = {
     //     "Create the website for the day of the event.",
     //   ],
     //   logo: "https://i.postimg.cc/3NYxQQ7v/events-logo.png",
-    // },
-    // {
-    //   name: "Cubing@DIA",
-    //   role: "Head of Technology",
-    //   period: "Oct 2025 - Current",
-    //   responsibilities: [
-    //     "Create and maintain the main website.",
-    //     "Oversee all technical aspects on the day of the competition.",
-    //     "Create the website for the day of the competiton.",
-    //   ],
-    //   logo: "https://i.postimg.cc/YCHTwM8t/econminds-logo.png",
     // },
     
   ],
