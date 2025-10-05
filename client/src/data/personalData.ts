@@ -357,6 +357,17 @@ export const personalData = {
 
   clubs: [
     {
+      name: "Enterprise and Entrepreneurship",
+      role: "Head",
+      period: "2022 - 2023",
+      responsibilities: [
+        "Create entrepreneurial events for the school students",
+        "Manage leadership roles across the school in events",
+        "Create promotional materials for events",
+      ],
+      logo: "https://i.postimg.cc/wj2XcBPS/winchester-logo.png",
+    },
+    {
       name: "DIAconomics Club",
       role: "Deputy Head of Media",
       period: "April 2025 - Current",
@@ -379,28 +390,6 @@ export const personalData = {
       logo: "https://i.postimg.cc/0jbhY3cw/diamun-logo.png",
     },
     {
-      name: "VOFMUN",
-      role: "Head of Technology",
-      period: "Sep 2025 - Current",
-      responsibilities: [
-        "Revamp and maintain the conference website",
-        "Manage technical aspects on the day of the conference",
-        "Create and maintain a functioning webapp",
-      ],
-      logo: "https://i.postimg.cc/fWXPK8zN/vofmun-logo.png",
-    },
-    {
-      name: "Enterprise and Entrepreneurship",
-      role: "Head",
-      period: "2022 - 2023",
-      responsibilities: [
-        "Create entrepreneurial events for the school students",
-        "Manage leadership roles across the school in events",
-        "Create promotional materials for events",
-      ],
-      logo: "https://i.postimg.cc/wj2XcBPS/winchester-logo.png",
-    },
-    {
       name: "SyntaxEngine",
       role: "Co-President",
       period: "Aug 2025 - Current",
@@ -410,6 +399,17 @@ export const personalData = {
         "Organize events and collaborations with other clubs.",
       ],
       logo: "https://i.postimg.cc/L60LQWvs/syntaxengine-logo.jpg",
+    },
+    {
+      name: "VOFMUN",
+      role: "Head of Technology",
+      period: "Sep 2025 - Current",
+      responsibilities: [
+        "Revamp and maintain the conference website",
+        "Manage technical aspects on the day of the conference",
+        "Create and maintain a functioning webapp",
+      ],
+      logo: "https://i.postimg.cc/fWXPK8zN/vofmun-logo.png",
     },
     {
       name: "EconMinds xChange",
