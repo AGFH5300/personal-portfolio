@@ -475,7 +475,7 @@ export const personalData = {
         "Oversee all technical aspects on the day of the event.",
         "Create the website for the day of the event.",
       ],
-      logo: "https://i.postimg.cc/CKt4nbqv/cubing-logo.png",
+      logo: "https://i.postimg.cc/d0sqZSCR/cubing-logo.png",
     },
    
     // {
