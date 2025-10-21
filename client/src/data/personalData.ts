@@ -488,6 +488,17 @@ export const personalData = {
       ],
       logo: "https://i.postimg.cc/3NYxQQ7v/events-logo.png",
     },
+    {
+      name: "DIA Mathletes",
+      role: "Head of Technology",
+      period: "Oct 2025 - Current",
+      responsibilities: [
+        "Create and maintain the main website.",
+        "Oversee all technical aspects on the day of the events.",
+        "Create the website for the day of the events.",
+      ],
+      logo: "https://i.postimg.cc/fRB9CJ24/mathletes-logo.png",
+    },
   ],
 
   volunteerWork: [
