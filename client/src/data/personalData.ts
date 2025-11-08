@@ -11,7 +11,7 @@ export const personalData = {
   ],
   age: 15,
   nationality: "Indian",
-  email: "dxb.avg@gmail.com",
+  email: "ansh@anshgupta.site",
   phone: "+971 585 082 674",
   profileImage: "https://i.postimg.cc/DZ2bSMLP/ansh.jpg",
   cvUrl: "https://drive.google.com/uc?export=download&id=1D57Vzyk2RH2Aj-lukYcRvoe1cwG2eS_b",
@@ -19,7 +19,7 @@ export const personalData = {
   social: {
     linkedin: "https://www.linkedin.com/in/anshvg/",
     github: "https://github.com/AGFH5300",
-    email: "mailto:dxb.avg@gmail.com",
+    email: "mailto:ansh@anshgupta.site",
     snapchat: "https://www.snapchat.com/add/AGFH530",
     whatsapp: "https://wa.me/971585082674?text=Hello!",
   },
