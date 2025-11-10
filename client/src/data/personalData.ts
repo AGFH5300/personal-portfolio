@@ -79,7 +79,7 @@ export const personalData = {
       description:
         "Won 1st place solving multiple math problems as a team with Vihaan Deshpande, Lavitra Dhoot and Avyukta Ankam.",
       achievements: ["1st Place Winner"],
-      logo: "https://i.postimg.cc/fRB9CJ24/mathletes-logo.png",
+      logo: "https://i.postimg.cc/fRB9CJ24/mathletes-logo-old.png",
       images: [
         {
           url: "https://i.postimg.cc/CKK4Xd4h/mathletes.jpg",
@@ -497,7 +497,18 @@ export const personalData = {
         "Oversee all technical aspects on the day of the events.",
         "Create the website for the day of the events.",
       ],
-      logo: "https://i.postimg.cc/fRB9CJ24/mathletes-logo.png",
+      logo: "https://i.postimg.cc/y8phZPpP/mathletes-logo-new.png",
+    },
+    {
+      name: "STEM Scholars Society",
+      role: "Vice President",
+      period: "Oct 2025 - Current",
+      responsibilities: [
+        "Create and manage events and planning.",
+        "Oversee all departments of the club.",
+        "Help the President in any matters.",
+      ],
+      logo: "https://i.postimg.cc/k4RFvbR6/stem-logo.png",
     },
   ],
 
