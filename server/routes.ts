@@ -37,18 +37,32 @@ const contactSchema = z.object({
   message: z.string().min(10),
 });
 
-// ---- Web3Forms initialization (HTTPS API; no SMTP) ----
-let WEB3FORMS_READY = false;
+// ---- Resend initialization (HTTPS API) ----
+let RESEND_READY = false;
 
-const initializeWeb3Forms = () => {
-  const key = process.env.WEB3FORMS_ACCESS_KEY;
+const initializeResend = () => {
+  const key = process.env.RESEND_API_KEY;
+  const from = process.env.RESEND_FROM_EMAIL;
+  const to = process.env.CONTACT_TO || process.env.RESEND_TO_EMAIL || process.env.RESEND_FROM_EMAIL;
+
   if (!key) {
-    console.error("❌ WEB3FORMS_ACCESS_KEY must be set in environment variables");
-    WEB3FORMS_READY = false;
+    console.error("❌ RESEND_API_KEY must be set in environment variables");
+    RESEND_READY = false;
     return false;
   }
-  console.log("✅ Web3Forms config present");
-  WEB3FORMS_READY = true;
+
+  if (!from) {
+    console.error("❌ RESEND_FROM_EMAIL must be set to a verified sender (e.g. 'Portfolio <you@domain.com>')");
+    RESEND_READY = false;
+    return false;
+  }
+
+  if (!to) {
+    console.warn("⚠️ CONTACT_TO or RESEND_TO_EMAIL not provided - using RESEND_FROM_EMAIL as fallback recipient");
+  }
+
+  console.log("✅ Resend config present");
+  RESEND_READY = true;
   return true;
 };
 
@@ -75,10 +89,14 @@ interface ContactFormData {
   };
 }
 
-// Send email function (via Web3Forms REST API over HTTPS) with beautified content
+// Send email function (via Resend REST API) with beautified content
 const sendContactEmail = async (formData: ContactFormData): Promise<boolean> => {
   try {
     const when = new Date(formData.date).toLocaleString();
+
+    if (!RESEND_READY) {
+      console.warn("⚠️ Resend not fully initialized - attempting send with current environment values");
+    }
 
     // Build a compact summary section + readable body
     const summaryLines = [
@@ -104,53 +122,47 @@ const sendContactEmail = async (formData: ContactFormData): Promise<boolean> => 
       "— end —",
     ].join("\n");
 
-    // Web3Forms payload (extra fields appear as labeled rows)
+    const toAddress = process.env.CONTACT_TO || process.env.RESEND_TO_EMAIL || process.env.RESEND_FROM_EMAIL;
+
+    if (!process.env.RESEND_API_KEY || !process.env.RESEND_FROM_EMAIL || !toAddress) {
+      console.error("❌ Missing Resend configuration - cannot send email");
+      return false;
+    }
+
     const payload: Record<string, any> = {
-      access_key: process.env.WEB3FORMS_ACCESS_KEY!,
-      form_name: "Portfolio Contact",
-      from_name: "Portfolio",
-      // Clear, no-emoji subject line:
+      from: process.env.RESEND_FROM_EMAIL,
+      to: [toAddress],
       subject: `Contact: ${formData.subject} - ${formData.name}`,
-      // Standard fields the template renders:
-      name: formData.name,
-      email: formData.email,             // visitor email (Reply-To is inferred)
-      message: beautifiedMessage,        // formatted body for readability
-      // Useful extra fields become labeled rows in the email:
-      submitted_at: when,
-      ip: formData.meta?.ip || "",
-      country: formData.meta?.country || "",
-      device: formData.meta?.device || "",
-      os: formData.meta?.os || "",
-      referrer: formData.meta?.referrer || "",
-      // Spam trap (optional; pair with hidden field in client if you add one)
-      botcheck: "",
-      // Some setups honor explicit reply_to; harmless if ignored:
-      reply_to: formData.email,
+      reply_to: [formData.email],
+      text: beautifiedMessage,
     };
 
-    const resp = await doFetch("https://api.web3forms.com/submit", {
+    const resp = await doFetch("https://api.resend.com/emails", {
       method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+      },
       body: JSON.stringify(payload),
     });
 
-    // Web3Forms returns JSON { success, message, data? }
+    // Resend returns JSON { id, ... }
     if (!resp.ok) {
       const text = await resp.text();
-      console.error("❌ Web3Forms HTTP error:", resp.status, text);
+      console.error("❌ Resend HTTP error:", resp.status, text);
       return false;
     }
 
     const data = await resp.json();
-    if (!data?.success) {
-      console.error("❌ Web3Forms API error:", data);
+    if (!data?.id) {
+      console.error("❌ Resend API error:", data);
       return false;
     }
 
-    console.log("✅ Contact email sent via Web3Forms");
+    console.log("✅ Contact email sent via Resend");
     return true;
   } catch (error) {
-    console.error("❌ Failed to send contact email (Web3Forms):", error);
+    console.error("❌ Failed to send contact email (Resend):", error);
     return false;
   }
 };
@@ -236,20 +248,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     next();
   });
 
-  // Initialize Web3Forms on startup
-  const web3formsReady = initializeWeb3Forms();
+  // Initialize Resend on startup
+  const resendReady = initializeResend();
 
-  if (web3formsReady) {
-    console.log("🚀 Web3Forms initialized successfully");
+  if (resendReady) {
+    console.log("🚀 Resend initialized successfully");
   } else {
-    console.log("⚠️ Web3Forms not fully configured - will still save JSON backup");
+    console.log("⚠️ Resend not fully configured - will still save JSON backup");
   }
 
-  // Test endpoint to check email status (Web3Forms)
+  // Test endpoint to check email status (Resend)
   app.get("/api/email-status", (req, res) => {
     res.json({
-      web3formsReady: Boolean(process.env.WEB3FORMS_ACCESS_KEY),
-      to: process.env.CONTACT_TO || "Key owner (Web3Forms default)",
+      resendReady: Boolean(process.env.RESEND_API_KEY && process.env.RESEND_FROM_EMAIL),
+      to:
+        process.env.CONTACT_TO ||
+        process.env.RESEND_TO_EMAIL ||
+        process.env.RESEND_FROM_EMAIL ||
+        "Unknown (configure CONTACT_TO or RESEND_FROM_EMAIL)",
       timestamp: new Date().toISOString(),
     });
   });
@@ -426,7 +442,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         },
       };
 
-      // Try to send email via Web3Forms
+      // Try to send email via Resend
       const emailSent = await sendContactEmail(formData);
 
       if (emailSent) {
@@ -445,7 +461,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       } else {
         // Email failed to send
-        console.error("❌ Email service failed (Web3Forms)");
+        console.error("❌ Email service failed (Resend)");
         return res.status(500).json({
           success: false,
           message: "Failed to send message. Please try again later.",
