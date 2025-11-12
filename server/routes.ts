@@ -38,11 +38,12 @@ const contactSchema = z.object({
 });
 
 // ---- Resend initialization (HTTPS API) ----
+const DEFAULT_RESEND_FROM = "Portfolio <onboarding@resend.dev>";
 let RESEND_READY = false;
 
 const initializeResend = () => {
   const key = process.env.RESEND_API_KEY;
-  const from = process.env.RESEND_FROM_EMAIL;
+  const fromAddress = process.env.RESEND_FROM_EMAIL || DEFAULT_RESEND_FROM;
   const to = process.env.CONTACT_TO || process.env.RESEND_TO_EMAIL || process.env.RESEND_FROM_EMAIL;
 
   if (!key) {
@@ -51,17 +52,19 @@ const initializeResend = () => {
     return false;
   }
 
-  if (!from) {
-    console.error("❌ RESEND_FROM_EMAIL must be set to a verified sender (e.g. 'Portfolio <you@domain.com>')");
-    RESEND_READY = false;
-    return false;
+  if (!process.env.RESEND_FROM_EMAIL) {
+    console.warn(
+      "⚠️ RESEND_FROM_EMAIL not set - using onboarding@resend.dev fallback (suitable for personal/testing use only)"
+    );
   }
 
   if (!to) {
-    console.warn("⚠️ CONTACT_TO or RESEND_TO_EMAIL not provided - using RESEND_FROM_EMAIL as fallback recipient");
+    console.warn(
+      "⚠️ CONTACT_TO or RESEND_TO_EMAIL not provided - set one of these to receive contact form emails"
+    );
   }
 
-  console.log("✅ Resend config present");
+  console.log(`✅ Resend config present (from: ${fromAddress})`);
   RESEND_READY = true;
   return true;
 };
@@ -122,15 +125,16 @@ const sendContactEmail = async (formData: ContactFormData): Promise<boolean> => 
       "— end —",
     ].join("\n");
 
+    const fromAddress = process.env.RESEND_FROM_EMAIL || DEFAULT_RESEND_FROM;
     const toAddress = process.env.CONTACT_TO || process.env.RESEND_TO_EMAIL || process.env.RESEND_FROM_EMAIL;
 
-    if (!process.env.RESEND_API_KEY || !process.env.RESEND_FROM_EMAIL || !toAddress) {
+    if (!process.env.RESEND_API_KEY || !toAddress) {
       console.error("❌ Missing Resend configuration - cannot send email");
       return false;
     }
 
     const payload: Record<string, any> = {
-      from: process.env.RESEND_FROM_EMAIL,
+      from: fromAddress,
       to: [toAddress],
       subject: `Contact: ${formData.subject} - ${formData.name}`,
       reply_to: [formData.email],
