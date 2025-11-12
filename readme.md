@@ -96,6 +96,9 @@ This is a personal portfolio website for Ansh Gupta, a 15-year-old web developer
 ### Environment Requirements
 - **DATABASE_URL**: PostgreSQL connection string for Neon database
 - **NODE_ENV**: Environment detection (development/production)
+- **RESEND_API_KEY**: Required to enable outbound contact form emails (Resend)
+- **CONTACT_TO**: Email address that should receive contact form submissions (your personal inbox)
+- **RESEND_FROM_EMAIL** *(optional)*: Custom verified sender. If omitted, the server falls back to `Portfolio <onboarding@resend.dev>` so you can receive messages without setting up a custom domain.
 
 ## Changelog
 - June 14, 2025. Initial setup
