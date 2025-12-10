@@ -164,6 +164,14 @@ export default function SkillsSection() {
                     </div>
                   </div>
                   <p className="text-sm text-gray-700 mb-3">{cert.issueDate}</p>
+                  <a
+                    href={cert.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center text-sm font-semibold text-primary underline-offset-4 hover:underline"
+                  >
+                    {cert.url}
+                  </a>
                 </div>
                 {cert.image && (
                   <div
