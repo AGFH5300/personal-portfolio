@@ -279,338 +279,6 @@ export const personalData = {
     ],
   },
 
-  techStack: [
-    {
-      title: "Frontend Application Layer",
-      badge: "Frontend",
-      description: "Modern React tooling for crafting fast, responsive product surfaces.",
-      icon: "Laptop",
-      theme: {
-        from: "#E5F0FF",
-        via: "#F8FAFF",
-        to: "#FFF5F8",
-      },
-      mission: {
-        codename: "Interface Runway",
-        summary: "Where TypeScript ideas land as production-ready Next.js experiences.",
-        highlight:
-          "Live streaming dashboards, optimistic state transitions, and typed form builders let me demo features the same night they are prototyped.",
-      },
-      items: [
-        "TypeScript",
-        "React 19",
-        "Next.js 14 App Router",
-        "Server Components",
-        "Tailwind CSS 4",
-        "Vite",
-        "React Hook Form",
-        "Zod",
-        "TanStack React Query",
-        "Zustand",
-      ],
-      spotlights: [
-        {
-          name: "Next.js streaming UI",
-          tagline: "Server-first rendering",
-          description:
-            "App Router server components and actions keep dashboards hydrated without a separate REST layer.",
-          funFact:
-            "Parallel routes let me reveal loading states instantly while data batches stream in the background.",
-        },
-        {
-          name: "TypeScript everywhere",
-          tagline: "Shared contract safety",
-          description:
-            "Strict typing flows from React components to API handlers using shared Drizzle schema definitions.",
-          funFact:
-            "Utility types power reusable form builders that plug directly into React Hook Form and Zod validators.",
-        },
-        {
-          name: "React 19 transitions",
-          tagline: "Optimistic UI patterns",
-          description:
-            "Suspense boundaries and optimistic updates keep interactions snappy even during long-running mutations.",
-          funFact:
-            "`useOptimistic` pairs with inline skeletons so navigation still feels instant on slow networks.",
-        },
-      ],
-    },
-    {
-      title: "Design Systems & Motion",
-      badge: "UI Craft",
-      description: "Composable design primitives and micro-interactions that feel alive.",
-      icon: "Palette",
-      theme: {
-        from: "#FDECF8",
-        via: "#FFF7FB",
-        to: "#E9F5FF",
-      },
-      mission: {
-        codename: "Storyboarding Studio",
-        summary: "Design systems, motion, and accessibility fuse into playful product rituals.",
-        highlight:
-          "I choreograph interface states with component tokens, animated timelines, and command palettes that respond to every key press.",
-      },
-      items: [
-        "shadcn/ui",
-        "Radix UI",
-        "Framer Motion",
-        "Lottie",
-        "Embla Carousel",
-        "Lucide React",
-        "Geist Font",
-        "tailwindcss-animate",
-        "class-variance-authority",
-        "tailwind-merge",
-      ],
-      spotlights: [
-        {
-          name: "Accessible primitives",
-          tagline: "Radix under the hood",
-          description:
-            "Composable shadcn/ui components inherit Radix accessibility so focus traps and keyboard flows just work.",
-          funFact:
-            "Command palettes built with CMDK let power users jump between sections with a few keystrokes.",
-        },
-        {
-          name: "Motion as feedback",
-          tagline: "Framer-driven storytelling",
-          description:
-            "Layered timeline animations highlight milestones and tech pairings without overwhelming the layout.",
-          funFact:
-            "Spring physics ease chips into view so large tech lists still feel playful instead of dense.",
-        },
-        {
-          name: "Brand-consistent theming",
-          tagline: "Tokens over ad-hoc styles",
-          description:
-            "Design tokens flow through Tailwind and CVA variants, keeping typography, spacing, and states consistent.",
-          funFact:
-            "Color-safe Tailwind palettes mean the light theme stays readable even with accent gradients.",
-        },
-      ],
-    },
-    {
-      title: "APIs, Auth & Integrations",
-      badge: "Backend",
-      description: "Services that secure data, automate workflows, and connect products.",
-      icon: "ServerCog",
-      theme: {
-        from: "#E8FBF6",
-        via: "#F5FFFB",
-        to: "#EEF2FF",
-      },
-      mission: {
-        codename: "Integration Ops",
-        summary: "APIs and auth rails that keep apps fast, safe, and collaborative.",
-        highlight:
-          "Typed database schemas, Supabase edge routines, and session bridges mean features travel smoothly between web, desktop, and mobile builds.",
-      },
-      items: [
-        "Node.js 20",
-        "Express.js",
-        "Supabase",
-        "Drizzle ORM",
-        "Drizzle Kit",
-        "PostgreSQL",
-        "Neon Serverless",
-        "Flask",
-        "WebSockets",
-        "Passport.js",
-      ],
-      spotlights: [
-        {
-          name: "Supabase edge functions",
-          tagline: "Serverless automation",
-          description:
-            "Lightweight TypeScript functions handle webhooks, email triggers, and row-level security policies.",
-          funFact:
-            "Realtime channels broadcast leaderboard updates without refreshing the page.",
-        },
-        {
-          name: "Drizzle schema first",
-          tagline: "Migrations with confidence",
-          description:
-            "SQL generated from typed schemas keeps migrations versioned, reviewable, and git-friendly.",
-          funFact:
-            "Inferable types double as API contracts so the client never guesses column names.",
-        },
-        {
-          name: "Auth building blocks",
-          tagline: "Sessions to tokens",
-          description:
-            "Passport.js strategies and express-session pair with Supabase Auth for secure hybrid stacks.",
-          funFact:
-            "Magic links and OAuth share the same session store thanks to connect-pg-simple adapters.",
-        },
-      ],
-    },
-    {
-      title: "Automation & Data Tooling",
-      badge: "Data",
-      description: "Pipelines for AI assistance, document parsing, and rich media workflows.",
-      icon: "BrainCircuit",
-      theme: {
-        from: "#F2F9FF",
-        via: "#F7FFFD",
-        to: "#E8F4FF",
-      },
-      mission: {
-        codename: "Research Lab",
-        summary: "Experimental scripts that wrangle visuals, documents, and machine learning.",
-        highlight:
-          "Python notebooks, OCR pipelines, and AI prompts help me turn messy competition assets into polished deliverables overnight.",
-      },
-      items: [
-        "Python 3.11",
-        "numpy",
-        "pandas",
-        "OpenCV",
-        "pytesseract",
-        "pdf2image",
-        "FFmpeg",
-        "requests",
-        "BeautifulSoup",
-      ],
-      spotlights: [
-        {
-          name: "Vision-powered utilities",
-          tagline: "OpenCV + Tesseract",
-          description:
-            "Image pipelines denoise documents, slice regions, and OCR text for searchable study resources.",
-          funFact:
-            "Adaptive thresholding keeps handwriting legible before parsing it into structured JSON.",
-        },
-        {
-          name: "Video & audio batches",
-          tagline: "FFmpeg automations",
-          description:
-            "CLI presets transcode clips, generate thumbnails, and sync captions without manual tweaking.",
-          funFact:
-            "`yt-dlp` feeds the pipeline so highlight reels are rendered while I keep coding.",
-        },
-        {
-          name: "AI-assisted scripting",
-          tagline: "Python notebooks",
-          description:
-            "pandas dataframes and the OpenAI / Gemini APIs accelerate prototyping for competitions and hackathons.",
-          funFact:
-            "Prompt templates live alongside code, making it easy to swap providers without refactoring.",
-        },
-      ],
-    },
-    {
-      title: "Delivery & Operations",
-      badge: "Shipping",
-      description: "Infrastructure that keeps projects deployable, observable, and fast to iterate.",
-      icon: "Cloud",
-      theme: {
-        from: "#F2F7FF",
-        via: "#F8FBFF",
-        to: "#FFF8F0",
-      },
-      mission: {
-        codename: "Launch Control",
-        summary: "Ops rituals that keep every experiment deployable at a moment's notice.",
-        highlight:
-          "Containerised build chains, health endpoints, and asset pipelines make sure the portfolio, APIs, and games stay ship-ready.",
-      },
-      items: [
-        "Docker",
-        "docker-compose",
-        "Render",
-        "InfinityFree",
-        "GitHub Pages",
-        "Supabase Storage",
-        "GitHub Actions",
-        "Node-based SVG pipeline",
-        "JSON metadata tooling",
-        "dotenv",
-      ],
-      spotlights: [
-        {
-          name: "Zero-downtime builds",
-          tagline: "Docker multi-stage",
-          description:
-            "Multi-stage containers bundle Vite builds with Flask APIs so deployments stay small and cacheable.",
-          funFact:
-            "Layer caching keeps rebuilds under a minute even with both Python and Node stacks inside.",
-        },
-        {
-          name: "Observable endpoints",
-          tagline: "Health checks everywhere",
-          description:
-            "Status routes in Next.js and Flask ping uptime monitors and surface latency in dashboards.",
-          funFact:
-            "Supabase logs stream into simple analytics panels powered by geoip-lite lookups.",
-        },
-        {
-          name: "Asset pipelines",
-          tagline: "SVG to production",
-          description:
-            "svgexport and imagemin-cli optimize illustrations before shipping them to CDN-friendly storage.",
-          funFact:
-            "Automated fallbacks ensure favicons and posters are generated in every required dimension.",
-        },
-      ],
-    },
-    {
-      title: "Game & Creative Tech",
-      badge: "Interactive",
-      description: "Tools for playful experiences, prototypes, and narrative-driven demos.",
-      icon: "Gamepad2",
-      theme: {
-        from: "#FFF3E8",
-        via: "#FFF9F1",
-        to: "#EAF4FF",
-      },
-      mission: {
-        codename: "Play Lab",
-        summary: "Experiments that blend game feel with web-based storytelling.",
-        highlight:
-          "GameMaker mechanics, motion design, and audio layering spill into the browser so each showcase feels like a mini game demo.",
-      },
-      items: [
-        "GameMaker Studio 2",
-        "GML scripting",
-        "Sprite animation pipelines",
-        "Lottie",
-        "Framer Motion",
-        "Embla Carousel",
-        "Audio layering",
-        "Input OTP",
-        "React Resizable Panels",
-        "Sonner toasts",
-      ],
-      spotlights: [
-        {
-          name: "Idle Realms mechanics",
-          tagline: "Clicker balancing",
-          description:
-            "Timer loops and resource curves in GML keep incremental gameplay rewarding without grinding.",
-          funFact:
-            "Camera parallax scripts were ported into React layouts to animate hero sections on the web.",
-        },
-        {
-          name: "Playable showcases",
-          tagline: "Web + game crossover",
-          description:
-            "Interactive carousels mirror in-game menus so visitors can explore mechanics straight from the site.",
-          funFact:
-            "Embla Carousel's physics easing mimics the easing curves from the GameMaker engine.",
-        },
-        {
-          name: "Sound-reactive UI",
-          tagline: "Micro-interaction audio",
-          description:
-            "Lottie and custom audio layers trigger in sync, adding tactile feedback to motion graphics.",
-          funFact:
-            "Toast notifications use subtle pitch shifts so important alerts stand out without startling users.",
-        },
-      ],
-    },
-  ],
-
   languages: [
     {
       name: "English",
@@ -646,46 +314,12 @@ export const personalData = {
 
   certifications: [
     {
-      name: "CS50: Introduction to Computer Science - Harvard University",
+      name: "CS50 Harvard Course",
       issuer: "Harvard University",
       issueDate: "Jun 2025",
       image: "https://i.postimg.cc/XNm5dYsb/CS50x.png",
       downloadUrl: "https://i.postimg.cc/tyCz01PY/CS50x.png?dl=1",
       logo: "https://i.postimg.cc/hPFzxcqW/harvard-logo.png",
-      url: "https://cs50.harvard.edu/certificates/82200682-560a-4882-958d-58281b5d23ab",
-    },
-    {
-      name: "AWS: Amazon Q Developer Fundamentals - Training Badge",
-      issuer: "Amazon Web Services",
-      issueDate: "Nov 2025",
-      image: "https://i.postimg.cc/Rq5L1SYD/credly-certification.png",
-      downloadUrl: "https://i.postimg.cc/J7tYLt5M/credly-certification.png?dl=1",
-      logo: "https://i.postimg.cc/tCCJrQhK/aws-logo.png",
-      url: "https://www.credly.com/badges/92bcb63b-36d2-4dc2-8331-e1dc0416399c/public_url"
-    },
-    {
-      name: "Hanyu Shuiping Kaoshi (Chinese Proficiency Test)",
-      issuer: "Hanban - Confucius Institute Headquarters",
-      issueDate: "Score: 195/200 - Jan 2020",
-      image: "https://i.postimg.cc/T38g93qz/hsk-1.jpg",
-      downloadUrl: "https://i.postimg.cc/SkRdmXXx/hsk-1.jpg?dl=1",
-      logo: "https://i.postimg.cc/Qtb7x7v8/hanban-logo.png",
-    },
-    {
-      name: "Hanyu Shuiping Kaoshi Level 2 (Chinese Proficiency Test Level 2)",
-      issuer: "Center for Language Education and Cooperation (CLEC)",
-      issueDate: "Score: 195/200",
-      image: "",
-      downloadUrl: "",
-      logo: "https://i.postimg.cc/Qtb7x7v8/hanban-logo.png",
-    },
-    {
-      name: "Hanyu Shuiping Kaoshi Level 3 (Chinese Proficiency Test Level 3)",
-      issuer: "Center for Language Education and Cooperation (CLEC)",
-      issueDate: "Score: 280/300 - Sep 2024",
-      image: "",
-      downloadUrl: "",
-      logo: "https://i.postimg.cc/Qtb7x7v8/hanban-logo.png",
     },
     {
       name: "Udemy 100 Days of Code: The Complete Python Pro Bootcamp",
@@ -694,6 +328,30 @@ export const personalData = {
       image: "",
       downloadUrl: "",
       logo: "https://i.postimg.cc/44QGyyYK/udemy-logo.png",
+    },
+    {
+      name: "HSK Level 1",
+      issuer: "Chinese Proficiency Test",
+      issueDate: "Score: 195/200 - Jan 2020",
+      image: "https://i.postimg.cc/T38g93qz/hsk-1.jpg",
+      downloadUrl: "https://i.postimg.cc/SkRdmXXx/hsk-1.jpg?dl=1",
+      logo: "https://i.postimg.cc/Qtb7x7v8/hanban-logo.png",
+    },
+    {
+      name: "HSK Level 2",
+      issuer: "Chinese Proficiency Test",
+      issueDate: "Score: 195/200",
+      image: "",
+      downloadUrl: "",
+      logo: "https://i.postimg.cc/Qtb7x7v8/hanban-logo.png",
+    },
+    {
+      name: "HSK Level 3",
+      issuer: "Chinese Proficiency Test",
+      issueDate: "Score: 280/300 - Sep 2024",
+      image: "",
+      downloadUrl: "",
+      logo: "https://i.postimg.cc/Qtb7x7v8/hanban-logo.png",
     },
   ],
 
