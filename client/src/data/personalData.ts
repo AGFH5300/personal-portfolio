@@ -314,12 +314,46 @@ export const personalData = {
 
   certifications: [
     {
-      name: "CS50 Harvard Course",
+      name: "CS50: Introduction to Computer Science - Harvard University",
       issuer: "Harvard University",
       issueDate: "Jun 2025",
       image: "https://i.postimg.cc/XNm5dYsb/CS50x.png",
       downloadUrl: "https://i.postimg.cc/tyCz01PY/CS50x.png?dl=1",
       logo: "https://i.postimg.cc/hPFzxcqW/harvard-logo.png",
+      url: "https://cs50.harvard.edu/certificates/82200682-560a-4882-958d-58281b5d23ab",
+    },
+    {
+      name: "AWS: Amazon Q Developer Fundamentals - Training Badge",
+      issuer: "Amazon Web Services",
+      issueDate: "Nov 2025",
+      image: "https://i.postimg.cc/Rq5L1SYD/credly-certification.png",
+      downloadUrl: "https://i.postimg.cc/J7tYLt5M/credly-certification.png?dl=1",
+      logo: "https://i.postimg.cc/tCCJrQhK/aws-logo.png",
+      url: "https://www.credly.com/badges/92bcb63b-36d2-4dc2-8331-e1dc0416399c/public_url"
+    },
+    {
+      name: "Hanyu Shuiping Kaoshi (Chinese Proficiency Test)",
+      issuer: "Hanban - Confucius Institute Headquarters",
+      issueDate: "Score: 195/200 - Jan 2020",
+      image: "https://i.postimg.cc/T38g93qz/hsk-1.jpg",
+      downloadUrl: "https://i.postimg.cc/SkRdmXXx/hsk-1.jpg?dl=1",
+      logo: "https://i.postimg.cc/Qtb7x7v8/hanban-logo.png",
+    },
+    {
+      name: "Hanyu Shuiping Kaoshi Level 2 (Chinese Proficiency Test Level 2)",
+      issuer: "Center for Language Education and Cooperation (CLEC)",
+      issueDate: "Score: 195/200",
+      image: "",
+      downloadUrl: "",
+      logo: "https://i.postimg.cc/Qtb7x7v8/hanban-logo.png",
+    },
+    {
+      name: "Hanyu Shuiping Kaoshi Level 3 (Chinese Proficiency Test Level 3)",
+      issuer: "Center for Language Education and Cooperation (CLEC)",
+      issueDate: "Score: 280/300 - Sep 2024",
+      image: "",
+      downloadUrl: "",
+      logo: "https://i.postimg.cc/Qtb7x7v8/hanban-logo.png",
     },
     {
       name: "Udemy 100 Days of Code: The Complete Python Pro Bootcamp",
@@ -328,30 +362,6 @@ export const personalData = {
       image: "",
       downloadUrl: "",
       logo: "https://i.postimg.cc/44QGyyYK/udemy-logo.png",
-    },
-    {
-      name: "HSK Level 1",
-      issuer: "Chinese Proficiency Test",
-      issueDate: "Score: 195/200 - Jan 2020",
-      image: "https://i.postimg.cc/T38g93qz/hsk-1.jpg",
-      downloadUrl: "https://i.postimg.cc/SkRdmXXx/hsk-1.jpg?dl=1",
-      logo: "https://i.postimg.cc/Qtb7x7v8/hanban-logo.png",
-    },
-    {
-      name: "HSK Level 2",
-      issuer: "Chinese Proficiency Test",
-      issueDate: "Score: 195/200",
-      image: "",
-      downloadUrl: "",
-      logo: "https://i.postimg.cc/Qtb7x7v8/hanban-logo.png",
-    },
-    {
-      name: "HSK Level 3",
-      issuer: "Chinese Proficiency Test",
-      issueDate: "Score: 280/300 - Sep 2024",
-      image: "",
-      downloadUrl: "",
-      logo: "https://i.postimg.cc/Qtb7x7v8/hanban-logo.png",
     },
   ],
 
