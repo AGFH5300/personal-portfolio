@@ -332,6 +332,15 @@ export const personalData = {
       url: "https://www.credly.com/badges/92bcb63b-36d2-4dc2-8331-e1dc0416399c/public_url"
     },
     {
+      name: "AWS: Amazon EKS - Training Badge - Training Badge",
+      issuer: "Amazon Web Services",
+      issueDate: "Nov 2025",
+      image: "https://i.postimg.cc/zDwNTq8F/credly-certification2.png",
+      downloadUrl: "https://i.postimg.cc/yKtN4NGt/credly-certification2.png?dl=1",
+      logo: "https://i.postimg.cc/tCCJrQhK/aws-logo.png",
+      url: "https://www.credly.com/badges/06185b98-d6b1-497d-8504-398dc2706970/public_url"
+    },
+    {
       name: "Hanyu Shuiping Kaoshi (Chinese Proficiency Test)",
       issuer: "Hanban - Confucius Institute Headquarters",
       issueDate: "Score: 195/200 - Jan 2020",
