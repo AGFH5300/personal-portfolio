@@ -332,7 +332,7 @@ export const personalData = {
       url: "https://www.credly.com/badges/92bcb63b-36d2-4dc2-8331-e1dc0416399c/public_url"
     },
     {
-      name: "AWS: Amazon EKS - Training Badge - Training Badge",
+      name: "AWS: Amazon EKS - Training Badge",
       issuer: "Amazon Web Services",
       issueDate: "Nov 2025",
       image: "https://i.postimg.cc/zDwNTq8F/credly-certification2.png",
