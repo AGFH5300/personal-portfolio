@@ -406,6 +406,7 @@ export const personalData = {
         "Manage technical aspects on the day of the conference",
         "Oversee all technical operations and troubleshooting",
       ],
+      url: "diamun.org",
       logo: "https://i.postimg.cc/0jbhY3cw/diamun-logo.png",
     },
     {
