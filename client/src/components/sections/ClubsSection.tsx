@@ -68,7 +68,7 @@ export default function ClubsSection() {
                           target="_blank"
                           rel="noreferrer"
                           className="inline-flex items-center text-sm font-semibold text-primary underline-offset-4 hover:underline"
-                          style={ { paddingTop: "3px"; } }
+                          style={ { paddingTop: "3px" } }
                         >
                           <ExternalLink className="mr-2 h-3 w-3" />
                           <span>Visit</span>
