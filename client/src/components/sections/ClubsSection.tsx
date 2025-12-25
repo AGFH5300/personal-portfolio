@@ -62,15 +62,17 @@ export default function ClubsSection() {
                           <li key={i}>{resp}</li>
                         ))}
                       </ul>
-                      <a
-                        href={club.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center text-sm font-semibold text-primary underline-offset-4 hover:underline"
-                      >
-                        <ExternalLink className="mr-2" />
-                        {club.url}
-                      </a>
+                      {club.url && club.url !== "#" && (
+                        <a
+                          href={club.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center text-sm font-semibold text-primary underline-offset-4 hover:underline"
+                        >
+                          <ExternalLink className="mr-2 h-3 w-3" />
+                          <span>View Project</span>
+                        </a>
+                      )}
                     </div>
                   </div>
                 </CardContent>
