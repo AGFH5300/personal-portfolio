@@ -406,7 +406,7 @@ export const personalData = {
         "Manage technical aspects on the day of the conference",
         "Oversee all technical operations and troubleshooting",
       ],
-      url: "diamun.org",
+      url: "https://diamun.org",
       logo: "https://i.postimg.cc/0jbhY3cw/diamun-logo.png",
     },
     {
@@ -429,6 +429,7 @@ export const personalData = {
         "Manage technical aspects on the day of the conference",
         "Create and maintain a functioning webapp",
       ],
+      url: "https://vofmun.org",
       logo: "https://i.postimg.cc/fWXPK8zN/vofmun-logo.png",
     },
     {
@@ -517,6 +518,7 @@ export const personalData = {
         "Oversee all technical aspects on the day of the events.",
         "Create the website for the day of the events.",
       ],
+      url: "https://mathletes-site.onrender.com",
       logo: "https://i.postimg.cc/y8phZPpP/mathletes-logo-new.png",
     },
     {
