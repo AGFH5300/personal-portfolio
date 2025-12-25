@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { personalData } from "@/data/personalData";
 import { Card, CardContent } from "@/components/ui/card";
-import { BarChart2, Image, Megaphone, PenTool, Users } from "lucide-react";
+import { BarChart2, Image, Megaphone, PenTool, Users, ExternalLink } from "lucide-react";
 
 export default function ClubsSection() {
   const clubIcons = {
@@ -68,6 +68,7 @@ export default function ClubsSection() {
                         rel="noreferrer"
                         className="inline-flex items-center text-sm font-semibold text-primary underline-offset-4 hover:underline"
                       >
+                        <ExternalLink className="mr-2" />
                         {club.url}
                       </a>
                     </div>
