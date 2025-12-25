@@ -62,6 +62,14 @@ export default function ClubsSection() {
                           <li key={i}>{resp}</li>
                         ))}
                       </ul>
+                      <a
+                        href={club.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center text-sm font-semibold text-primary underline-offset-4 hover:underline"
+                      >
+                        {club.url}
+                      </a>
                     </div>
                   </div>
                 </CardContent>
