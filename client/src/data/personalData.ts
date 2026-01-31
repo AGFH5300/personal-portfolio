@@ -541,6 +541,7 @@ export const personalData = {
         "Oversee all technical aspects on the day of the events.",
         "Add all the latest research reports to the website.",
       ],
+      url: "https://havenequities.site",
       logo: "https://i.postimg.cc/NMLwnJPw/haven-logo.png",
     },
   ],
