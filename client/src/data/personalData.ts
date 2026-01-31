@@ -534,7 +534,7 @@ export const personalData = {
     },
     {
       name: "Haven Equities",
-      role: "Cheif Technical Officer",
+      role: "CTO - Chief Technical Officer",
       period: "Jan 2026 - Current",
       responsibilities: [
         "Create and maintain the main website.",
