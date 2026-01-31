@@ -6,12 +6,12 @@ export const personalData = {
   shortBio:
     "Passionate about creating web applications and learning new technologies. I do front and back-end development with experience in HTML, CSS, JavaScript, PHP, and React.",
   fullBio: [
-    "I'm a 15-year-old developer with a growing portfolio of web projects. It began with creating websites using HTML, CSS, and JavaScript, and has expanded to include more complex applications using React, TypeScript and backend like PHP.",
+    "I'm a 16-year-old developer with a growing portfolio of web projects. It began with creating websites using HTML, CSS, and JavaScript, and has expanded to include more complex applications using React, TypeScript and backend like PHP.",
     "I am also a language enthusiast with HSK certifications in Chinese, having achieved excellent scores across all levels I've done.",
   ],
-  age: 15,
+  age: 16,
   nationality: "Indian",
-  email: "ansh@anshgupta.site",
+  email: "dxb.avg@gmail.com",
   phone: "+971 585 082 674",
   profileImage: "https://i.postimg.cc/DZ2bSMLP/ansh.jpg",
   cvUrl: "https://drive.google.com/uc?export=download&id=1D57Vzyk2RH2Aj-lukYcRvoe1cwG2eS_b",
@@ -531,6 +531,17 @@ export const personalData = {
         "Help the President in any matters.",
       ],
       logo: "https://i.postimg.cc/k4RFvbR6/stem-logo.png",
+    },
+    {
+      name: "Haven Equities",
+      role: "Cheif Technical Officer",
+      period: "Jan 2026 - Current",
+      responsibilities: [
+        "Create and maintain the main website.",
+        "Oversee all technical aspects on the day of the events.",
+        "Add all the latest research reports to the website.",
+      ],
+      logo: "https://i.postimg.cc/NMLwnJPw/haven-logo.png",
     },
   ],
 
