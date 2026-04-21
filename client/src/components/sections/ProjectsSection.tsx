@@ -39,6 +39,8 @@ export default function ProjectsSection() {
                 src={project.image}
                 alt={project.name}
                 className="w-full object-cover"
+                loading="lazy"
+                decoding="async"
               />
                 <div className="p-6" style={{paddingBottom:'12px'}}>
                 <h3 className="text-xl font-semibold mb-2">{project.name}</h3>
