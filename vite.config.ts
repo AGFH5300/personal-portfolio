@@ -27,6 +27,18 @@ export default defineConfig({
       "@assets": path.resolve(import.meta.dirname, "attached_assets"),
     },
   },
+  server: {
+    host: "127.0.0.1",
+    strictPort: true,
+    hmr: {
+      host: "127.0.0.1",
+    },
+    fs: {
+      strict: true,
+      allow: [path.resolve(import.meta.dirname, "client"), path.resolve(import.meta.dirname, "shared")],
+      deny: [".env", ".env.*", "*.pem", "*.key"],
+    },
+  },
   
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
