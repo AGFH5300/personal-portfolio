@@ -151,6 +151,12 @@ export default function AllProjects() {
     return endsWithPrompt || hasInputIndicator;
   };
 
+
+  const shouldShowInputBar = (projectId: string): boolean => {
+    const state = getProjectState(projectId);
+    return state.waitingForInput || state.isRunning;
+  };
+
   const updateProjectState = (projectId: string, updates: Partial<ProjectState> | ((prev: ProjectState) => ProjectState)) => {
     setProjectStates(prev => {
       const currentState = prev[projectId] || {
@@ -188,9 +194,13 @@ export default function AllProjects() {
           content: item.content
         }));
 
+        const restoredOutput = output.length > 0 ? output : [{ type: 'output', content: `Session restored for ${projectId}\n---\n` }];
+        const latestOutput = [...restoredOutput].reverse().find((item: TerminalOutput) => item.type === 'output');
+
         updateProjectState(projectId, {
-          output: output.length > 0 ? output : [{ type: 'output', content: `Session restored for ${projectId}\n---\n` }],
+          output: restoredOutput,
           isRunning: sessionData.isRunning,
+          waitingForInput: latestOutput ? isWaitingForInput(latestOutput.content) : false,
           showTerminal: true
         });
 
@@ -235,9 +245,8 @@ export default function AllProjects() {
 
       const response = await fetch(`/api/run-code/${projectId}`, {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Connection': 'keep-alive'
+        headers: {
+          'Content-Type': 'application/json'
         }
       });
       // console.log(`🌐 [DEBUG] Response status: ${response.status}`);
@@ -270,6 +279,23 @@ export default function AllProjects() {
             const { done, value } = await reader.read();
 
             if (done) {
+              // Process any final buffered payload that didn't end with a newline.
+              if (buffer.trim()) {
+                try {
+                  const data = JSON.parse(buffer);
+                  updateProjectState(projectId, prev => ({
+                    ...prev,
+                    output: [...prev.output, data]
+                  }));
+
+                  if (data.type === 'output' && isWaitingForInput(data.content)) {
+                    updateProjectState(projectId, { waitingForInput: true });
+                  }
+                } catch (e) {
+                  // console.log(`🌐 [ERROR] Failed to parse buffered JSON payload: "${buffer}"`, e);
+                }
+              }
+
               // console.log(`🌐 [DEBUG] Stream complete`);
               break;
             }
@@ -692,12 +718,12 @@ export default function AllProjects() {
                 ))}
               </div>
 
-              {getProjectState(activeTerminal).waitingForInput && (
+              {shouldShowInputBar(activeTerminal) && (
                 <div className="border-t border-gray-700 p-3 bg-gray-800 flex gap-2">
                   <Input
                     value={getProjectState(activeTerminal).currentInput}
                     onChange={(e) => updateProjectState(activeTerminal, { currentInput: e.target.value })}
-                    onKeyPress={(e) => {
+                    onKeyDown={(e) => {
                       if (e.key === 'Enter') {
                         sendInput(activeTerminal);
                       }
