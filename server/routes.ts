@@ -177,26 +177,6 @@ const runningProcesses = new Map<string, any>();
 
 // Store process keep-alive timers
 const processTimeouts = new Map<string, NodeJS.Timeout>();
-const processSessionHistory = new Map<string, Array<{ type: string; content: string; timestamp: string }>>();
-const MAX_SESSION_ENTRIES = 500;
-
-const appendSessionOutput = (projectId: string, type: string, content: string) => {
-  const existing = processSessionHistory.get(projectId) || [];
-  const updated = [
-    ...existing,
-    {
-      type,
-      content,
-      timestamp: new Date().toISOString(),
-    },
-  ];
-
-  if (updated.length > MAX_SESSION_ENTRIES) {
-    updated.splice(0, updated.length - MAX_SESSION_ENTRIES);
-  }
-
-  processSessionHistory.set(projectId, updated);
-};
 
 const saveContactFormData = (formData: ContactFormData): Promise<void> => {
   const contactsFilePath = path.join(process.cwd(), "contact-submissions.json");
@@ -357,7 +337,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     pythonProcess.stdout.on("data", (data) => {
       const output = data.toString();
       console.log(`🐍 [STDOUT] ${projectId}: ${output.replace(/\n/g, "\\n")}`);
-      appendSessionOutput(projectId, "output", output);
       const response = JSON.stringify({ type: "output", content: output });
       res.write(response + "\n");
     });
@@ -366,7 +345,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     pythonProcess.stderr.on("data", (data) => {
       const error = data.toString();
       console.log(`🐍 [STDERR] ${projectId}: ${error.replace(/\n/g, "\\n")}`);
-      appendSessionOutput(projectId, "error", error);
       const response = JSON.stringify({ type: "error", content: error });
       res.write(response + "\n");
     });
@@ -374,7 +352,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     // Handle process completion
     pythonProcess.on("close", (code) => {
       console.log(`🐍 [DEBUG] Process ${projectId} closed with code: ${code}`);
-      appendSessionOutput(projectId, "complete", `Process exited with code ${code}`);
       const response = JSON.stringify({ type: "complete", code });
       res.write(response + "\n");
 
@@ -441,47 +418,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         clearTimeout(processTimeouts.get(projectId) as NodeJS.Timeout);
         processTimeouts.delete(projectId);
       }
-      appendSessionOutput(projectId, "input", `> ${input}`);
       process.stdin.write(input + "\n");
       res.json({ success: true });
     } catch (error) {
       console.log(`🐍 [ERROR] Failed to send input to ${projectId}:`, error);
       res.status(500).json({ error: "Failed to send input" });
     }
-  });
-
-  app.post("/api/stop-code/:projectId", (req, res) => {
-    const { projectId } = req.params;
-    const process = runningProcesses.get(projectId);
-
-    if (!process) {
-      return res.status(404).json({ success: false, message: "No running process found" });
-    }
-
-    if (processTimeouts.has(projectId)) {
-      clearTimeout(processTimeouts.get(projectId) as NodeJS.Timeout);
-      processTimeouts.delete(projectId);
-    }
-
-    process.kill();
-    runningProcesses.delete(projectId);
-    appendSessionOutput(projectId, "output", "Process stopped by user.");
-
-    return res.json({ success: true });
-  });
-
-  app.get("/api/session/:projectId", (req, res) => {
-    const { projectId } = req.params;
-    const output = processSessionHistory.get(projectId) || [];
-    const isRunning = runningProcesses.has(projectId);
-
-    res.json({ output, isRunning });
-  });
-
-  app.delete("/api/session/:projectId", (req, res) => {
-    const { projectId } = req.params;
-    processSessionHistory.delete(projectId);
-    res.json({ success: true });
   });
 
   // Contact form endpoint
