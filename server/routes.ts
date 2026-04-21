@@ -313,9 +313,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
 
     // Set up streaming response
-    res.setHeader("Content-Type", "application/json");
-    res.setHeader("Cache-Control", "no-cache");
+    res.setHeader("Content-Type", "application/x-ndjson; charset=utf-8");
+    res.setHeader("Cache-Control", "no-cache, no-transform");
     res.setHeader("Connection", "keep-alive");
+    res.setHeader("X-Accel-Buffering", "no");
+    res.flushHeaders?.();
 
     // If the same project is already running, kill it before starting a fresh process
     const existingProcess = runningProcesses.get(projectId);
@@ -332,35 +334,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
     // Store process for input handling
     runningProcesses.set(projectId, pythonProcess);
+    const writeStreamChunk = (payload: { type: string; content?: string; code?: number | null }) => {
+      if (res.writableEnded || res.destroyed) {
+        return;
+      }
+      res.write(JSON.stringify(payload) + "\n");
+    };
 
     // Handle stdout
     pythonProcess.stdout.on("data", (data) => {
       const output = data.toString();
       console.log(`🐍 [STDOUT] ${projectId}: ${output.replace(/\n/g, "\\n")}`);
-      const response = JSON.stringify({ type: "output", content: output });
-      res.write(response + "\n");
+      writeStreamChunk({ type: "output", content: output });
     });
 
     // Handle stderr
     pythonProcess.stderr.on("data", (data) => {
       const error = data.toString();
       console.log(`🐍 [STDERR] ${projectId}: ${error.replace(/\n/g, "\\n")}`);
-      const response = JSON.stringify({ type: "error", content: error });
-      res.write(response + "\n");
+      writeStreamChunk({ type: "error", content: error });
     });
 
     // Handle process completion
     pythonProcess.on("close", (code) => {
       console.log(`🐍 [DEBUG] Process ${projectId} closed with code: ${code}`);
-      const response = JSON.stringify({ type: "complete", code });
-      res.write(response + "\n");
+      writeStreamChunk({ type: "complete", code });
 
       // Don't end the response immediately - keep connection alive for potential input
       setTimeout(() => {
-        if (!res.headersSent) {
+        if (!res.writableEnded && !res.destroyed) {
           res.end();
         }
         runningProcesses.delete(projectId);
+        if (processTimeouts.has(projectId)) {
+          clearTimeout(processTimeouts.get(projectId) as NodeJS.Timeout);
+          processTimeouts.delete(projectId);
+        }
         console.log(`🐍 [DEBUG] Process ${projectId} removed from runningProcesses after delay`);
       }, 150000); // 2.5 minutes
     });
@@ -368,16 +377,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     // Handle process errors
     pythonProcess.on("error", (error) => {
       console.log(`🐍 [ERROR] Process error for ${projectId}: ${error.message}`);
-      const response = JSON.stringify({ type: "error", content: error.message });
-      res.write(response + "\n");
-      res.end();
+      writeStreamChunk({ type: "error", content: error.message });
+      if (!res.writableEnded && !res.destroyed) {
+        res.end();
+      }
       runningProcesses.delete(projectId);
+      if (processTimeouts.has(projectId)) {
+        clearTimeout(processTimeouts.get(projectId) as NodeJS.Timeout);
+        processTimeouts.delete(projectId);
+      }
     });
 
-    // Clean up on client disconnect - but only after a much longer delay to prevent immediate killing
-    req.on("close", () => {
-      const clientIP = req.ip;
-      console.log(`🐍 [DISCONNECT] Client disconnected for ${projectId} | IP: ${clientIP}`);
+    // Clean up on output stream closure - delay process kill to allow reconnect/input follow-up
+    res.on("close", () => {
+      const streamIP = req.ip;
+      console.log(`🐍 [STREAM] Output stream closed for ${projectId} | IP: ${streamIP}`);
+
+      if (pythonProcess.exitCode !== null || !runningProcesses.has(projectId)) {
+        return;
+      }
 
       // Clear any existing timeout first
       if (processTimeouts.has(projectId)) {
