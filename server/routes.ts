@@ -317,9 +317,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Connection", "keep-alive");
 
+    // If the same project is already running, kill it before starting a fresh process
+    const existingProcess = runningProcesses.get(projectId);
+    if (existingProcess) {
+      existingProcess.kill();
+      runningProcesses.delete(projectId);
+    }
+
     // Spawn Python process
-    const pythonProcess = spawn("python3", [projectPath], {
+    const pythonProcess = spawn("python3", ["-u", projectPath], {
       stdio: ["pipe", "pipe", "pipe"],
+      env: { ...process.env, PYTHONUNBUFFERED: "1" },
     });
 
     // Store process for input handling
