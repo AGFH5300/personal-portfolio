@@ -14,7 +14,7 @@ export const personalData = {
   email: "dxb.avg@gmail.com",
   phone: "+971 585 082 674",
   profileImage: "https://i.postimg.cc/DZ2bSMLP/ansh.jpg",
-  cvUrl: "https://drive.google.com/uc?export=download&id=1D57Vzyk2RH2Aj-lukYcRvoe1cwG2eS_b",
+  cvUrl: "https://drive.google.com/uc?export=download&id=1aNzGy_8zTqHgsGXAUuqhcgtVmVUG8fCm",
 
   social: {
     linkedin: "https://www.linkedin.com/in/anshvg/",
@@ -422,7 +422,7 @@ export const personalData = {
     },
     {
       name: "VOFMUN",
-      role: "Head of Technology",
+      role: "Co-Founder & Head of Technology",
       period: "Sep 2025 - Current",
       responsibilities: [
         "Revamp and maintain the conference website",
