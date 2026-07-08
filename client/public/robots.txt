@@ -12,4 +12,4 @@ Disallow: /package.json
 Disallow: /package-lock.json
 Disallow: /uv.lock
 Allow: /
-Sitemap: https://anshgupta.site/sitemap.xml
+Sitemap: https://anshgupta.cc/sitemap.xml
