@@ -19,7 +19,7 @@ export const personalData = {
   social: {
     linkedin: "https://www.linkedin.com/in/anshvg/",
     github: "https://github.com/AGFH5300",
-    email: "mailto:ansh@anshgupta.site",
+    email: "mailto:ansh@anshgupta.cc",
     snapchat: "https://www.snapchat.com/add/AGFH530",
     whatsapp: "https://wa.me/971585082674?text=Hello!",
   },
