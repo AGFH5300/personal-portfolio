@@ -11,6 +11,13 @@ function resolveImageSource(src: string) {
     : src;
 }
 
+function isBackgroundWhite(r: number, g: number, b: number, a: number) {
+  if (a === 0) return false;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  return max - min < 18 && min > 232;
+}
+
 type ThemeAwareLogoProps = {
   src?: string;
   alt: string;
@@ -59,25 +66,70 @@ export function ThemeAwareLogo({
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
         const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
         const pixels = imageData.data;
+        const width = canvas.width;
+        const height = canvas.height;
+        const visited = new Uint8Array(width * height);
+        const queue: number[] = [];
 
+        const enqueueIfWhite = (x: number, y: number) => {
+          if (x < 0 || x >= width || y < 0 || y >= height) return;
+          const point = y * width + x;
+          if (visited[point]) return;
+
+          const offset = point * 4;
+          if (
+            isBackgroundWhite(
+              pixels[offset],
+              pixels[offset + 1],
+              pixels[offset + 2],
+              pixels[offset + 3],
+            )
+          ) {
+            visited[point] = 1;
+            queue.push(point);
+          }
+        };
+
+        // Only remove near-white pixels connected to an outer edge. This gets
+        // rid of white logo canvases without destroying white details inside
+        // the artwork itself.
+        for (let x = 0; x < width; x += 1) {
+          enqueueIfWhite(x, 0);
+          enqueueIfWhite(x, height - 1);
+        }
+        for (let y = 0; y < height; y += 1) {
+          enqueueIfWhite(0, y);
+          enqueueIfWhite(width - 1, y);
+        }
+
+        for (let cursor = 0; cursor < queue.length; cursor += 1) {
+          const point = queue[cursor];
+          const x = point % width;
+          const y = Math.floor(point / width);
+          const offset = point * 4;
+          pixels[offset + 3] = 0;
+
+          enqueueIfWhite(x + 1, y);
+          enqueueIfWhite(x - 1, y);
+          enqueueIfWhite(x, y + 1);
+          enqueueIfWhite(x, y - 1);
+        }
+
+        // Near-black neutral lettering often disappears against the dark card
+        // after its white canvas is removed. Lift only those neutral pixels;
+        // coloured brand artwork is left untouched.
         for (let i = 0; i < pixels.length; i += 4) {
+          if (pixels[i + 3] === 0) continue;
+
           const r = pixels[i];
           const g = pixels[i + 1];
           const b = pixels[i + 2];
           const max = Math.max(r, g, b);
           const min = Math.min(r, g, b);
-          const neutral = max - min < 18;
+          const neutral = max - min < 16;
 
-          // Strip the opaque white/off-white canvas many school logos ship with.
-          if (neutral && min > 232) {
-            pixels[i + 3] = 0;
-            continue;
-          }
-
-          // Convert near-black neutral lettering to a light neutral so it stays
-          // visible on the dark theme while keeping coloured artwork intact.
-          if (neutral && max < 95 && pixels[i + 3] > 0) {
-            const lifted = 232 - Math.round(max * 0.2);
+          if (neutral && max < 78) {
+            const lifted = 236 - Math.round(max * 0.2);
             pixels[i] = lifted;
             pixels[i + 1] = lifted;
             pixels[i + 2] = lifted;
@@ -106,7 +158,7 @@ export function ThemeAwareLogo({
     return (
       <div
         className={cn(
-          "flex h-full w-full items-center justify-center rounded-md border border-border bg-muted text-xs font-semibold tracking-wide text-primary",
+          "flex h-full w-full items-center justify-center rounded-md border border-border bg-muted/60 text-[11px] font-semibold tracking-wide text-primary",
           className,
         )}
         aria-label={alt}
