@@ -91,7 +91,7 @@ export default function ExperienceSection() {
                   {competition.achievements.map((achievement) => (
                     <span
                       key={achievement}
-                      className="rounded-full border border-primary/15 bg-primary/8 px-2.5 py-1 text-[10px] font-semibold text-primary"
+                      className="rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1 text-[10px] font-semibold text-primary"
                     >
                       {achievement}
                     </span>
@@ -112,7 +112,7 @@ export default function ExperienceSection() {
                             images,
                           });
                         }}
-                        className="flex min-w-0 flex-1 items-center gap-2 rounded-lg border border-border bg-muted/30 p-2 text-left transition hover:border-primary/35"
+                        className="flex min-w-0 flex-1 items-center gap-2 rounded-lg border border-border bg-muted/30 p-2 text-left transition hover:border-primary/40"
                       >
                         <img
                           src={image.url}
