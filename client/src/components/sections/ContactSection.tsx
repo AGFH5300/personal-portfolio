@@ -1,13 +1,14 @@
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { Github, Linkedin, Mail, MessageCircleMore, Phone, Send } from "lucide-react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { personalData } from "@/data/personalData";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { apiRequest } from "@/lib/queryClient";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -16,46 +17,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  RectangleEllipsis,
-  Phone,
-  Linkedin,
-  Github,
-  MessageCircleMore,
-  Mail,
-  CheckCircle,
-  Send,
-} from "lucide-react";
 
-// Custom Paper Airplane Icon Component
-const PaperAirplaneIcon = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M3 3l18 9-18 9 3-9z" />
-    <path d="M6 12h12" />
-  </svg>
-);
-
-// Paths to your custom .lottie animation files
 const successAnimationPath = "/success.lottie";
 const errorAnimationPath = "/error.lottie";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
-  subject: z
-    .string()
-    .min(2, { message: "Subject must be at least 2 characters." }),
-  message: z
-    .string()
-    .min(10, { message: "Message must be at least 10 characters." }),
+  subject: z.string().min(2, { message: "Subject must be at least 2 characters." }),
+  message: z.string().min(10, { message: "Message must be at least 10 characters." }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -63,185 +33,157 @@ type FormValues = z.infer<typeof formSchema>;
 export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
-  const [animationPath, setAnimationPath] = useState<string>("");
+  const [animationPath, setAnimationPath] = useState("");
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    },
+    defaultValues: { name: "", email: "", subject: "", message: "" },
   });
 
   const onSubmit = async (data: FormValues) => {
     if (showAnimation) return;
-
     setIsSubmitting(true);
 
     try {
       await apiRequest("POST", "/api/contact", data);
-      // Success - show success animation and keep it visible
       setAnimationPath(successAnimationPath);
       setShowAnimation(true);
       form.reset();
-      // Animation stays until user leaves or refreshes page
-    } catch (error) {
-      // Error - show error animation and keep it visible
+    } catch {
       setAnimationPath(errorAnimationPath);
       setShowAnimation(true);
-      // Animation stays until user leaves or refreshes page
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const socialIcons = [
-    {
-      icon: <Linkedin className="h-4 w-4" />,
-      url: personalData.social.linkedin,
-    },
-    { icon: <Github className="h-4 w-4" />, url: personalData.social.github },
-    {
-      icon: <MessageCircleMore className="h-4 w-4" />,
-      url: personalData.social.whatsapp,
-    },
-    {
-      icon: <Mail className="h-4 w-4" />,
-      url: personalData.social.email,
-    },
+    { label: "LinkedIn", icon: Linkedin, url: personalData.social.linkedin },
+    { label: "GitHub", icon: Github, url: personalData.social.github },
+    { label: "WhatsApp", icon: MessageCircleMore, url: personalData.social.whatsapp },
+    { label: "Email", icon: Mail, url: personalData.social.email },
   ];
 
+  const fieldClass =
+    "border-border bg-background text-foreground placeholder:text-muted-foreground/65 focus-visible:ring-primary/35";
+
   return (
-    <section id="contact" className="min-h-screen py-16 bg-primary text-white">
+    <section id="contact" className="border-t border-border bg-[hsl(var(--surface-alt))] py-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Get In Touch</h2>
-          <div className="w-20 h-1 bg-white mx-auto"></div>
+        <div className="mb-10 text-center">
+          <p className="font-pixel-square mb-2 text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+            Contact
+          </p>
+          <h2 className="text-3xl font-bold tracking-[-0.035em] text-foreground">Get in touch</h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
+            Want to discuss a project, collaboration or student initiative? Send me a message.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div>
-            <h3 className="text-xl font-semibold mb-6">Contact Information</h3>
-            <div className="space-y-4">
-              <div className="flex items-start">
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mr-4">
-                  <RectangleEllipsis className="h-4 w-4" />
-                </div>
-                <div>
-                  <h4 className="font-medium">Email</h4>
-                  <p className="opacity-80">{personalData.email}</p>
-                </div>
-              </div>
+        <div className="mx-auto grid max-w-5xl gap-5 lg:grid-cols-[.8fr_1.2fr]">
+          <div className="rounded-xl border border-border bg-card p-6">
+            <p className="font-pixel-square text-[9px] uppercase tracking-[0.12em] text-muted-foreground">
+              Direct
+            </p>
 
-              <div className="flex items-start">
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mr-4">
-                  <Phone className="h-4 w-4" />
-                </div>
-                <div>
-                  <h4 className="font-medium">Phone</h4>
-                  <p className="opacity-80">{personalData.phone}</p>
-                </div>
-              </div>
+            <div className="mt-5 space-y-4">
+              <a
+                href={`mailto:${personalData.email}`}
+                className="flex items-center gap-3 text-sm text-foreground transition hover:text-primary"
+              >
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
+                  <Mail className="h-4 w-4 text-primary" />
+                </span>
+                <span className="min-w-0 truncate">{personalData.email}</span>
+              </a>
+
+              <a
+                href={`tel:${personalData.phone.replace(/\s/g, "")}`}
+                className="flex items-center gap-3 text-sm text-foreground transition hover:text-primary"
+              >
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
+                  <Phone className="h-4 w-4 text-primary" />
+                </span>
+                <span>{personalData.phone}</span>
+              </a>
             </div>
 
-            <h3 className="text-xl font-semibold mt-8 mb-6">Follow Me</h3>
-            <div className="flex space-x-4">
-              {socialIcons.map((social, index) => (
+            <div className="my-6 h-px bg-border" />
+
+            <p className="font-pixel-square text-[9px] uppercase tracking-[0.12em] text-muted-foreground">
+              Elsewhere
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {socialIcons.map(({ label, icon: Icon, url }) => (
                 <a
-                  key={index}
-                  href={social.url}
+                  key={label}
+                  href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
+                  aria-label={label}
+                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition hover:border-primary/40 hover:text-primary"
                 >
-                  {social.icon}
+                  <Icon className="h-4 w-4" />
                 </a>
               ))}
             </div>
           </div>
 
-          <div className="relative">
-            {/* Lottie Animation */}
+          <div className="relative min-h-[470px] overflow-hidden rounded-xl border border-border bg-card p-6">
             {showAnimation && (
-              <div className="absolute inset-0 z-50 pointer-events-none">
+              <div className="absolute inset-0 z-20 flex items-center justify-center bg-card/95 backdrop-blur-sm">
                 <DotLottieReact
                   src={animationPath}
-                  style={{ 
-                    width: 550, 
-                    height: 550,
-                    position: 'absolute',
-                    bottom: '10px',
-                    right: '50%',
-                    transform: 'translateX(50%)'
-                  }}
+                  style={{ width: 320, height: 320 }}
                   loop={false}
-                  autoplay={true}
+                  autoplay
                 />
               </div>
             )}
 
-            {!showAnimation && (
-              <h3 className="text-xl font-semibold mb-6">Send Me a Message</h3>
-            )}
             <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className={`space-y-4 transition-opacity duration-300 ${showAnimation ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
-              >
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white">Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Your name"
-                          className="px-4 py-3 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage className="text-red-300" />
-                    </FormItem>
-                  )}
-                />
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Your name" className={fieldClass} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-white">Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="email"
-                          placeholder="Your email"
-                          className="px-4 py-3 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage className="text-red-300" />
-                    </FormItem>
-                  )}
-                />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-foreground">Email</FormLabel>
+                        <FormControl>
+                          <Input type="email" placeholder="you@example.com" className={fieldClass} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
                 <FormField
                   control={form.control}
                   name="subject"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-white">Subject</FormLabel>
+                      <FormLabel className="text-foreground">Subject</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Subject"
-                          className="px-4 py-3 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200"
-                          {...field}
-                        />
+                        <Input placeholder="What would you like to discuss?" className={fieldClass} {...field} />
                       </FormControl>
-                      <FormMessage className="text-red-300" />
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -251,16 +193,16 @@ export default function ContactSection() {
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-white">Message</FormLabel>
+                      <FormLabel className="text-foreground">Message</FormLabel>
                       <FormControl>
                         <Textarea
-                          rows={5}
-                          placeholder="Your message"
-                          className="px-4 py-3 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 resize-none transition-all duration-200"
+                          rows={7}
+                          placeholder="Write your message..."
+                          className={`${fieldClass} resize-none`}
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage className="text-red-300" />
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -269,16 +211,10 @@ export default function ContactSection() {
                   ref={buttonRef}
                   type="submit"
                   disabled={isSubmitting || showAnimation}
-                  className="w-full px-6 py-3 bg-white text-primary font-medium rounded-md transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full gap-2"
                 >
-                  {isSubmitting ? (
-                    "Sending..."
-                  ) : (
-                    <>
-                      <PaperAirplaneIcon className="w-5 h-5" />
-                      Send Message
-                    </>
-                  )}
+                  <Send className="h-4 w-4" />
+                  {isSubmitting ? "Sending..." : "Send message"}
                 </Button>
               </form>
             </Form>
