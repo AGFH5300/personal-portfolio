@@ -1,10 +1,9 @@
 import { motion, useAnimation } from "framer-motion";
+import { Award, ExternalLink, Lightbulb, MessageSquare, Clock, Zap } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { personalData } from "@/data/personalData";
-import { Card, CardContent } from "@/components/ui/card";
-import { Users, MessageSquare, Lightbulb, ListTodo, Clock, Zap, Award } from "lucide-react";
 import { CertificateModal } from "@/components/ui/certificate-modal";
 import { ThemeAwareLogo } from "@/components/ui/theme-aware-logo";
+import { personalData } from "@/data/personalData";
 
 export default function SkillsSection() {
   const controls = useAnimation();
@@ -18,187 +17,182 @@ export default function SkillsSection() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          controls.start("visible");
-        }
+        if (entry.isIntersecting) controls.start("visible");
       },
-      { threshold: 0.1 },
+      { threshold: 0.12 },
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
   }, [controls]);
 
-  const skillIcons = {
-    "Team Leadership": <Users className="text-primary text-xl" />,
-    "Communication": <MessageSquare className="text-primary text-xl" />,
-    "Problem Solving": <Lightbulb className="text-primary text-xl" />,
-    "Project Management": <ListTodo className="text-primary text-xl" />,
-    "Time Management": <Clock className="text-primary text-xl" />,
-    "Adaptability": <Zap className="text-primary text-xl" />,
+  const softIcons = {
+    "Problem Solving": Lightbulb,
+    Communication: MessageSquare,
+    Adaptability: Zap,
+    "Time Management": Clock,
   };
 
   return (
-    <section id="skills" className="py-16 bg-white" ref={sectionRef}>
+    <section id="skills" className="bg-background py-16" ref={sectionRef}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
+          className="mb-10 text-center"
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.45 }}
         >
-          <h2 className="text-3xl font-bold text-dark mb-4">
-            Skills & Expertise
-          </h2>
-          <div className="w-20 h-1 bg-accent mx-auto"></div>
+          <p className="font-pixel-square mb-2 text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+            Capabilities
+          </p>
+          <h2 className="text-3xl font-bold tracking-[-0.035em] text-foreground">Skills & expertise</h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div>
-            <h3 className="text-xl font-semibold mb-6">Technical Skills</h3>
+        <div className="grid gap-8 lg:grid-cols-[1.05fr_.95fr]">
+          <div className="rounded-xl border border-border bg-card p-6">
+            <div className="mb-6 flex items-end justify-between">
+              <h3 className="text-lg font-semibold tracking-[-0.02em] text-foreground">Technical skills</h3>
+              <span className="font-pixel-square text-[8px] uppercase tracking-[0.1em] text-muted-foreground">
+                Current stack
+              </span>
+            </div>
 
-            {personalData.skills.technical.map((skill, index) => (
-              <div className="mb-5" key={`tech-${index}`}>
-                <div className="flex justify-between mb-1">
-                  <span className="font-medium">{skill.name}</span>
-                  <span>{skill.level}%</span>
+            <div className="space-y-5">
+              {personalData.skills.technical.map((skill, index) => (
+                <div key={skill.name}>
+                  <div className="mb-2 flex items-center justify-between text-sm">
+                    <span className="font-medium text-foreground">{skill.name}</span>
+                    <span className="font-pixel-square text-[8px] tracking-[0.08em] text-muted-foreground">
+                      {skill.level}%
+                    </span>
+                  </div>
+                  <div className="h-1.5 overflow-hidden rounded-full bg-muted">
+                    <motion.div
+                      className="h-full rounded-full bg-primary"
+                      initial={{ width: 0 }}
+                      animate={controls}
+                      variants={{
+                        visible: {
+                          width: `${skill.level}%`,
+                          transition: { duration: 1.1, delay: index * 0.06 },
+                        },
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2.5">
-                  <motion.div
-                    className="bg-primary h-2.5 rounded-full"
-                    initial={{ width: 0 }}
-                    animate={controls}
-                    variants={{
-                      visible: {
-                        width: `${skill.level}%`,
-                        transition: { duration: 1.5, delay: index * 0.1 },
-                      },
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
-          <div>
-            <h3 className="text-xl font-semibold mb-6">Soft Skills</h3>
+          <div className="grid grid-cols-2 gap-3">
+            {personalData.skills.soft.map((skill, index) => {
+              const Icon = softIcons[skill.name as keyof typeof softIcons] || Lightbulb;
 
-            <div className="grid grid-cols-2 gap-4">
-              {personalData.skills.soft.map((skill, index) => (
-                <motion.div
-                  key={`soft-${index}`}
-                  className="p-4 bg-light rounded-lg text-center"
-                  initial={{ opacity: 0, y: 20 }}
+              return (
+                <motion.article
+                  key={skill.name}
+                  className="rounded-xl border border-border bg-card p-5"
+                  initial={{ opacity: 0, y: 12 }}
                   animate={controls}
                   variants={{
                     visible: {
                       opacity: 1,
                       y: 0,
-                      transition: { duration: 0.5, delay: 0.2 + index * 0.1 },
+                      transition: { duration: 0.4, delay: 0.12 + index * 0.05 },
                     },
                   }}
                 >
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                    {skillIcons[skill.name as keyof typeof skillIcons] || (
-                      <Lightbulb className="text-primary text-xl" />
-                    )}
+                  <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
+                    <Icon className="h-4 w-4 text-primary" />
                   </div>
-                  <h4 className="font-medium mb-1">{skill.name}</h4>
-                  <p className="text-sm text-gray-600">{skill.description}</p>
-                </motion.div>
-              ))}
-            </div>
+                  <h4 className="text-sm font-semibold text-foreground">{skill.name}</h4>
+                  <p className="mt-2 text-xs leading-5 text-muted-foreground">{skill.description}</p>
+                </motion.article>
+              );
+            })}
           </div>
         </div>
 
-        {/* Certifications Section */}
-        <div className="mt-16">
-          <motion.div
-            className="text-center mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h3 className="text-2xl font-bold text-dark mb-4">
-              Certifications & Achievements
-            </h3>
-            <div className="w-20 h-1 bg-accent mx-auto"></div>
-          </motion.div>
+        <div className="mt-14">
+          <div className="mb-7 flex items-end justify-between gap-4">
+            <div>
+              <p className="font-pixel-square text-[9px] uppercase tracking-[0.12em] text-muted-foreground">
+                Credentials
+              </p>
+              <h3 className="mt-2 text-2xl font-bold tracking-[-0.03em] text-foreground">
+                Certifications & achievements
+              </h3>
+            </div>
+            <span className="hidden text-sm text-muted-foreground sm:block">
+              {personalData.certifications.length} credentials
+            </span>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {personalData.certifications.map((cert, index) => (
-              <motion.div
-                key={`cert-${index}`}
-                className="bg-card border border-border rounded-lg shadow-sm overflow-hidden flex flex-col h-full"
-                initial={{ opacity: 0, y: 20 }}
+              <motion.article
+                key={cert.name}
+                className="flex min-h-[190px] flex-col rounded-xl border border-border bg-card p-5 shadow-sm"
+                initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.4, delay: Math.min(index * 0.04, 0.24) }}
               >
-                <div className="p-4 flex-grow">
-                  <div className="flex items-start mb-3">
-                    <div className="w-10 h-10 flex items-center justify-center mr-3 flex-shrink-0">
-                      {cert.logo ? (
-                        <ThemeAwareLogo
-                          src={cert.logo}
-                          alt={`${cert.issuer} logo`}
-                          label={cert.issuer}
-                        />
-                      ) : (
-                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                          <Award className="text-primary" size={20} />
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-lg mb-1">{cert.name}</h4>
-                      <p className="text-sm text-gray-600">{cert.issuer}</p>
-                    </div>
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 shrink-0">
+                    {cert.logo ? (
+                      <ThemeAwareLogo src={cert.logo} alt={`${cert.issuer} logo`} label={cert.issuer} />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center rounded-lg bg-primary/10">
+                        <Award className="h-4 w-4 text-primary" />
+                      </div>
+                    )}
                   </div>
-                  <p className="text-sm text-gray-700 mb-3">{cert.issueDate}</p>
-                  <a
-                    href={cert.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center text-sm font-semibold text-primary underline-offset-4 hover:underline"
-                  >
-                    {cert.url}
-                  </a>
+                  <div className="min-w-0">
+                    <h4 className="text-sm font-semibold leading-5 text-foreground">{cert.name}</h4>
+                    <p className="mt-1 text-xs text-muted-foreground">{cert.issuer}</p>
+                  </div>
                 </div>
-                {cert.image && (
-                  <div
-                    className="relative overflow-hidden cursor-pointer"
-                    style={{ height: "200px" }}
-                    onClick={() => setSelectedCertificate({ image: cert.image, name: cert.name, downloadUrl: cert.downloadUrl })}
-                  >
-                    <div className="absolute inset-0 bg-black/5 hover:bg-black/20 transition-colors flex items-center justify-center">
-                      <span className="bg-card/95 text-primary text-xs px-2 py-1 rounded">
-                        View Certificate
-                      </span>
-                    </div>
-                    <img
-                      src={cert.image}
-                      alt={cert.name}
-                      className="w-full h-full object-cover object-top"
-                    />
-                  </div>
-                )}
-              </motion.div>
+
+                <p className="mt-4 font-pixel-square text-[8px] tracking-[0.08em] text-primary">
+                  {cert.issueDate}
+                </p>
+
+                <div className="mt-auto flex flex-wrap gap-3 pt-5">
+                  {cert.image && (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSelectedCertificate({
+                          image: cert.image,
+                          name: cert.name,
+                          downloadUrl: cert.downloadUrl,
+                        })
+                      }
+                      className="text-xs font-semibold text-foreground underline decoration-border underline-offset-4 transition hover:text-primary hover:decoration-primary"
+                    >
+                      View certificate
+                    </button>
+                  )}
+
+                  {cert.url && (
+                    <a
+                      href={cert.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground transition hover:text-primary"
+                    >
+                      Credential <ExternalLink className="h-3 w-3" />
+                    </a>
+                  )}
+                </div>
+              </motion.article>
             ))}
           </div>
         </div>
       </div>
-      
-      {/* Certificate Modal */}
+
       <CertificateModal
         isOpen={selectedCertificate !== null}
         onClose={() => setSelectedCertificate(null)}
