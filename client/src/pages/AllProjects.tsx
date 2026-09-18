@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { ArrowLeft, Code2, Play, Square, Terminal, X, Search, ArrowUp } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "wouter";
@@ -590,7 +591,7 @@ export default function AllProjects() {
   return (
     <div className="min-h-screen bg-light">
       {/* Sticky Header */}
-      <div className="sticky top-0 z-40 bg-white shadow-sm border-b">
+      <div className="sticky top-0 z-40 border-b border-border bg-background/95 shadow-sm backdrop-blur-xl">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-4">
@@ -598,7 +599,7 @@ export default function AllProjects() {
                 <ArrowLeft className="h-5 w-5" />
                 Back to Portfolio
               </Link>
-              <div className="w-px h-6 bg-gray-300"></div>
+              <div className="h-6 w-px bg-border"></div>
               <h1 className="text-2xl font-bold text-dark">All Projects</h1>
             </div>
 
@@ -624,6 +625,7 @@ export default function AllProjects() {
                   Clear Filters
                 </Button>
               )}
+              <ThemeToggle className="shrink-0" />
             </div>
           </div>
         </div>
@@ -672,7 +674,7 @@ export default function AllProjects() {
             animate={{ opacity: 1, y: 0 }}
             className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
           >
-            <div className="bg-white rounded-lg w-full max-w-4xl max-h-[80vh] overflow-hidden">
+            <div className="bg-card border border-border rounded-lg w-full max-w-4xl max-h-[80vh] overflow-hidden shadow-2xl">
               <div className="bg-gray-800 px-4 py-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Terminal className="h-5 w-5 text-green-400" />
@@ -685,7 +687,7 @@ export default function AllProjects() {
                     size="sm"
                     variant="ghost"
                     onClick={() => clearSessionHistory(activeTerminal)}
-                    className="text-gray-400 hover:text-black"
+                    className="text-gray-400 hover:text-foreground"
                     title="Clear History"
                   >
                     Clear
@@ -694,7 +696,7 @@ export default function AllProjects() {
                     size="sm"
                     variant="ghost"
                     onClick={() => closeTerminal(activeTerminal)}
-                    className="text-gray-400 hover:text-black"
+                    className="text-gray-400 hover:text-foreground"
                   >
                     <X className="h-4 w-4" />
                   </Button>
