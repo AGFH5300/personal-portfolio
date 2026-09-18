@@ -102,7 +102,7 @@ export default function AboutSection() {
                     <div>
                       <h4 className="text-sm font-semibold text-foreground">{exp.position}</h4>
                       <p className="mt-1 text-xs text-muted-foreground">
-                        {exp.company}{exp.period ? ` · ${exp.period}` : ""}
+                        {exp.company}{"period" in exp && exp.period ? ` · ${exp.period}` : ""}
                       </p>
                     </div>
                   </div>
