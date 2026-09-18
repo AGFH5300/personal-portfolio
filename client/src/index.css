@@ -2,94 +2,162 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Geist";
+  src: url("https://raw.githubusercontent.com/vercel/geist-font/main/fonts/Geist/webfonts/Geist%5Bwght%5D.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Pixel Square";
+  src: url("https://raw.githubusercontent.com/vercel/geist-font/main/fonts/GeistPixel/webfonts/GeistPixel-Square.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 /* Technology badge colors */
-.tech-badge-blue {
-  background-color: #dbeafe;
-  color: #1e40af;
-}
-
-.tech-badge-orange {
-  background-color: #ffedd5;
-  color: #9a3412;
-}
-
-.tech-badge-yellow {
-  background-color: #fef9c3;
-  color: #854d0e;
-}
-
-.tech-badge-cyan {
-  background-color: #cffafe;
-  color: #155e75;
-}
-
-.tech-badge-purple {
-  background-color: #f3e8ff;
-  color: #6b21a8;
-}
-
-.tech-badge-green {
-  background-color: #dcfce7;
-  color: #166534;
-}
-
-.tech-badge-red {
-  background-color: #fee2e2;
-  color: #b91c1c;
-}
+.tech-badge-blue { background-color: #dbeafe; color: #1e40af; }
+.tech-badge-orange { background-color: #ffedd5; color: #9a3412; }
+.tech-badge-yellow { background-color: #fef9c3; color: #854d0e; }
+.tech-badge-cyan { background-color: #cffafe; color: #155e75; }
+.tech-badge-purple { background-color: #f3e8ff; color: #6b21a8; }
+.tech-badge-green { background-color: #dcfce7; color: #166534; }
+.tech-badge-red { background-color: #fee2e2; color: #b91c1c; }
 
 :root {
-      --background: 0 0% 100%;
---foreground: 20 14.3% 4.1%;
---muted: 60 4.8% 95.9%;
---muted-foreground: 25 5.3% 44.7%;
---popover: 0 0% 100%;
---popover-foreground: 20 14.3% 4.1%;
---card: 0 0% 100%;
---card-foreground: 20 14.3% 4.1%;
---border: 20 5.9% 90%;
---input: 20 5.9% 90%;
---primary: 207 90% 54%;
---primary-foreground: 211 100% 99%;
---secondary: 60 4.8% 95.9%;
---secondary-foreground: 24 9.8% 10%;
---accent: 60 4.8% 95.9%;
---accent-foreground: 24 9.8% 10%;
---destructive: 0 84.2% 60.2%;
---destructive-foreground: 60 9.1% 97.8%;
---ring: 20 14.3% 4.1%;
---radius: 0.5rem;
-  }
-  .dark {
-      --background: 240 10% 3.9%;
---foreground: 0 0% 98%;
---muted: 240 3.7% 15.9%;
---muted-foreground: 240 5% 64.9%;
---popover: 240 10% 3.9%;
---popover-foreground: 0 0% 98%;
---card: 240 10% 3.9%;
---card-foreground: 0 0% 98%;
---border: 240 3.7% 15.9%;
---input: 240 3.7% 15.9%;
---primary: 207 90% 54%;
---primary-foreground: 211 100% 99%;
---secondary: 240 3.7% 15.9%;
---secondary-foreground: 0 0% 98%;
---accent: 240 3.7% 15.9%;
---accent-foreground: 0 0% 98%;
---destructive: 0 62.8% 30.6%;
---destructive-foreground: 0 0% 98%;
---ring: 240 4.9% 83.9%;
---radius: 0.5rem;
-  }
+  --background: 210 20% 98%;
+  --foreground: 222 26% 13%;
+  --muted: 216 18% 94%;
+  --muted-foreground: 218 11% 42%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 26% 13%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 26% 13%;
+  --border: 215 18% 86%;
+  --input: 215 18% 86%;
+  --primary: 217 91% 60%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 215 22% 92%;
+  --secondary-foreground: 222 26% 13%;
+  --accent: 217 91% 60%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 217 91% 60%;
+  --radius: 0.65rem;
+  --surface-alt: 216 25% 96%;
+}
+
+.dark {
+  --background: 222 29% 8%;
+  --foreground: 210 25% 96%;
+  --muted: 220 23% 15%;
+  --muted-foreground: 216 12% 67%;
+  --popover: 220 27% 11%;
+  --popover-foreground: 210 25% 96%;
+  --card: 220 27% 11%;
+  --card-foreground: 210 25% 96%;
+  --border: 217 20% 24%;
+  --input: 217 20% 24%;
+  --primary: 216 92% 68%;
+  --primary-foreground: 222 29% 8%;
+  --secondary: 219 24% 16%;
+  --secondary-foreground: 210 25% 96%;
+  --accent: 216 92% 68%;
+  --accent-foreground: 222 29% 8%;
+  --destructive: 0 63% 42%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 216 92% 68%;
+  --surface-alt: 220 25% 10%;
+}
 
 @layer base {
   * {
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+    background: hsl(var(--background));
+  }
+
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    min-width: 320px;
+    font-family: "Geist", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    text-rendering: optimizeLegibility;
+    transition: background-color 180ms ease, color 180ms ease;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.2);
   }
 }
 
+@layer utilities {
+  .font-pixel-square {
+    font-family: "Geist Pixel Square", "Geist", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 400;
+  }
+
+  /* Legacy semantic aliases used by the older portfolio components. */
+  .bg-light {
+    background-color: hsl(var(--surface-alt));
+  }
+
+  .bg-dark {
+    background-color: hsl(222 30% 7%);
+  }
+
+  .text-dark {
+    color: hsl(var(--foreground));
+  }
+}
+
+/* Bridge the remaining legacy utility classes into the theme without forcing
+   every older portfolio card to be rebuilt at once. */
+.dark section.bg-white,
+.dark main.bg-white {
+  background-color: hsl(var(--background));
+}
+
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark .text-gray-700,
+.dark .text-gray-600 {
+  color: hsl(var(--muted-foreground));
+}
+
+.dark .text-gray-500,
+.dark .text-gray-400 {
+  color: hsl(var(--muted-foreground) / 0.86);
+}
+
+.dark .border-gray-100,
+.dark .border-gray-200,
+.dark .border-gray-300 {
+  border-color: hsl(var(--border));
+}
+
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .bg-gray-200 {
+  background-color: hsl(var(--muted));
+}
+
+.dark .shadow-md,
+.dark .shadow-lg,
+.dark .shadow-xl {
+  --tw-shadow-color: rgb(0 0 0 / 0.3);
+}
+
+.portfolio-grid {
+  background-image:
+    linear-gradient(to right, hsl(var(--border) / 0.28) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--border) / 0.28) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+}
