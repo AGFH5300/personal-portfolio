@@ -97,7 +97,7 @@ export default function NavBar() {
             <span className="text-foreground">Gupta</span>
           </Link>
 
-          <div className="ml-auto hidden items-center gap-4 md:flex">
+          <div className="ml-auto hidden items-center gap-4 lg:flex">
             <nav>
               <ul className="flex items-center gap-4 lg:gap-6">
                 {navLinks.map((link) => {
@@ -128,7 +128,7 @@ export default function NavBar() {
             <ThemeToggle />
           </div>
 
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="flex items-center gap-2 lg:hidden">
             <ThemeToggle />
             <Button
               variant="ghost"
@@ -143,7 +143,7 @@ export default function NavBar() {
 
         <div
           className={cn(
-            "overflow-hidden border-border bg-background/95 transition-[max-height,opacity,border-color] duration-300 md:hidden",
+            "overflow-hidden border-border bg-background/95 transition-[max-height,opacity,border-color] duration-300 lg:hidden",
             isOpen
               ? "max-h-[32rem] border-t opacity-100"
               : "max-h-0 border-t-transparent opacity-0",
