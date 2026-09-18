@@ -111,7 +111,7 @@ export default function NavBar() {
                           "relative py-2 text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-200",
                           isActive
                             ? "text-primary"
-                            : "text-foreground/78 hover:text-foreground",
+                            : "text-foreground/80 hover:text-foreground",
                         )}
                         onClick={handleLinkClick}
                       >
@@ -143,7 +143,7 @@ export default function NavBar() {
 
         <div
           className={cn(
-            "overflow-hidden border-border bg-background/98 transition-[max-height,opacity,border-color] duration-300 md:hidden",
+            "overflow-hidden border-border bg-background/95 transition-[max-height,opacity,border-color] duration-300 md:hidden",
             isOpen
               ? "max-h-[32rem] border-t opacity-100"
               : "max-h-0 border-t-transparent opacity-0",
