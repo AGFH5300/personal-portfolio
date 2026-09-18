@@ -46,8 +46,9 @@ export default function ExperienceSection() {
           {personalData.Experience.map((competition, index) => {
             const Icon =
               competitionIcons[competition.position as keyof typeof competitionIcons] || Award;
+            const images = competition.images ?? [];
             const imageIndex = currentImageIndex[index] || 0;
-            const image = competition.images?.[imageIndex];
+            const image = images[imageIndex];
 
             return (
               <motion.article
@@ -108,7 +109,7 @@ export default function ExperienceSection() {
                             image: image.url,
                             name: competition.name,
                             downloadUrl: image.downloadUrl,
-                            images: competition.images,
+                            images,
                           });
                         }}
                         className="flex min-w-0 flex-1 items-center gap-2 rounded-lg border border-border bg-muted/30 p-2 text-left transition hover:border-primary/35"
@@ -124,7 +125,7 @@ export default function ExperienceSection() {
                         </span>
                       </button>
 
-                      {competition.images && competition.images.length > 1 && (
+                      {images.length > 1 && (
                         <div className="flex shrink-0 gap-1">
                           <button
                             type="button"
@@ -134,7 +135,7 @@ export default function ExperienceSection() {
                                 [index]:
                                   imageIndex > 0
                                     ? imageIndex - 1
-                                    : competition.images.length - 1,
+                                    : images.length - 1,
                               }))
                             }
                             className="flex h-8 w-8 items-center justify-center rounded-md border border-border text-muted-foreground transition hover:text-primary"
@@ -148,7 +149,7 @@ export default function ExperienceSection() {
                               setCurrentImageIndex((prev) => ({
                                 ...prev,
                                 [index]:
-                                  imageIndex < competition.images.length - 1
+                                  imageIndex < images.length - 1
                                     ? imageIndex + 1
                                     : 0,
                               }))
