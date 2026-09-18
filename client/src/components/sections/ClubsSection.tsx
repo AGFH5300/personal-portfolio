@@ -39,7 +39,7 @@ export default function ClubsSection() {
             return (
               <motion.article
                 key={club.name}
-                className="group min-h-[255px] rounded-lg border border-border bg-card/75 p-4 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-primary/35 hover:shadow-md"
+                className="group min-h-[255px] rounded-lg border border-border bg-card/75 p-4 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -61,7 +61,7 @@ export default function ClubsSection() {
                     <p className="mt-0.5 text-xs leading-5 text-muted-foreground">
                       {club.role}
                     </p>
-                    <p className="font-pixel-square mt-1 text-[8px] tracking-[0.08em] text-primary/85">
+                    <p className="font-pixel-square mt-1 text-[8px] tracking-[0.08em] text-primary/80">
                       {yearRange}
                     </p>
                   </div>
