@@ -127,7 +127,7 @@ export default function AboutSection() {
               <button
                 onClick={handleDownloadCV}
                 disabled={isDownloading}
-                className="inline-flex items-center text-primary hover:text-black transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center text-primary hover:text-foreground transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <span>{isDownloading ? "Downloading..." : "Download CV"}</span>
                 {isDownloading ? (
