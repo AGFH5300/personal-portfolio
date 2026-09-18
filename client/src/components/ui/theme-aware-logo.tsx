@@ -57,8 +57,13 @@ export function ThemeAwareLogo({
 
       try {
         const canvas = document.createElement("canvas");
-        canvas.width = image.naturalWidth || 96;
-        canvas.height = image.naturalHeight || 96;
+        const naturalWidth = image.naturalWidth || 96;
+        const naturalHeight = image.naturalHeight || 96;
+        const maxDimension = 256;
+        const scale = Math.min(1, maxDimension / Math.max(naturalWidth, naturalHeight));
+
+        canvas.width = Math.max(1, Math.round(naturalWidth * scale));
+        canvas.height = Math.max(1, Math.round(naturalHeight * scale));
 
         const context = canvas.getContext("2d", { willReadFrequently: true });
         if (!context) return;
