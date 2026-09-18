@@ -28,8 +28,8 @@ function ProjectVisual({ name }: { name: string }) {
             </span>
           </div>
           <div className="grid h-[calc(100%-2rem)] grid-cols-[72px_1fr]">
-            <div className="border-r border-border bg-muted/35 p-2">
-              <div className="mb-2 h-2 w-10 rounded bg-primary/45" />
+            <div className="border-r border-border bg-muted/40 p-2">
+              <div className="mb-2 h-2 w-10 rounded bg-primary/40" />
               <div className="mb-1.5 h-1.5 w-12 rounded bg-border" />
               <div className="mb-1.5 h-1.5 w-9 rounded bg-border" />
               <div className="h-1.5 w-11 rounded bg-border" />
@@ -41,11 +41,11 @@ function ProjectVisual({ name }: { name: string }) {
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <div className="h-12 rounded border border-border bg-muted/40 p-2">
-                  <div className="mb-1 h-1.5 w-8 rounded bg-primary/45" />
+                  <div className="mb-1 h-1.5 w-8 rounded bg-primary/40" />
                   <div className="h-1.5 w-12 rounded bg-border" />
                 </div>
                 <div className="h-12 rounded border border-border bg-muted/40 p-2">
-                  <div className="mb-1 h-1.5 w-10 rounded bg-primary/35" />
+                  <div className="mb-1 h-1.5 w-10 rounded bg-primary/40" />
                   <div className="h-1.5 w-9 rounded bg-border" />
                 </div>
               </div>
@@ -97,7 +97,7 @@ export default function ProjectsSection() {
           {projectHighlights.map((project, index) => (
             <motion.article
               key={project.name}
-              className="group flex overflow-hidden rounded-xl border border-border bg-card shadow-sm transition duration-200 hover:-translate-y-1 hover:border-primary/35 hover:shadow-lg flex-col"
+              className="group flex overflow-hidden rounded-xl border border-border bg-card shadow-sm transition duration-200 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg flex-col"
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -132,7 +132,7 @@ export default function ProjectsSection() {
                 </p>
 
                 {project.achievement && (
-                  <div className="mb-4 inline-flex self-start items-center rounded-full border border-primary/20 bg-primary/8 px-3 py-1 text-xs font-semibold text-primary">
+                  <div className="mb-4 inline-flex self-start items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
                     <Trophy className="mr-1.5 h-3.5 w-3.5" />
                     {project.achievement}
                   </div>
