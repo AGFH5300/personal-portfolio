@@ -66,7 +66,7 @@ export default function ContactSection() {
   ];
 
   const fieldClass =
-    "border-border bg-background text-foreground placeholder:text-muted-foreground/65 focus-visible:ring-primary/35";
+    "border-border bg-background text-foreground placeholder:text-muted-foreground/70 focus-visible:ring-primary/40";
 
   return (
     <section id="contact" className="border-t border-border bg-[hsl(var(--surface-alt))] py-16">
