@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
             <Link href="/" className="text-2xl font-bold text-primary">
-              Ansh <span className="text-foreground">Gupta</span>
+              Ansh <span className="text-white">Gupta</span>
             </Link>
           </div>
           <div className="text-sm text-gray-400">
