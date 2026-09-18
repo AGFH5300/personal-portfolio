@@ -257,7 +257,7 @@ export const personalData = {
       { name: "TypeScript", level: 65 },
       { name: "React", level: 60 },
       { name: "Python", level: 50 },
-      { name: "C+", level: 35 },
+      { name: "C++", level: 35 },
     ],
     soft: [
       {
@@ -309,6 +309,11 @@ export const personalData = {
       name: "German",
       proficiency: "Elementary proficiency",
       logo: "https://i.postimg.cc/Qt6DDcFj/german-flag.png",
+    },
+    {
+      name: "Spanish",
+      proficiency: "Elementary proficiency",
+      logo: "https://flagcdn.com/w80/es.png",
     },
   ],
 
@@ -399,8 +404,8 @@ export const personalData = {
     },
     {
       name: "DIAMUN",
-      role: "Deputy Head of Technology",
-      period: "June 2025 - Current",
+      role: "Head of Technology",
+      period: "2025 - Current",
       responsibilities: [
         "Revamp and maintain the conference website",
         "Manage technical aspects on the day of the conference",
@@ -411,7 +416,7 @@ export const personalData = {
     },
     {
       name: "SyntaxEngine",
-      role: "Co-President",
+      role: "President",
       period: "Aug 2025 - Current",
       responsibilities: [
         "Lead & coordinate club activities and projects.",
@@ -445,7 +450,7 @@ export const personalData = {
     },
     {
       name: "TEDxYouth@DIA",
-      role: "Deputy Head of Technology",
+      role: "Head of Technology",
       period: "Sep 2025 - Current",
       responsibilities: [
         "Create and maintain the main website.",
