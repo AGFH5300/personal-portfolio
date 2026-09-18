@@ -24,7 +24,7 @@ export default function ProjectsSection() {
           {projectHighlights.map((project, index) => (
             <motion.div
               key={project.name}
-              className="bg-white rounded-lg overflow-hidden shadow-md transition transform hover:-translate-y-1 hover:shadow-lg flex flex-col"
+              className="bg-card border border-border rounded-lg overflow-hidden shadow-sm transition transform hover:-translate-y-1 hover:shadow-md flex flex-col"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -60,7 +60,7 @@ export default function ProjectsSection() {
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-auto inline-flex items-center text-primary hover:text-black transition-colors duration-300 font-medium text-sm"
+                    className="mt-auto inline-flex items-center text-primary hover:text-foreground transition-colors duration-300 font-medium text-sm"
                   >
                     <ExternalLink className="mr-2 h-4 w-4" />
                     View Project
