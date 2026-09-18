@@ -4,6 +4,7 @@ import { personalData } from "@/data/personalData";
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, MessageSquare, Lightbulb, ListTodo, Clock, Zap, Award } from "lucide-react";
 import { CertificateModal } from "@/components/ui/certificate-modal";
+import { ThemeAwareLogo } from "@/components/ui/theme-aware-logo";
 
 export default function SkillsSection() {
   const controls = useAnimation();
@@ -137,7 +138,7 @@ export default function SkillsSection() {
             {personalData.certifications.map((cert, index) => (
               <motion.div
                 key={`cert-${index}`}
-                className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full"
+                className="bg-card border border-border rounded-lg shadow-sm overflow-hidden flex flex-col h-full"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -147,10 +148,10 @@ export default function SkillsSection() {
                   <div className="flex items-start mb-3">
                     <div className="w-10 h-10 flex items-center justify-center mr-3 flex-shrink-0">
                       {cert.logo ? (
-                        <img
+                        <ThemeAwareLogo
                           src={cert.logo}
                           alt={`${cert.issuer} logo`}
-                          className="w-full h-full object-contain"
+                          label={cert.issuer}
                         />
                       ) : (
                         <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -180,7 +181,7 @@ export default function SkillsSection() {
                     onClick={() => setSelectedCertificate({ image: cert.image, name: cert.name, downloadUrl: cert.downloadUrl })}
                   >
                     <div className="absolute inset-0 bg-black/5 hover:bg-black/20 transition-colors flex items-center justify-center">
-                      <span className="bg-white/90 text-primary text-xs px-2 py-1 rounded">
+                      <span className="bg-card/95 text-primary text-xs px-2 py-1 rounded">
                         View Certificate
                       </span>
                     </div>
