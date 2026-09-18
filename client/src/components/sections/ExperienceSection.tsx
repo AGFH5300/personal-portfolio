@@ -3,6 +3,7 @@ import { personalData } from "@/data/personalData";
 import { Card, CardContent } from "@/components/ui/card";
 import { Award, Medal, Trophy, ImageIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import { CertificateModal } from "@/components/ui/certificate-modal";
+import { ThemeAwareLogo } from "@/components/ui/theme-aware-logo";
 import { useState } from "react";
 
 export default function ExperienceSection() {
@@ -68,10 +69,10 @@ export default function ExperienceSection() {
                 <div className="flex items-start">
                   <div className="w-12 h-12 flex items-center justify-center mr-4">
                     {competition.logo ? (
-                      <img 
-                        src={competition.logo} 
+                      <ThemeAwareLogo
+                        src={competition.logo}
                         alt={`${competition.name} logo`}
-                        className="w-full h-full object-contain"
+                        label={competition.name}
                       />
                     ) : (
                       <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
@@ -88,7 +89,7 @@ export default function ExperienceSection() {
                         <p className="text-sm text-primary font-medium mb-1">
                           {competition.position}
                         </p>
-                        <p className="text-xs text-gray-500 mb-2">
+                        <p className="text-xs text-muted-foreground mb-2">
                           {competition.date}
                         </p>
                       </div>
@@ -132,9 +133,9 @@ export default function ExperienceSection() {
                                     const newIndex = current > 0 ? current - 1 : competition.images.length - 1;
                                     setCurrentImageIndex(prev => ({ ...prev, [index]: newIndex }));
                                   }}
-                                  className="absolute -left-2 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-1 shadow-md hover:bg-gray-50 z-10"
+                                  className="absolute -left-2 top-1/2 transform -translate-y-1/2 bg-card rounded-full border border-border p-1 shadow-md hover:bg-muted z-10"
                                 >
-                                  <ChevronLeft className="h-3 w-3 text-gray-600" />
+                                  <ChevronLeft className="h-3 w-3 text-muted-foreground" />
                                 </button>
                                 <button
                                   onClick={(e) => {
@@ -143,9 +144,9 @@ export default function ExperienceSection() {
                                     const newIndex = current < competition.images.length - 1 ? current + 1 : 0;
                                     setCurrentImageIndex(prev => ({ ...prev, [index]: newIndex }));
                                   }}
-                                  className="absolute -right-2 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-1 shadow-md hover:bg-gray-50 z-10"
+                                  className="absolute -right-2 top-1/2 transform -translate-y-1/2 bg-card rounded-full border border-border p-1 shadow-md hover:bg-muted z-10"
                                 >
-                                  <ChevronRight className="h-3 w-3 text-gray-600" />
+                                  <ChevronRight className="h-3 w-3 text-muted-foreground" />
                                 </button>
                                 
                                 {/* Image counter */}
