@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
+import { Globe2, Star } from "lucide-react";
 import { personalData } from "@/data/personalData";
-import { Card, CardContent } from "@/components/ui/card";
-import { Globe, Star } from "lucide-react";
 
 export default function LanguagesSection() {
   const getProficiencyLevel = (proficiency: string) => {
@@ -12,70 +11,80 @@ export default function LanguagesSection() {
     return 3;
   };
 
-  const renderStars = (level: number) => {
-    return [...Array(5)].map((_, i) => (
-      <Star
-        key={i}
-        size={16}
-        className={i < level ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}
-      />
-    ));
-  };
-
   return (
-    <section id="languages" className="py-16 bg-light">
+    <section id="languages" className="bg-[hsl(var(--surface-alt))] py-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
+          className="mb-10 text-center"
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.45 }}
         >
-          <h2 className="text-3xl font-bold text-dark mb-4">Languages</h2>
-          <div className="w-20 h-1 bg-accent mx-auto"></div>
-          <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
-            Multilingual communication abilities across various languages.
+          <p className="font-pixel-square mb-2 text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+            Communication
+          </p>
+          <h2 className="text-3xl font-bold tracking-[-0.035em] text-foreground">
+            Languages
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
+            Languages I can communicate in, from native fluency to elementary proficiency.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {personalData.languages.map((language, index) => (
-            <motion.div
-              key={`language-${index}`}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              <Card className="shadow-md transition-shadow hover:shadow-lg h-full">
-                <CardContent className="p-6">
-                  <div className="flex items-start">
-                    <div className="w-12 h-12 flex items-center justify-center mr-4">
-                      {language.logo ? (
-                        <img
-                          src={language.logo}
-                          alt={`${language.name} flag`}
-                          className="w-full h-full object-contain"
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {personalData.languages.map((language, index) => {
+            const level = getProficiencyLevel(language.proficiency);
+
+            return (
+              <motion.article
+                key={language.name}
+                className="rounded-lg border border-border bg-card p-5 shadow-sm"
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: Math.min(index * 0.045, 0.22) }}
+              >
+                <div className="flex items-start gap-4">
+                  <div className="flex h-11 w-14 shrink-0 items-center justify-center overflow-hidden rounded-md border border-border bg-background">
+                    {language.logo ? (
+                      <img
+                        src={language.logo}
+                        alt={`${language.name} flag`}
+                        className="h-full w-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : (
+                      <Globe2 className="h-5 w-5 text-primary" />
+                    )}
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-semibold tracking-[-0.02em] text-foreground">
+                      {language.name}
+                    </h3>
+                    <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                      {language.proficiency}
+                    </p>
+                    <div className="mt-3 flex items-center gap-1" aria-label={`${level} out of 5 proficiency`}>
+                      {[0, 1, 2, 3, 4].map((star) => (
+                        <Star
+                          key={star}
+                          size={14}
+                          className={
+                            star < level
+                              ? "fill-amber-400 text-amber-400"
+                              : "fill-transparent text-border"
+                          }
                         />
-                      ) : (
-                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                          <Globe className="text-primary" size={20} />
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-medium mb-2">{language.name}</h3>
-                      <p className="text-sm text-gray-600 mb-3">{language.proficiency}</p>
-                      <div className="flex items-center space-x-1">
-                        {renderStars(getProficiencyLevel(language.proficiency))}
-                      </div>
+                      ))}
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                </div>
+              </motion.article>
+            );
+          })}
         </div>
       </div>
     </section>
