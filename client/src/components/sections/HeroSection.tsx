@@ -32,7 +32,7 @@ export default function HeroSection() {
               {personalData.name}
             </h1>
 
-            <p className="mt-5 text-xl font-medium tracking-[-0.02em] text-foreground/82 sm:text-2xl">
+            <p className="mt-5 text-xl font-medium tracking-[-0.02em] text-foreground/80 sm:text-2xl">
               {personalData.title}
             </p>
 
@@ -54,7 +54,7 @@ export default function HeroSection() {
                 href={personalData.social.github}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-border bg-card/70 px-5 py-3 text-sm font-semibold text-foreground transition hover:-translate-y-0.5 hover:border-primary/45"
+                className="inline-flex items-center gap-2 rounded-lg border border-border bg-card/70 px-5 py-3 text-sm font-semibold text-foreground transition hover:-translate-y-0.5 hover:border-primary/40"
               >
                 GitHub
                 <ExternalLink className="h-4 w-4" />
@@ -69,7 +69,7 @@ export default function HeroSection() {
             transition={{ duration: 0.55, delay: 0.08 }}
           >
             <div className="relative">
-              <div className="absolute -inset-3 -z-10 rounded-[2rem] border border-primary/15 bg-primary/5" />
+              <div className="absolute -inset-3 -z-10 rounded-[2rem] border border-primary/20 bg-primary/5" />
               <img
                 src={personalData.profileImage}
                 alt={`${personalData.name} profile`}
