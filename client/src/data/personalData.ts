@@ -429,6 +429,7 @@ export const personalData = {
         "Create and maintain the main website.",
         "Oversee technical aspects on the day of the event.",
       ],
+      logo: "/assets/portfolio/diatech-logo.png",
     },
     {
       name: "SyntaxEngine",
@@ -601,6 +602,7 @@ export const personalData = {
         "Create and maintain the main website.",
         "Oversee technical aspects on the day of the event.",
       ],
+      logo: "/assets/portfolio/braver-together-logo.png",
     },
     {
       name: "Interact@DIA",
@@ -611,6 +613,7 @@ export const personalData = {
         "Create and maintain the main website.",
         "Oversee technical aspects on the day of the event.",
       ],
+      logo: "/assets/portfolio/interact-dia-logo.png",
     },
     {
       name: "Youth Propel",

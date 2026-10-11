@@ -65,6 +65,7 @@ export const clubHighlights: ClubHighlight[] = [
     role: "Head of Technology — Core Committee",
     history: [{ schoolYear: "2026-27", role: "Head of Technology — Core Committee" }],
     responsibilities: standardTechnologyResponsibilities,
+    logo: "/assets/portfolio/diatech-logo.png",
   },
   {
     name: "SyntaxEngine",
@@ -187,6 +188,7 @@ export const clubHighlights: ClubHighlight[] = [
     role: "Chief Technology Officer (CTO)",
     history: [{ schoolYear: "2026-27", role: "Chief Technology Officer (CTO)" }],
     responsibilities: standardTechnologyResponsibilities,
+    logo: "/assets/portfolio/braver-together-logo.png",
   },
   {
     name: "Engineering Society",
@@ -214,6 +216,7 @@ export const clubHighlights: ClubHighlight[] = [
     role: "Head of Technology — Core Committee",
     history: [{ schoolYear: "2026-27", role: "Head of Technology — Core Committee" }],
     responsibilities: standardTechnologyResponsibilities,
+    logo: "/assets/portfolio/interact-dia-logo.png",
   },
   {
     name: "Youth Propel",
