@@ -39,7 +39,7 @@ export const clubHighlights: ClubHighlight[] = [
   {
     name: "DIAconomics Club",
     role: "Deputy Head of Media",
-    history: [{ schoolYear: "2025-26", role: "Deputy Head of Media" }],
+    history: [{ schoolYear: "2024-25", role: "Deputy Head of Media" }],
     responsibilities: [
       "Manage the club's media presence and content creation.",
       "Create promotional materials for club events.",
@@ -48,10 +48,10 @@ export const clubHighlights: ClubHighlight[] = [
   },
   {
     name: "DIAMUN",
-    role: "Head of Technology",
+    role: "Head of Technology — Executive Team",
     history: [
       { schoolYear: "2025-26", role: "Deputy Head of Technology" },
-      { schoolYear: "2026-27", role: "Head of Technology" },
+      { schoolYear: "2026-27", role: "Head of Technology — Executive Team" },
     ],
     responsibilities: [
       "Revamp and maintain the conference website.",
@@ -61,10 +61,16 @@ export const clubHighlights: ClubHighlight[] = [
     logo: "https://i.postimg.cc/0jbhY3cw/diamun-logo.png",
   },
   {
+    name: "DI@TECH",
+    role: "Head of Technology — Core Committee",
+    history: [{ schoolYear: "2026-27", role: "Head of Technology — Core Committee" }],
+    responsibilities: standardTechnologyResponsibilities,
+  },
+  {
     name: "SyntaxEngine",
     role: "President",
     history: [
-      { schoolYear: "2025-26", role: "President" },
+      { schoolYear: "2025-26", role: "Co-President" },
       { schoolYear: "2026-27", role: "President" },
     ],
     responsibilities: [
@@ -89,8 +95,11 @@ export const clubHighlights: ClubHighlight[] = [
   },
   {
     name: "EconMinds xChange",
-    role: "Head of Technology",
-    history: [{ schoolYear: "2025-26", role: "Head of Technology" }],
+    role: "Head of Technology — Core Committee",
+    history: [
+      { schoolYear: "2025-26", role: "Head of Technology — Core Committee" },
+      { schoolYear: "2026-27", role: "Head of Technology — Core Committee" },
+    ],
     responsibilities: standardTechnologyResponsibilities,
     logo: "https://i.postimg.cc/YCHTwM8t/econminds-logo.png",
   },
@@ -103,41 +112,40 @@ export const clubHighlights: ClubHighlight[] = [
   },
   {
     name: "Aviation@DIA",
-    role: "Head of Technology",
-    history: [{ schoolYear: "2025-26", role: "Head of Technology" }],
+    role: "Head of Technology — Core Committee",
+    history: [{ schoolYear: "2025-26", role: "Head of Technology — Core Committee" }],
     responsibilities: standardTechnologyResponsibilities,
     logo: "https://i.postimg.cc/7LyGDPzt/aviation-logo.png",
   },
   {
     name: "Legal Horizons",
-    role: "Head of Technology",
-    history: [{ schoolYear: "2025-26", role: "Head of Technology" }],
+    role: "Head of Technology — Core Committee",
+    history: [{ schoolYear: "2025-26", role: "Head of Technology — Core Committee" }],
     responsibilities: standardTechnologyResponsibilities,
     logo: "https://i.postimg.cc/Vs4d9HV5/legal-logo.png",
   },
   {
     name: "Debate Society",
-    role: "Head of Technology",
-    history: [{ schoolYear: "2025-26", role: "Head of Technology" }],
+    role: "Head of Technology — Core Committee",
+    history: [{ schoolYear: "2025-26", role: "Head of Technology — Core Committee" }],
     responsibilities: standardTechnologyResponsibilities,
     logo: "https://i.postimg.cc/brJZbKtQ/debsoc-logo.png",
   },
   {
-    name: "DIACubing",
-    role: "Head of Technology",
+    name: "DIA Cubing (DIACubing)",
+    role: "Head of Technology — Executive Team",
     history: [
-      { schoolYear: "2025-26", role: "Head of Technology" },
-      { schoolYear: "2026-27", role: "Head of Technology" },
+      { schoolYear: "2025-26", role: "Head of Technology — Executive Team" },
     ],
     responsibilities: standardTechnologyResponsibilities,
     logo: "https://i.postimg.cc/d0sqZSCR/cubing-logo.png",
   },
   {
     name: "Events@DIA",
-    role: "Head of Technology",
+    role: "Head of Technology — Core Committee",
     history: [
-      { schoolYear: "2025-26", role: "Head of Technology" },
-      { schoolYear: "2026-27", role: "Head of Technology" },
+      { schoolYear: "2025-26", role: "Head of Technology — Core Committee" },
+      { schoolYear: "2026-27", role: "Head of Technology — Core Committee" },
     ],
     responsibilities: [
       "Create and maintain the main website.",
@@ -147,8 +155,8 @@ export const clubHighlights: ClubHighlight[] = [
   },
   {
     name: "DIA Mathletes",
-    role: "Head of Technology",
-    history: [{ schoolYear: "2025-26", role: "Head of Technology" }],
+    role: "Head of Technology — Core Committee",
+    history: [{ schoolYear: "2025-26", role: "Head of Technology — Core Committee" }],
     responsibilities: standardTechnologyResponsibilities,
     url: "https://mathletes-site.onrender.com",
     logo: "https://i.postimg.cc/y8phZPpP/mathletes-logo-new.png",
@@ -165,19 +173,19 @@ export const clubHighlights: ClubHighlight[] = [
   },
   {
     name: "Haven Equities",
-    role: "CTO",
+    role: "Chief Technology Officer (CTO)",
     history: [
-      { schoolYear: "2025-26", role: "CTO" },
-      { schoolYear: "2026-27", role: "CTO" },
+      { schoolYear: "2025-26", role: "Chief Technology Officer (CTO)" },
+      { schoolYear: "2026-27", role: "Chief Technology Officer (CTO)" },
     ],
     responsibilities: standardTechnologyResponsibilities,
     url: "https://havenequities.site",
     logo: "https://i.postimg.cc/NMLwnJPw/haven-logo.png",
   },
   {
-    name: "BraverTogether",
-    role: "CTO",
-    history: [{ schoolYear: "2026-27", role: "CTO" }],
+    name: "Braver Together",
+    role: "Chief Technology Officer (CTO)",
+    history: [{ schoolYear: "2026-27", role: "Chief Technology Officer (CTO)" }],
     responsibilities: standardTechnologyResponsibilities,
   },
   {
@@ -185,19 +193,34 @@ export const clubHighlights: ClubHighlight[] = [
     role: "Head of Technology",
     history: [{ schoolYear: "2026-27", role: "Head of Technology" }],
     responsibilities: standardTechnologyResponsibilities,
+    logo: "/assets/portfolio/engineering-society-logo.jpeg",
   },
   {
     name: "Business Minds",
-    role: "Head of Technology",
-    history: [{ schoolYear: "2026-27", role: "Head of Technology" }],
+    role: "Head of Technology — Core Committee",
+    history: [{ schoolYear: "2026-27", role: "Head of Technology — Core Committee" }],
     responsibilities: standardTechnologyResponsibilities,
     logo: "https://i.postimg.cc/L8xMspXB/bm-logo.png",
   },
   {
-    name: "Astro Nova",
-    role: "Head of Technology",
-    history: [{ schoolYear: "2026-27", role: "Head of Technology" }],
+    name: "AstroNova",
+    role: "Head of Technology — Core Committee",
+    history: [{ schoolYear: "2026-27", role: "Head of Technology — Core Committee" }],
     responsibilities: standardTechnologyResponsibilities,
+    logo: "/assets/portfolio/astro-nova-logo.jpeg",
+  },
+  {
+    name: "Interact@DIA",
+    role: "Head of Technology — Core Committee",
+    history: [{ schoolYear: "2026-27", role: "Head of Technology — Core Committee" }],
+    responsibilities: standardTechnologyResponsibilities,
+  },
+  {
+    name: "Youth Propel",
+    role: "Chief Technology Officer (CTO)",
+    history: [{ schoolYear: "2026-27", role: "Chief Technology Officer (CTO)" }],
+    responsibilities: standardTechnologyResponsibilities,
+    logo: "/assets/portfolio/youth-propel-logo.png",
   },
 ];
 

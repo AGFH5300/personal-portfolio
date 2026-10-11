@@ -383,7 +383,8 @@ export const personalData = {
     {
       name: "Enterprise and Entrepreneurship",
       role: "Head",
-      period: "2022 - 2023",
+      period: "2022–23",
+      history: [{ schoolYear: "2022–23", role: "Head" }],
       responsibilities: [
         "Create entrepreneurial events for the school students",
         "Manage leadership roles across the school in events",
@@ -394,7 +395,8 @@ export const personalData = {
     {
       name: "DIAconomics Club",
       role: "Deputy Head of Media",
-      period: "April 2025 - Current",
+      period: "2024–25",
+      history: [{ schoolYear: "2024–25", role: "Deputy Head of Media" }],
       responsibilities: [
         "Manage club's media presence and content creation",
         "Create promotional materials for club events",
@@ -404,8 +406,12 @@ export const personalData = {
     },
     {
       name: "DIAMUN",
-      role: "Head of Technology",
-      period: "2025 - Current",
+      role: "Head of Technology — Executive Team",
+      period: "2025–26, 2026–27",
+      history: [
+        { schoolYear: "2025–26", role: "Deputy Head of Technology" },
+        { schoolYear: "2026–27", role: "Head of Technology — Executive Team" },
+      ],
       responsibilities: [
         "Revamp and maintain the conference website",
         "Manage technical aspects on the day of the conference",
@@ -415,9 +421,23 @@ export const personalData = {
       logo: "https://i.postimg.cc/0jbhY3cw/diamun-logo.png",
     },
     {
+      name: "DI@TECH",
+      role: "Head of Technology — Core Committee",
+      period: "2026–27",
+      history: [{ schoolYear: "2026–27", role: "Head of Technology — Core Committee" }],
+      responsibilities: [
+        "Create and maintain the main website.",
+        "Oversee technical aspects on the day of the event.",
+      ],
+    },
+    {
       name: "SyntaxEngine",
       role: "President",
-      period: "Aug 2025 - Current",
+      period: "2025–26, 2026–27",
+      history: [
+        { schoolYear: "2025–26", role: "Co-President" },
+        { schoolYear: "2026–27", role: "President" },
+      ],
       responsibilities: [
         "Lead & coordinate club activities and projects.",
         "Support members in learning coding and completing projects.",
@@ -428,7 +448,11 @@ export const personalData = {
     {
       name: "VOFMUN",
       role: "Co-Founder & Head of Technology",
-      period: "Sep 2025 - Current",
+      period: "2025–26, 2026–27",
+      history: [
+        { schoolYear: "2025–26", role: "Co-Founder & Head of Technology" },
+        { schoolYear: "2026–27", role: "Co-Founder & Head of Technology" },
+      ],
       responsibilities: [
         "Revamp and maintain the conference website",
         "Manage technical aspects on the day of the conference",
@@ -439,19 +463,24 @@ export const personalData = {
     },
     {
       name: "EconMinds xChange",
-      role: "Head of Technology",
-      period: "Sep 2025 - Current",
+      role: "Head of Technology — Core Committee",
+      period: "2025–26, 2026–27",
+      history: [
+        { schoolYear: "2025–26", role: "Head of Technology — Core Committee" },
+        { schoolYear: "2026–27", role: "Head of Technology — Core Committee" },
+      ],
       responsibilities: [
         "Create and maintain the main website.",
         "Oversee all technical aspects on the day of the competition.",
-        "Create the website for the day of the competiton.",
+        "Create the website for the day of the competition.",
       ],
       logo: "https://i.postimg.cc/YCHTwM8t/econminds-logo.png",
     },
     {
       name: "TEDxYouth@DIA",
       role: "Head of Technology",
-      period: "Sep 2025 - Current",
+      period: "2025–26",
+      history: [{ schoolYear: "2025–26", role: "Head of Technology" }],
       responsibilities: [
         "Create and maintain the main website.",
         "Oversee all technical aspects on the day of the event.",
@@ -461,19 +490,21 @@ export const personalData = {
     },
     {
       name: "Aviation@DIA",
-      role: "Head of Technology",
-      period: "Sep 2025 - Current",
+      role: "Head of Technology — Core Committee",
+      period: "2025–26",
+      history: [{ schoolYear: "2025–26", role: "Head of Technology — Core Committee" }],
       responsibilities: [
         "Create and maintain the main website.",
         "Oversee all technical aspects on the day of the competition.",
-        "Create the website for the day of the competiton.",
+        "Create the website for the day of the competition.",
       ],
       logo: "https://i.postimg.cc/7LyGDPzt/aviation-logo.png",
     },
     {
       name: "Legal Horizons",
-      role: "Head of Technology",
-      period: "Oct 2025 - Current",
+      role: "Head of Technology — Core Committee",
+      period: "2025–26",
+      history: [{ schoolYear: "2025–26", role: "Head of Technology — Core Committee" }],
       responsibilities: [
         "Create and maintain the main website.",
         "Oversee all technical aspects on the day of the event.",
@@ -483,8 +514,9 @@ export const personalData = {
     },
     {
       name: "Debate Society",
-      role: "Head of Technology",
-      period: "Oct 2025 - Current",
+      role: "Head of Technology — Core Committee",
+      period: "2025–26",
+      history: [{ schoolYear: "2025–26", role: "Head of Technology — Core Committee" }],
       responsibilities: [
         "Create and maintain the main website.",
         "Oversee all technical aspects on the day of the event.",
@@ -493,9 +525,10 @@ export const personalData = {
       logo: "https://i.postimg.cc/brJZbKtQ/debsoc-logo.png",
     },
     {
-      name: "DIACubing",
-      role: "Head of Technology",
-      period: "Oct 2025 - Current",
+      name: "DIA Cubing (DIACubing)",
+      role: "Head of Technology — Executive Team",
+      period: "2025–26",
+      history: [{ schoolYear: "2025–26", role: "Head of Technology — Executive Team" }],
       responsibilities: [
         "Create and maintain the main website.",
         "Oversee all technical aspects on the day of the event.",
@@ -505,8 +538,12 @@ export const personalData = {
     },
     {
       name: "Events@DIA",
-      role: "Head of Technology",
-      period: "Oct 2025 - Current",
+      role: "Head of Technology — Core Committee",
+      period: "2025–26, 2026–27",
+      history: [
+        { schoolYear: "2025–26", role: "Head of Technology — Core Committee" },
+        { schoolYear: "2026–27", role: "Head of Technology — Core Committee" },
+      ],
       responsibilities: [
         "Create and maintain the main website.",
         "Oversee all technical aspects on the day of the events.",
@@ -516,8 +553,9 @@ export const personalData = {
     },
     {
       name: "DIA Mathletes",
-      role: "Head of Technology",
-      period: "Oct 2025 - Current",
+      role: "Head of Technology — Core Committee",
+      period: "2025–26",
+      history: [{ schoolYear: "2025–26", role: "Head of Technology — Core Committee" }],
       responsibilities: [
         "Create and maintain the main website.",
         "Oversee all technical aspects on the day of the events.",
@@ -529,7 +567,8 @@ export const personalData = {
     {
       name: "STEM Scholars Society",
       role: "Vice President",
-      period: "Oct 2025 - Current",
+      period: "2025–26",
+      history: [{ schoolYear: "2025–26", role: "Vice President" }],
       responsibilities: [
         "Create and manage events and planning.",
         "Oversee all departments of the club.",
@@ -539,8 +578,12 @@ export const personalData = {
     },
     {
       name: "Haven Equities",
-      role: "CTO - Chief Technical Officer",
-      period: "Jan 2026 - Current",
+      role: "Chief Technology Officer (CTO)",
+      period: "2025–26, 2026–27",
+      history: [
+        { schoolYear: "2025–26", role: "Chief Technology Officer (CTO)" },
+        { schoolYear: "2026–27", role: "Chief Technology Officer (CTO)" },
+      ],
       responsibilities: [
         "Create and maintain the main website.",
         "Oversee all technical aspects on the day of the events.",
@@ -548,6 +591,70 @@ export const personalData = {
       ],
       url: "https://havenequities.site",
       logo: "https://i.postimg.cc/NMLwnJPw/haven-logo.png",
+    },
+    {
+      name: "Braver Together",
+      role: "Chief Technology Officer (CTO)",
+      period: "2026–27",
+      history: [{ schoolYear: "2026–27", role: "Chief Technology Officer (CTO)" }],
+      responsibilities: [
+        "Create and maintain the main website.",
+        "Oversee technical aspects on the day of the event.",
+      ],
+    },
+    {
+      name: "Interact@DIA",
+      role: "Head of Technology — Core Committee",
+      period: "2026–27",
+      history: [{ schoolYear: "2026–27", role: "Head of Technology — Core Committee" }],
+      responsibilities: [
+        "Create and maintain the main website.",
+        "Oversee technical aspects on the day of the event.",
+      ],
+    },
+    {
+      name: "Youth Propel",
+      role: "Chief Technology Officer (CTO)",
+      period: "2026–27",
+      history: [{ schoolYear: "2026–27", role: "Chief Technology Officer (CTO)" }],
+      responsibilities: [
+        "Create and maintain the main website.",
+        "Oversee technical aspects on the day of the event.",
+      ],
+      logo: "/assets/portfolio/youth-propel-logo.png",
+    },
+    {
+      name: "Engineering Society",
+      role: "Head of Technology",
+      period: "2026–27",
+      history: [{ schoolYear: "2026–27", role: "Head of Technology" }],
+      responsibilities: [
+        "Create and maintain the main website.",
+        "Oversee technical aspects on the day of the event.",
+      ],
+      logo: "/assets/portfolio/engineering-society-logo.jpeg",
+    },
+    {
+      name: "Business Minds",
+      role: "Head of Technology — Core Committee",
+      period: "2026–27",
+      history: [{ schoolYear: "2026–27", role: "Head of Technology — Core Committee" }],
+      responsibilities: [
+        "Create and maintain the main website.",
+        "Oversee technical aspects on the day of the event.",
+      ],
+      logo: "https://i.postimg.cc/L8xMspXB/bm-logo.png",
+    },
+    {
+      name: "AstroNova",
+      role: "Head of Technology — Core Committee",
+      period: "2026–27",
+      history: [{ schoolYear: "2026–27", role: "Head of Technology — Core Committee" }],
+      responsibilities: [
+        "Create and maintain the main website.",
+        "Oversee technical aspects on the day of the event.",
+      ],
+      logo: "/assets/portfolio/astro-nova-logo.jpeg",
     },
   ],
 
