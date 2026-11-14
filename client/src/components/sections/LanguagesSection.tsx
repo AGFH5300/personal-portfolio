@@ -51,8 +51,18 @@ export default function LanguagesSection() {
               <Card className="shadow-md transition-shadow hover:shadow-lg h-full">
                 <CardContent className="p-6">
                   <div className="flex items-start">
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
-                      <Globe className="text-primary" size={20} />
+                    <div className="w-12 h-12 flex items-center justify-center mr-4">
+                      {language.logo ? (
+                        <img
+                          src={language.logo}
+                          alt={`${language.name} flag`}
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                          <Globe className="text-primary" size={20} />
+                        </div>
+                      )}
                     </div>
                     <div className="flex-1">
                       <h3 className="text-lg font-medium mb-2">{language.name}</h3>

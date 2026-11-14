@@ -12,7 +12,7 @@ export default function AboutSection() {
     try {
       // Create a temporary link element to trigger download
       const link = document.createElement('a');
-      link.href = "https://drive.google.com/uc?export=download&id=1-wF2e6ZWHwvQfFtEm-yRt5THF-PreaFP";
+      link.href = personalData.cvUrl;
       link.target = "_blank";
       document.body.appendChild(link);
       link.click();

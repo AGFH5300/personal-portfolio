@@ -66,8 +66,18 @@ export default function ExperienceSection() {
             >
               <CardContent className="p-6">
                 <div className="flex items-start">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
-                    {getCompetitionIcon(competition.position)}
+                  <div className="w-12 h-12 flex items-center justify-center mr-4">
+                    {competition.logo ? (
+                      <img 
+                        src={competition.logo} 
+                        alt={`${competition.name} logo`}
+                        className="w-full h-full object-contain"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                        {getCompetitionIcon(competition.position)}
+                      </div>
+                    )}
                   </div>
                   <div className="flex-1">
                     <div className="flex items-start justify-between mb-2">

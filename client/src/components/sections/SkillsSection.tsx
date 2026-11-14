@@ -2,7 +2,7 @@ import { motion, useAnimation } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { personalData } from "@/data/personalData";
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, MessageSquare, Lightbulb, ListTodo, Clock, Zap } from "lucide-react";
+import { Users, MessageSquare, Lightbulb, ListTodo, Clock, Zap, Award } from "lucide-react";
 import { CertificateModal } from "@/components/ui/certificate-modal";
 
 export default function SkillsSection() {
@@ -144,8 +144,25 @@ export default function SkillsSection() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <div className="p-4 flex-grow">
-                  <h4 className="font-semibold text-lg mb-2">{cert.name}</h4>
-                  <p className="text-sm text-gray-600 mb-3">{cert.issuer}</p>
+                  <div className="flex items-start mb-3">
+                    <div className="w-10 h-10 flex items-center justify-center mr-3 flex-shrink-0">
+                      {cert.logo ? (
+                        <img
+                          src={cert.logo}
+                          alt={`${cert.issuer} logo`}
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                          <Award className="text-primary" size={20} />
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-lg mb-1">{cert.name}</h4>
+                      <p className="text-sm text-gray-600">{cert.issuer}</p>
+                    </div>
+                  </div>
                   <p className="text-sm text-gray-700 mb-3">{cert.issueDate}</p>
                 </div>
                 {cert.image && (
