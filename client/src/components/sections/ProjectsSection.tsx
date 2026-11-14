@@ -2,7 +2,9 @@ import { motion } from "framer-motion";
 import { personalData } from "@/data/personalData";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Github, ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Github, ExternalLink, Code2, ArrowRight } from "lucide-react";
+import { Link } from "wouter";
 
 export default function ProjectsSection() {
   return (
@@ -36,9 +38,9 @@ export default function ProjectsSection() {
               <img
                 src={project.image}
                 alt={project.name}
-                className="w-full h-48 object-cover"
+                className="w-full object-cover"
               />
-              <div className="p-6">
+                <div className="p-6" style={{paddingBottom:'12px'}}>
                 <h3 className="text-xl font-semibold mb-2">{project.name}</h3>
                 <p className="text-gray-600 text-sm mb-4">
                   {project.description}
@@ -60,7 +62,7 @@ export default function ProjectsSection() {
                       href={project.demoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary hover:text-secondary transition-colors duration-300 flex items-center"
+                      className="text-primary hover:text-black transition-colors duration-300 flex items-center"
                     >
                       <ExternalLink className="mr-2 h-4 w-4" />
                       <span>View Project</span>
@@ -71,6 +73,67 @@ export default function ProjectsSection() {
             </motion.div>
           ))}
         </div>
+
+        {/* Learning Journey Section - Under Maintenance */}
+        <motion.div
+          className="mt-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <Card className="relative bg-gradient-to-r from-primary/5 to-accent/5 border-primary/20 max-w-4xl mx-auto overflow-hidden">
+
+            {/* Original content - slightly grayed */}
+            <CardContent className="p-8 filter">
+              <div className="flex items-center justify-center mb-6">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Code2 className="text-primary" size={32} />
+                </div>
+              </div>
+
+              <h3 className="text-2xl font-bold text-dark mb-4">
+                My Coding Learning Journey
+              </h3>
+
+              <p className="text-gray-600 mb-6 max-w-2xl mx-auto text-lg">
+                Explore my complete collection of Python projects, web applications, and coding projects created while learning and exploring different programming languages and technologies.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-primary">30+</div>
+                  <div className="text-sm text-gray-600">Python Projects</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-primary">Multiple</div>
+                  <div className="text-sm text-gray-600">Languages</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-primary">100+</div>
+                  <div className="text-sm text-gray-600">Hours Coded</div>
+                </div>
+              </div>
+
+              <Link 
+              href="/all"
+              onClick={() => {
+                // Save current scroll position before navigating
+                sessionStorage.setItem('homeScrollPosition', window.scrollY.toString());
+              }}
+            >
+              <Button size="lg" className="group">
+                View All My Projects
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+
+              <p className="text-xs text-gray-500 mt-4">
+                Includes projects from Harvard CS50, Udemy courses, and personal projects
+              </p>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
     </section>
   );

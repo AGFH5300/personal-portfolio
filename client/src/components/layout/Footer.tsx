@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
             <Link href="/" className="text-2xl font-bold text-primary">
-              Ansh<span className="text-foreground">Gupta</span>
+              Ansh <span className="text-foreground">Gupta</span>
             </Link>
           </div>
           <div className="text-sm text-gray-400">
@@ -29,6 +29,18 @@ export default function Footer() {
               About
             </a>
             <a
+              href="#competition"
+              className="text-gray-400 hover:text-primary mx-2 transition-colors duration-300"
+              onClick={(e) => {
+                e.preventDefault();
+                document
+                  .getElementById("competition")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              Experience
+            </a>
+            <a
               href="#projects"
               className="text-gray-400 hover:text-primary mx-2 transition-colors duration-300"
               onClick={(e) => {
@@ -39,18 +51,6 @@ export default function Footer() {
               }}
             >
               Projects
-            </a>
-            <a
-              href="#contact"
-              className="text-gray-400 hover:text-primary mx-2 transition-colors duration-300"
-              onClick={(e) => {
-                e.preventDefault();
-                document
-                  .getElementById("contact")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
-            >
-              Contact
             </a>
           </div>
         </div>

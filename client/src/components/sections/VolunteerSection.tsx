@@ -5,7 +5,10 @@ import { Heart, BookOpen, GraduationCap, Gift } from "lucide-react";
 
 export default function VolunteerSection() {
   const volunteerIcons = {
-    "Panchgani Education Initiative": <GraduationCap className="text-white" />
+    "Panchgani Education Initiative": <GraduationCap className="text-white" />,
+    "Donating Hot Meals": <Gift className="text-white" />,
+    "Tata Cancer Hospital": <Heart className="text-white" />,
+    "School for Children with Hearing and Speech Impairments": <BookOpen className="text-white" />
   };
 
   return (
@@ -32,7 +35,7 @@ export default function VolunteerSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className="absolute left-0 w-9 h-9 -ml-10 bg-primary rounded-full flex items-center justify-center text-white shadow-md">
+              <div className="absolute left-0 w-9 h-9 -ml-10 bg-primary rounded-full flex items-center justify-center text-white shadow-md z-10">
                 {volunteerIcons[work.organization as keyof typeof volunteerIcons] || <Heart className="text-white" />}
               </div>
               <Card className="shadow-sm ml-4">
